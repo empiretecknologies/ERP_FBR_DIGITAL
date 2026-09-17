@@ -1,0 +1,553 @@
+is_global = true
+build_property.TargetFramework = net7.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = Empire_ERP
+build_property.RootNamespace = Empire_ERP
+build_property.ProjectDir = D:\Source Code Cloud\FBR_DIGITAL_INVOICE\Empire_ERP\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.RazorLangVersion = 7.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = D:\Source Code Cloud\FBR_DIGITAL_INVOICE\Empire_ERP
+build_property._RazorSourceGeneratorDebug = 
+build_property.EffectiveAnalysisLevelStyle = 7.0
+build_property.EnableCodeStyleSeverity = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Reports/PointOfSale.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UmVwb3J0c1xQb2ludE9mU2FsZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Reports/SaleReceipt.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UmVwb3J0c1xTYWxlUmVjZWlwdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/AccountingMapping/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudGluZ01hcHBpbmdcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/AccountingReports/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudGluZ1JlcG9ydHNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/AdvanceProduction/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWR2YW5jZVByb2R1Y3Rpb25cSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/Approval/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXBwcm92YWxcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/AttendanceMachine/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXR0ZW5kYW5jZU1hY2hpbmVcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/BankDetail/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmFua0RldGFpbFxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/BarcodePrint/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmFyY29kZVByaW50XEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/BatchIssue/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmF0Y2hJc3N1ZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/BillOfMaterial/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmlsbE9mTWF0ZXJpYWxcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/Binaries/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmluYXJpZXNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/Branch/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQnJhbmNoXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/CashBookVoucher/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FzaEJvb2tWb3VjaGVyXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/CashReceiptVoucher/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FzaFJlY2VpcHRWb3VjaGVyXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/ChartOfAccount/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2hhcnRPZkFjY291bnRcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/ClosingShop/ClosingShop.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xvc2luZ1Nob3BcQ2xvc2luZ1Nob3AuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/ClosingShop/ClosingShop_old.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xvc2luZ1Nob3BcQ2xvc2luZ1Nob3Bfb2xkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/ClosingShop/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xvc2luZ1Nob3BcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/CommMap/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tbU1hcFxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/Company/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tcGFueVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/CostCenterOpening/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29zdENlbnRlck9wZW5pbmdcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/CostCenter/_CostCenterPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29zdENlbnRlclxfQ29zdENlbnRlclBhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/Currency/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3VycmVuY3lcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/CustomerPricing/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3VzdG9tZXJQcmljaW5nXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/DailyProduction/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFpbHlQcm9kdWN0aW9uXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/DatabaseBackup/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGF0YWJhc2VCYWNrdXBcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/DeleteAttendance/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVsZXRlQXR0ZW5kYW5jZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/DeliveryFeeding/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVsaXZlcnlGZWVkaW5nXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/DeliveryFormat/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVsaXZlcnlGb3JtYXRcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/DeliveryOrder/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVsaXZlcnlPcmRlclxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/DocumentRetrieval/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9jdW1lbnRSZXRyaWV2YWxcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/EmpLeaves/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wTGVhdmVzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/Employee/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/EmpMasterInfo/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wTWFzdGVySW5mb1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/EmpPenalty/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wUGVuYWx0eVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/EmpTransferEntry/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wVHJhbnNmZXJFbnRyeVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/FamilyMember/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmFtaWx5TWVtYmVyXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/FDeliveryFeeding/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRkRlbGl2ZXJ5RmVlZGluZ1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/FSodaBookFeeding/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRlNvZGFCb29rRmVlZGluZ1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/GatePass/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR2F0ZVBhc3NcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/Grade/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR3JhZGVcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/Hawla/HawlaPrint.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSGF3bGFcSGF3bGFQcmludC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/Hawla/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSGF3bGFcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/Home/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/HRCandidate/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJDYW5kaWRhdGVcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/HRInterviewFeedback/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJJbnRlcnZpZXdGZWVkYmFja1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/HRInterviewSchedule/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJJbnRlcnZpZXdTY2hlZHVsZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/HRJobPost/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJKb2JQb3N0XEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/HRMasterTable/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJNYXN0ZXJUYWJsZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/HRMaster/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJNYXN0ZXJcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/HROfferLetter/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJPZmZlckxldHRlclxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/HRSetup/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSFJTZXR1cFxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/ImportGeneralManifest/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW1wb3J0R2VuZXJhbE1hbmlmZXN0XEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/ImportManifest/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW1wb3J0TWFuaWZlc3RcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/ImportPermit/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW1wb3J0UGVybWl0XEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/ImportReport/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW1wb3J0UmVwb3J0XEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/InvoiceReports/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW52b2ljZVJlcG9ydHNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/ItemGroups/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSXRlbUdyb3Vwc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/ItemMaster/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSXRlbU1hc3RlclxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/ItemOpening/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSXRlbU9wZW5pbmdcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/JournalVoucher/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSm91cm5hbFZvdWNoZXJcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/KnockOff/_KnockOffPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS25vY2tPZmZcX0tub2NrT2ZmUGFydGlhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/Login/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5cRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/Login/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5cSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/LotRegistration/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG90UmVnaXN0cmF0aW9uXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/MachineInfo/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFjaGluZUluZm9cSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/MailBox/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFpbEJveFxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/MaterialRequisition/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWF0ZXJpYWxSZXF1aXNpdGlvblxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/MembershipCard/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVtYmVyc2hpcENhcmRcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/MenuDetails/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVudURldGFpbHNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/MerchantPurchaseOrderDetail/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVyY2hhbnRQdXJjaGFzZU9yZGVyRGV0YWlsXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/MerchantPurchaseOrder/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVyY2hhbnRQdXJjaGFzZU9yZGVyXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/MpoLayout/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTXBvTGF5b3V0XEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/MPORegistration/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTVBPUmVnaXN0cmF0aW9uXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/MpoTrims/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTXBvVHJpbXNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/Notes/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTm90ZXNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/OpeningBalance/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3BlbmluZ0JhbGFuY2VcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/PartyOpeningBalance/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFydHlPcGVuaW5nQmFsYW5jZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/PartyReceiptVoucher/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFydHlSZWNlaXB0Vm91Y2hlclxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/PartyReports/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFydHlSZXBvcnRzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/PartyToParty/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFydHlUb1BhcnR5XEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/PartyTypes/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFydHlUeXBlc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/PendingToSRB/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVuZGluZ1RvU1JCXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/Period/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVyaW9kXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/POSDiscountItemWise/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUE9TRGlzY291bnRJdGVtV2lzZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/POSDiscount/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUE9TRGlzY291bnRcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/POSMapping/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUE9TTWFwcGluZ1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/PostDatedCheque/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUG9zdERhdGVkQ2hlcXVlXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/POSTransactions/C20.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUE9TVHJhbnNhY3Rpb25zXEMyMC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/POSTransactions/ExpenseReceipt.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUE9TVHJhbnNhY3Rpb25zXEV4cGVuc2VSZWNlaXB0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/POSTransactions/GTEX.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUE9TVHJhbnNhY3Rpb25zXEdURVguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/POSTransactions/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUE9TVHJhbnNhY3Rpb25zXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/POSTransactions/PointOfSale.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUE9TVHJhbnNhY3Rpb25zXFBvaW50T2ZTYWxlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/POSTransactions/PointOfSale_2.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUE9TVHJhbnNhY3Rpb25zXFBvaW50T2ZTYWxlXzIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/POSTransactions/POS_KOT.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUE9TVHJhbnNhY3Rpb25zXFBPU19LT1QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/POSTransactions/SaleReceipt.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUE9TVHJhbnNhY3Rpb25zXFNhbGVSZWNlaXB0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/POSUserRights/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUE9TVXNlclJpZ2h0c1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/PurchaseBillReports/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHVyY2hhc2VCaWxsUmVwb3J0c1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/PurchaseBill/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHVyY2hhc2VCaWxsXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/PurchaseBookVoucher/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHVyY2hhc2VCb29rVm91Y2hlclxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/PurchaseOrder/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHVyY2hhc2VPcmRlclxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/PurchaseRequisition/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHVyY2hhc2VSZXF1aXNpdGlvblxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/PurchaseSaleFormat/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHVyY2hhc2VTYWxlRm9ybWF0XEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/Region/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVnaW9uXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/ReportType/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVwb3J0VHlwZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/Role/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm9sZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/SalesContract/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2FsZXNDb250cmFjdFxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/SalesInvoiceReport/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2FsZXNJbnZvaWNlUmVwb3J0XEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/SaleTaxInvoice/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2FsZVRheEludm9pY2VcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/SetupSubType/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2V0dXBTdWJUeXBlXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/SetupType/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2V0dXBUeXBlXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/Shipment/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hpcG1lbnRcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/SodaBookFeeding/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU29kYUJvb2tGZWVkaW5nXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/SPartyReports/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU1BhcnR5UmVwb3J0c1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/StockAdjustment/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3RvY2tBZGp1c3RtZW50XEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/StockReceive/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3RvY2tSZWNlaXZlXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/StockTransferRequisition/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3RvY2tUcmFuc2ZlclJlcXVpc2l0aW9uXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/StockTransfer/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3RvY2tUcmFuc2ZlclxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/Table/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFibGVcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/TexSalesInvoice/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGV4U2FsZXNJbnZvaWNlXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/User/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/Waiter/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2FpdGVyXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/WarehouseTransfer/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2FyZWhvdXNlVHJhbnNmZXJcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/Warehouse/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2FyZWhvdXNlXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/WeighBridge/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2VpZ2hCcmlkZ2VcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/WorkOrder/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV29ya09yZGVyXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Source Code Cloud/FBR_DIGITAL_INVOICE/Empire_ERP/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-lbfjs3iror
