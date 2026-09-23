@@ -755,7 +755,7 @@ namespace Empire_ERP.Infrastructure.Repositories
                             DISC = Convert.ToDouble(detail_Reader["DISC"]),
                             DISC_AMT = Convert.ToDouble(detail_Reader["DISC_AMT"]),
                             TAX = Convert.ToDouble(detail_Reader["TAX"]),
-                            TAX_AMT = Convert.ToDouble(detail_Reader["TAX_AMT"]),
+                            TAX_AMT = Convert.ToDecimal(detail_Reader["TAX_AMT"]),
                             NET_AMT = Convert.ToDouble(detail_Reader["NET_AMT"]),
                             DT_DESC = Convert.ToString(detail_Reader["DT_DESC"]),
                             //QTY2 = Convert.ToDouble(detail_Reader["QTY2"]),

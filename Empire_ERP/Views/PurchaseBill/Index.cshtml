@@ -3,8 +3,75 @@
         background-color: #055a87 !important;
         color: white;
     }
+
+    .pb-form .card-header {
+        padding: 8px 12px;
+    }
+
+    .pb-form .card-body.Record {
+        padding: 8px 12px 10px;
+    }
+
+    .pb-form .pb-field {
+        margin-bottom: 6px;
+    }
+
+    .pb-form .image-box {
+        width: 118px;
+        height: 118px;
+        margin: 0 auto;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        overflow: hidden;
+        background: #055a87;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+        .pb-form .image-box img {
+            width: 92%;
+            height: 92%;
+            object-fit: contain;
+        }
+
+    .pb-form .pb-actions {
+        padding: 4px 0 8px;
+        gap: 8px;
+    }
+
+    .pb-form .pb-save-row {
+        padding-top: 8px !important;
+        padding-bottom: 8px !important;
+    }
+
+    .pb-form .nav-tabs {
+        margin-top: 2px;
+    }
+
+    .verified-label {
+        color: #28a745;
+        font-size: 14px;
+        font-weight: 700;
+        padding: 2px 6px;
+        display: inline-block;
+    }
+
+    @@media (max-width: 1199px) {
+        .pb-form .image-box {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 6px;
+        }
+    }
+
+    @@media (max-width: 767px) {
+        .pb-form .pb-actions {
+            flex-wrap: wrap;
+        }
+    }
 </style>
-<div class="card">
+<div class="card pb-form">
     <div class="card-header">
         <button type="button" class="btn btn-light btn-search waves-effect waves-light" data-bs-toggle="modal"
                 data-bs-target=".bs-example-modal-xl" id="BtnQuickSearch">
@@ -15,7 +82,7 @@
         </button>
     </div>
     <div class="card-body Record">
-        <div class="row">
+        <div class="row align-items-start">
             <input id="ID" hidden />
             <input id="ACT_CODE" hidden />
             <input id="SACODE" hidden />
@@ -23,21 +90,21 @@
             <input id="acthidden" hidden />
             <input id="salesmanhidden" hidden />
             <input id="itemIdHidden" hidden />
-            <div class="col-xl-10">
+            <div class="col-xl-10 col-lg-9 col-md-8">
                 <div class="row">
-                    <div class="col-xl-3">
+                    <div class="col-xl-3 col-lg-3 col-md-6 col-12 pb-field">
                         <label class="form-label" for="Code">Code:</label>
                         <input class="form-control" id="Code" readonly type="text" autocomplete="off">
                     </div>
-                    <div class="col-xl-3">
+                    <div class="col-xl-3 col-lg-3 col-md-6 col-12 pb-field">
                         <label class="form-label" for="ASTATUS">Status:</label>
                         <div id="ASTATUS"></div>
                     </div>
-                    <div class="col-xl-3">
+                    <div class="col-xl-3 col-lg-3 col-md-6 col-12 pb-field">
                         <label class="form-label" for="V_DATE">Transaction Date:</label>
                         <input class="form-control" id="V_DATE" type="date" onkeydown="empr_helper.HandleTabFocusToSelectBox(event, '#PARTY_CODE')" value="@DateTime.Now.Date.ToString("yyyy-MM-dd")" autocomplete="off">
                     </div>
-                    <div class="col-xl-3 vHide">
+                    <div class="col-xl-3 col-lg-3 col-md-6 col-12 pb-field vHide">
                         <label class="form-label" for="VOUCHER_NO">Transaction #:</label>
                         <input class="form-control" id="VOUCHER_NO" type="text" readonly autocomplete="off">
                     </div>
@@ -48,7 +115,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xl-3" onkeydown="empr_helper.MoveFocusToGrid(event, '#DetailContainer', 0, 'iteM_CODE')">
+                    <div class="col-xl-3 col-lg-3 col-md-6 col-12 pb-field" onkeydown="empr_helper.MoveFocusToGrid(event, '#DetailContainer', 0, 'iteM_CODE')">
                         <label class="form-label" for="PARTY_CODE">Party Name:</label>
                         <div id="PARTY_CODE"></div>
                     </div>
@@ -70,7 +137,7 @@
                         <input class="form-control" id="DISC" type="text" autocomplete="off" />
                     </div>
 
-                    <div class="col-xl-3">
+                    <div class="col-xl-3 col-lg-3 col-md-6 col-12 pb-field">
                         <label class="form-label" for="BTYPE">Pay Type:</label>
                         <div id="BTYPE"></div>
                     </div>
@@ -84,12 +151,12 @@
                         <input class="form-control" id="Rate" type="text" autocomplete="off" oninput="empr_helper.EnhancedDecimalFieldValidation(this)">
                     </div>
 
-                    <div class="col-xl-3">
+                    <div class="col-xl-3 col-lg-3 col-md-6 col-12 pb-field">
                         <label class="form-label" for="REF">Refrence #:</label>
                         <input class="form-control" id="REF" type="text" onkeydown="empr_helper.HandleTabFocus(event, '#REMARKS') autocomplete="off">
                     </div>
 
-                    <div class="col-xl-3">
+                    <div class="col-xl-3 col-lg-3 col-md-6 col-12 pb-field">
                         <label class="form-label" for="DOC">Doc :</label>
                         <input type="hidden" value="" id="hdnDOC" />
 
@@ -114,11 +181,11 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xl-6">
+                    <div class="col-xl-6 col-lg-6 col-md-12 pb-field">
                         <label class="form-label" for="REMARKS">Comment:</label>
                         <textarea class="form-control" id="REMARKS" rows="1" type="text" onkeydown="empr_helper.MoveFocusToGrid(event, '#DetailContainer', 0, 'iteM_CODE') autocomplete="off"></textarea>
                     </div>
-                    <div class="col-xl-6">
+                    <div class="col-xl-6 col-lg-6 col-md-12 pb-field">
                         <label class="form-label" for="FBR_RES">FBR Responce:</label>
                         <input class="form-control" id="FBR_RES" type="text" readonly autocomplete="off">
                     </div>
@@ -126,18 +193,16 @@
                
             </div>
 
-            <div class="col-xl-2">
-                <div class="">
-                    <div class="text-center p-2">
-                        <div class="image-box">
-                            @* <img id="empProfileImgFinal" src="~/Client/Company/default.jpg" /> *@
-                            <img id="qrImg" style="width: 150px;" src="~/Client/Company/notPostedYet.jpg" />
-                        </div>
+            <div class="col-xl-2 col-lg-3 col-md-4 col-12">
+                <div class="text-center">
+                    <div class="image-box">
+                        @* <img id="empProfileImgFinal" src="~/Client/Company/default.jpg" /> *@
+                        <img id="qrImg" src="~/Client/Company/notPostedYet.jpg" />
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-xl-12 pt-1 d-flex justify-content-end align-items-center gap-2">
+        <div class="col-xl-12 pb-actions d-flex justify-content-end align-items-center">
            @*  <button type="button" class="btn btn-primary" id="BtnSodaPick">
                 <i class="fa fa-search"></i> Pick Data
             </button> *@
@@ -181,7 +246,7 @@
                 <div class="table-responsive">
                     <div id="DetailContainer"></div>
                 </div>
-                <div class="col-xl-12 text-end pt-5 pb-5 pr-10">
+                <div class="col-xl-12 text-end pb-save-row pr-10">
                     <button class="btn btn-danger btn-delete" id="BtnDelete" style="display:none"><i class="fa fa-trash"></i> Delete</button>
                     <button class="btn btn-primary btn-save" id="BtnSave"><i class="fa fa-save"></i> Save</button>
                 </div>
@@ -192,7 +257,7 @@
                 <div class="table-responsive">
                     <div id="ChargesGridContainer"></div>
                 </div>
-                <div class="col-xl-12 text-end pt-5 pb-5 pr-10">
+                <div class="col-xl-12 text-end pb-save-row pr-10">
                     <button type="button" id="BtnChargesSave" class="mr-5 btn btn-primary btn-print waves-effect waves-light float-end">
                         <i class="fa fa-print"></i> Save Charges
                     </button>

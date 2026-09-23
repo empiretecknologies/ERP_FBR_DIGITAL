@@ -20,5 +20,6 @@ namespace Empire_ERP.Core.Interfaces
         MyHttpResponseMessage DeletePurchaseBillDetailByCode(int code, Common common);
         MyHttpResponseMessage GetPickDataByParty(int partyCode, int actCode, Common common);
         MyHttpResponseMessage GetDataForReport(PurchaseBillRDLCReport modelRecord, DataTable details, CustomMenuDetail menuDetails, Company currentCompany, Common common);
+        MyHttpResponseMessage GetDashboardData(Common common);
     }
 }

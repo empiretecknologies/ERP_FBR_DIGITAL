@@ -42,17 +42,17 @@ namespace Empire_ERP.Core.Entities
 
         public decimal? quantity { get; set; }
 
-        public decimal? totalValues { get; set; }
+        public double? totalValues { get; set; }
 
-        public decimal? valueSalesExcludingST { get; set; }
+        public double? valueSalesExcludingST { get; set; }
 
-        public decimal? fixedNotifiedValueOrRetailPrice { get; set; }
+        public double? fixedNotifiedValueOrRetailPrice { get; set; }
 
         public decimal? salesTaxApplicable { get; set; }
 
         public decimal? salesTaxWithheldAtSource { get; set; }
 
-        public decimal? extraTax { get; set; }
+        public string? extraTax { get; set; }
 
         public decimal? furtherTax { get; set; }
 

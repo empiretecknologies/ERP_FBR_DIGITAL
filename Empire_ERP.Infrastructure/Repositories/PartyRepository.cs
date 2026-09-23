@@ -162,7 +162,7 @@ namespace Empire_ERP.Infrastructure.Repositories
                                         "BANK_NAME,BRANCH_NAME,BANK_ADDRESS,DOC_PIC,CNIC_PIC," +
                                         "TERMS_CONDITION,ADD_DATE,ADD_COMPUTER_NAME,ADD_IP_ADDRESS," +
                                         "EDIT_USER_ID,EDIT_DATE,EDIT_COMPUTER_NAME,EDIT_IP_ADDRESS," +
-                                        "ADD_POSTALCODE,EDIT_POSTALCODE,MENU_ID,REGION" +
+                                        "ADD_POSTALCODE,EDIT_POSTALCODE,MENU_ID,REGION,PARTY_TYPE" +
                                         ",ADD_USER_ID,COMM,DISC,DLT,T_CAT,WHT,EXEMPT_DATE)" +
                                         "VALUES" +
                                         "('" + partyCode + "','" + pType + "','" + modelRecord.PARTY_NAME + "','" + modelRecord.PARTY_SHORT_NAME + "'," +
@@ -173,7 +173,7 @@ namespace Empire_ERP.Infrastructure.Repositories
                                         "'" + modelRecord.BANK_NAME + "','" + modelRecord.BRANCH_NAME + "','" + modelRecord.BANK_ADDRESS + "','" + modelRecord.DOC_PIC + "','" + modelRecord.CNIC_PIC + "'," +
                                         "'" + modelRecord.TERMS_CONDITION + "','" + CommonService.GetDateTime("Pakistan Standard Time") + "','" + Computer + "','" + Ip + "'," +
                                         "'" + username + "','" + CommonService.GetDateTime("Pakistan Standard Time") + "','" + Computer + "','" + Ip + "'," +
-                                        "'" + Postal + "','" + Postal + "','" + common.MenuID + "','" + modelRecord.REGION + "'," +
+                                        "'" + Postal + "','" + Postal + "','" + common.MenuID + "','" + modelRecord.REGION + "','" + modelRecord.REG_TYPE + "'," +
                                         "'" + username + "','" + modelRecord.COMM + "','" + modelRecord.DISC + "','T','" +modelRecord.T_CAT+ "','" +modelRecord.WHT+ "','" +modelRecord.EXEMPT_DATE+"')";
                                 //SqlCommand command = new SqlCommand(query, connection);
                                 //command.ExecuteNonQuery();
@@ -215,6 +215,7 @@ namespace Empire_ERP.Infrastructure.Repositories
                                         TELL = '" + modelRecord.TELL + @"',
                                         TAX = '" + modelRecord.TAX + @"',
                                         EMAIL = '" + modelRecord.EMAIL + @"',
+                                        PARTY_TYPE = '" + modelRecord.REG_TYPE + @"',
                                         WEBSITE = '" + modelRecord.WEBSITE + @"',
                                         CNIC_EXP = '" + modelRecord.CNIC_EXP + @"',
                                         REMARKS = '" + modelRecord.REMARKS + @"', 
@@ -1075,7 +1076,7 @@ namespace Empire_ERP.Infrastructure.Repositories
                         //        " FROM " + table + " WHERE PARTY_TYPE_CODE = '" + pType + "' AND DLT = 'T' AND PARTY_CODE = '" + partyCode + "'";
 
 
-                        string query = $@"SELECT T_CAT, WHT, EXEMPT_DATE, PARTY_CODE, PARTY_TYPE_CODE, PARTY_NAME, PARTY_SHORT_NAME, ACT_CODE, CAT_CODE, PADDRESS, NTN, CNIC, 
+                        string query = $@"SELECT T_CAT, WHT, EXEMPT_DATE, PARTY_CODE, PARTY_TYPE_CODE, PARTY_TYPE, PARTY_NAME, PARTY_SHORT_NAME, ACT_CODE, CAT_CODE, PADDRESS, NTN, CNIC, 
                                               CONTACT_PERSON, CELL, WB, TELL, EMAIL, WEBSITE, CNIC_EXP, REMARKS, PAYMENT_TERMS, CREDIT_LIMIT, S_CODE, SACT_CODE, 
                                               GST, SERVICE_TAX, F_CODE, ENTITY, ASTATUS, ACCOUNT_NUM, TAX, BANK_NAME, BRANCH_NAME, BANK_ADDRESS, TERMS_CONDITION, 
                                               ADD_DATE, ADD_COMPUTER_NAME, ADD_IP_ADDRESS, EDIT_USER_ID, EDIT_DATE, EDIT_COMPUTER_NAME, EDIT_IP_ADDRESS, ADD_POSTALCODE, 
@@ -1101,6 +1102,7 @@ namespace Empire_ERP.Infrastructure.Repositories
                                 PARTY_TYPE_CODE = reader["PARTY_TYPE_CODE"],
                                 PARTY_NAME = reader["PARTY_NAME"],
                                 PARTY_SHORT_NAME = reader["PARTY_SHORT_NAME"].ToString(),
+                                REG_TYPE = reader["PARTY_TYPE"] == DBNull.Value ? "" : Convert.ToString(reader["PARTY_TYPE"]),
                                 ACT_CODE = reader["ACT_CODE"],
                                 CAT_CODE = reader["CAT_CODE"],
                                 PADDRESS = reader["PADDRESS"].ToString(),

@@ -25,6 +25,24 @@ namespace Empire_ERP.Core.Services
 
         public MyHttpResponseMessage Save(PartyTypes partyTypes, Common common)
         {
+            if (string.IsNullOrWhiteSpace(partyTypes.NTN))
+            {
+                return new MyHttpResponseMessage
+                {
+                    msgType = 2,
+                    msg = "NTN # / CNIC # is required."
+                };
+            }
+
+            if (string.IsNullOrWhiteSpace(partyTypes.CNIC))
+            {
+                return new MyHttpResponseMessage
+                {
+                    msgType = 2,
+                    msg = "ST.Reg# is required."
+                };
+            }
+
             return _partyRepository.Save(partyTypes, common);
         }
 

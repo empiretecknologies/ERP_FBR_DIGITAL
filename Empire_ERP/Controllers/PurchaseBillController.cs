@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RestSharp;
 using System.Data;
+using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
 using static Azure.Core.HttpHeader;
@@ -599,7 +600,7 @@ namespace Empire_ERP.Controllers
                         buyerProvince = master.BUYER_PROVINCE,
                         buyerAddress = master.BUYER_ADDRESS,
                         //buyerRegistrationType = master.BUYER_REG_TYPE,
-                        buyerRegistrationType = master.SCENARIO_ID == "SN001" || master.SCENARIO_ID == "SN006" || master.SCENARIO_ID == "SN009" || master.SCENARIO_ID == "SN026" || master.SCENARIO_ID == "SN027" || master.SCENARIO_ID == "SN028" ? "Registered" : "Unregistered",
+                        buyerRegistrationType = master.REG_TYPE,
                         invoiceRefNo = master.SCENARIO_ID == "SN006" || master.SCENARIO_ID == "SN024" ? master.REF : "",
                         scenarioId = master.SCENARIO_ID,
                         items = items
@@ -635,350 +636,373 @@ namespace Empire_ERP.Controllers
         }
         private FBRItemModel GetFBRDetail(dynamic d,string scenarioId)
         {
-            var detail = new FBRItemModel
-            {
-                hsCode = d.HS_CODE,
-                productDescription = d.ITEM_NAME,
-                //uoM = d.UOM,
-                uoM = "Numbers, pieces, units",
-                quantity = d.QTY ?? 1,
-
-                totalValues = 0,
-                valueSalesExcludingST = 0,
-
-                fixedNotifiedValueOrRetailPrice =0,
-
-                salesTaxApplicable = 0,
-                salesTaxWithheldAtSource = 0,
-                extraTax = 0,
-                furtherTax = 0,
-
-                fedPayable = 0,
-                discount = 0,
-
-                sroScheduleNo = d.SRO_SCH_NO ?? "",
-                saleType = d.S_NAME,
-
-                sroItemSerialNo =
-                    d.SERIAL_NO?.ToString() ?? ""
-            };
-
-
+            var detail = new FBRItemModel{};
+            decimal taxRate = ParseFbrTaxRate(detail.rate);
+            decimal inclusiveTotal = GetInclusiveTotalValues(d);
+            var tax = Convert.ToString(d.TAX);
             switch (scenarioId)
             {
-               
                 case "SN001":
-
-                    detail.rate = "18%";
-
-                    detail.valueSalesExcludingST =
-                        CalculateValueSalesExcludingST(d, 18);
-
-                    detail.salesTaxApplicable =
-                        CalculateSalesTax(d , 18);
-
-                    detail.totalValues =
-                        detail.valueSalesExcludingST +
-                        detail.salesTaxApplicable;
-
+                    detail.rate = $"{tax}%";
+                    detail.hsCode = d.HS_CODE;
+                    detail.productDescription = d.ITEM_NAME;
+                    detail.uoM = d.UOM;
+                    detail.quantity = d.QTY;
+                    detail.totalValues = d.TOTAL_VALUES;
+                    detail.valueSalesExcludingST = d.TOTAL_VALUES;
+                    detail.fixedNotifiedValueOrRetailPrice = d.TOTAL_VALUES;
+                    detail.salesTaxApplicable = d.TAX_AMT;
+                    detail.salesTaxWithheldAtSource = 0;
+                    detail.extraTax = "";
+                    detail.furtherTax = 0;
+                    detail.fedPayable = 0;
+                    detail.discount = 0;
+                    detail.sroScheduleNo = d.SRO_SCH_NO;
+                    detail.saleType = d.S_NAME;
+                    detail.sroItemSerialNo = d.SERIAL_NO?.ToString();
                     break;
 
                 case "SN002":
-
-                    detail.rate = "18%";
-
-                    detail.valueSalesExcludingST =
-                        CalculateValueSalesExcludingST(d, 18);
-
-                    detail.salesTaxApplicable =
-                        CalculateSalesTax(d, 18);
-
-                    detail.totalValues =
-                        detail.valueSalesExcludingST +
-                        detail.salesTaxApplicable;
-
+                    detail.rate = $"{tax}%";
+                    detail.hsCode = d.HS_CODE;
+                    detail.productDescription = d.ITEM_NAME;
+                    detail.uoM = d.UOM;
+                    detail.quantity = d.QTY;
+                    detail.totalValues = d.TOTAL_VALUES;
+                    detail.valueSalesExcludingST = d.TOTAL_VALUES;
+                    detail.fixedNotifiedValueOrRetailPrice = d.TOTAL_VALUES;
+                    detail.salesTaxApplicable = d.TAX_AMT;
+                    detail.salesTaxWithheldAtSource = 0;
+                    detail.extraTax = "";
+                    detail.furtherTax = 0;
+                    detail.fedPayable = 0;
+                    detail.discount = 0;
+                    detail.sroScheduleNo = d.SRO_SCH_NO;
+                    detail.saleType = d.S_NAME;
+                    detail.sroItemSerialNo = d.SERIAL_NO?.ToString();
                     break;
 
-
                 case "SN003":
-
-                    detail.rate = "18%";
-
-                    detail.valueSalesExcludingST =
-                        CalculateValueSalesExcludingST(d,18);
-
-                    detail.salesTaxApplicable =
-                        CalculateSalesTax(d,18);
-
-                    detail.totalValues =
-                        detail.valueSalesExcludingST +
-                        detail.salesTaxApplicable;
-
+                    detail.rate = $"{tax}%";
+                    detail.hsCode = d.HS_CODE;
+                    detail.productDescription = d.ITEM_NAME;
+                    detail.uoM = d.UOM;
+                    detail.quantity = d.QTY;
+                    detail.totalValues = d.TOTAL_VALUES;
+                    detail.valueSalesExcludingST = d.TOTAL_VALUES;
+                    detail.fixedNotifiedValueOrRetailPrice = d.TOTAL_VALUES;
+                    detail.salesTaxApplicable = d.TAX_AMT;
+                    detail.salesTaxWithheldAtSource = 0;
+                    detail.extraTax = "";
+                    detail.furtherTax = 0;
+                    detail.fedPayable = 0;
+                    detail.discount = 0;
+                    detail.sroScheduleNo = d.SRO_SCH_NO;
+                    detail.saleType = d.S_NAME;
+                    detail.sroItemSerialNo = d.SERIAL_NO?.ToString();
                     break;
 
                 case "SN004":
-
-                    detail.rate = "18%";
-
-                    detail.valueSalesExcludingST =
-                        CalculateValueSalesExcludingST(d, 18);
-
-                    detail.salesTaxApplicable =
-                        CalculateSalesTax(d, 18);
-
-                    detail.totalValues =
-                        detail.valueSalesExcludingST +
-                        detail.salesTaxApplicable;
-
+                    detail.rate = $"{tax}%";
+                    detail.hsCode = d.HS_CODE;
+                    detail.productDescription = d.ITEM_NAME;
+                    detail.uoM = d.UOM;
+                    detail.quantity = d.QTY;
+                    detail.totalValues = d.TOTAL_VALUES;
+                    detail.valueSalesExcludingST = d.TOTAL_VALUES;
+                    detail.fixedNotifiedValueOrRetailPrice = d.TOTAL_VALUES;
+                    detail.salesTaxApplicable = d.TAX_AMT;
+                    detail.salesTaxWithheldAtSource = 0;
+                    detail.extraTax = "";
+                    detail.furtherTax = 0;
+                    detail.fedPayable = 0;
+                    detail.discount = 0;
+                    detail.sroScheduleNo = d.SRO_SCH_NO;
+                    detail.saleType = d.S_NAME;
+                    detail.sroItemSerialNo = d.SERIAL_NO?.ToString();
                     break;
 
                 case "SN005":
-
-                    detail.rate = "1%";
-
-                    detail.valueSalesExcludingST =
-                        CalculateValueSalesExcludingST(d, 1);
-
-                    detail.salesTaxApplicable =
-                        CalculateSalesTax(d, 1);
-
-                    detail.totalValues =
-                        detail.valueSalesExcludingST +
-                        detail.salesTaxApplicable;
-
+                    detail.rate = $"{tax}%";
+                    detail.hsCode = d.HS_CODE;
+                    detail.productDescription = d.ITEM_NAME;
+                    detail.uoM = d.UOM;
+                    detail.quantity = d.QTY;
+                    detail.totalValues = 0;
+                    detail.valueSalesExcludingST = d.TOTAL_VALUES;
+                    detail.fixedNotifiedValueOrRetailPrice = d.TOTAL_VALUES;
+                    detail.salesTaxApplicable = d.TAX_AMT;
+                    detail.salesTaxWithheldAtSource = 0;
+                    detail.extraTax = "";
+                    detail.furtherTax = 0;
+                    detail.fedPayable = 0;
+                    detail.discount = 0;
+                    detail.sroScheduleNo = d.SRO_SCH_NO;
+                    detail.saleType = d.S_NAME;
+                    detail.sroItemSerialNo = d.SERIAL_NO?.ToString();
                     break;
 
                 case "SN006":
-
-                    detail.rate = "Exempt";
-
-                    detail.salesTaxApplicable = 0;
-
-                    detail.valueSalesExcludingST =
-                        CalculateValueSalesExcludingST(d);
-
-                    detail.totalValues =
-                        detail.valueSalesExcludingST;
-
+                    detail.rate = $"{tax}%";
+                    detail.hsCode = d.HS_CODE;
+                    detail.productDescription = d.ITEM_NAME;
+                    detail.uoM = d.UOM;
+                    detail.quantity = d.QTY;
+                    detail.totalValues = d.TOTAL_VALUES;
+                    detail.valueSalesExcludingST = d.TOTAL_VALUES;
+                    detail.fixedNotifiedValueOrRetailPrice = d.TOTAL_VALUES;
+                    detail.salesTaxApplicable = d.TAX_AMT;
+                    detail.salesTaxWithheldAtSource = 0;
+                    detail.extraTax = "";
+                    detail.furtherTax = 0;
+                    detail.fedPayable = 0;
+                    detail.discount = 0;
+                    detail.sroScheduleNo = d.SRO_SCH_NO;
+                    detail.saleType = d.S_NAME;
+                    detail.sroItemSerialNo = d.SERIAL_NO?.ToString();
                     break;
-
 
                 case "SN007":
-
-                    detail.rate = "0%";
-
-                    detail.salesTaxApplicable = 0;
-
-                    detail.valueSalesExcludingST =
-                        CalculateValueSalesExcludingST(d);
-
-                    detail.totalValues =
-                        detail.valueSalesExcludingST;
-
+                    detail.rate = $"{tax}%";
+                    detail.hsCode = d.HS_CODE;
+                    detail.productDescription = d.ITEM_NAME;
+                    detail.uoM = d.UOM;
+                    detail.quantity = d.QTY;
+                    detail.totalValues = d.TOTAL_VALUES;
+                    detail.valueSalesExcludingST = d.TOTAL_VALUES;
+                    detail.fixedNotifiedValueOrRetailPrice = d.TOTAL_VALUES;
+                    detail.salesTaxApplicable = d.TAX_AMT;
+                    detail.salesTaxWithheldAtSource = 0;
+                    detail.extraTax = "";
+                    detail.furtherTax = 0;
+                    detail.fedPayable = 0;
+                    detail.discount = 0;
+                    detail.sroScheduleNo = d.SRO_SCH_NO;
+                    detail.saleType = d.S_NAME;
+                    detail.sroItemSerialNo = d.SERIAL_NO?.ToString();
                     break;
-
 
                 case "SN008":
-
-                    detail.rate = "18%";
-
-                    detail.fixedNotifiedValueOrRetailPrice =
-                        Math.Round(
-                            d.FIXEDVALUE_RETAILPRICE ?? 0,
-                            0
-                        );
-
-                    detail.salesTaxApplicable =
-                        CalculateSalesTax(d, 18);
-
-                    detail.totalValues =
-                        detail.valueSalesExcludingST +
-                        detail.salesTaxApplicable;
-
+                    detail.rate = $"{tax}%";
+                    detail.hsCode = d.HS_CODE;
+                    detail.productDescription = d.ITEM_NAME;
+                    detail.uoM = d.UOM;
+                    detail.quantity = d.QTY;
+                    detail.totalValues = 0;
+                    detail.valueSalesExcludingST = d.W_AMT;
+                    detail.fixedNotifiedValueOrRetailPrice = d.TOTAL_VALUES;
+                    detail.salesTaxApplicable = d.TAX_AMT;
+                    detail.salesTaxWithheldAtSource = 0;
+                    detail.extraTax = "";
+                    detail.furtherTax = 0;
+                    detail.fedPayable = 0;
+                    detail.discount = 0;
+                    detail.sroScheduleNo = d.SRO_SCH_NO;
+                    detail.saleType = d.S_NAME;
+                    detail.sroItemSerialNo = d.SERIAL_NO?.ToString();
                     break;
-
 
                 case "SN009":
-
-                    detail.rate = "18%";
-
-                    detail.valueSalesExcludingST =
-                        CalculateValueSalesExcludingST(d, 18);
-
-                    detail.salesTaxApplicable =
-                        CalculateSalesTax(d, 18);
-
-                    detail.totalValues =
-                        detail.valueSalesExcludingST +
-                        detail.salesTaxApplicable;
-
+                    detail.rate = $"{tax}%";
+                    detail.hsCode = d.HS_CODE;
+                    detail.productDescription = d.ITEM_NAME;
+                    detail.uoM = d.UOM;
+                    detail.quantity = d.QTY;
+                    detail.totalValues = d.TOTAL_VALUES;
+                    detail.valueSalesExcludingST = d.TOTAL_VALUES;
+                    detail.fixedNotifiedValueOrRetailPrice = d.TOTAL_VALUES;
+                    detail.salesTaxApplicable = d.TAX_AMT;
+                    detail.salesTaxWithheldAtSource = 0;
+                    detail.extraTax = "";
+                    detail.furtherTax = 0;
+                    detail.fedPayable = 0;
+                    detail.discount = 0;
+                    detail.sroScheduleNo = d.SRO_SCH_NO;
+                    detail.saleType = d.S_NAME;
+                    detail.sroItemSerialNo = d.SERIAL_NO?.ToString();
                     break;
 
-
                 case "SN010":
-
-                    detail.rate = "17%";
-
-                    detail.valueSalesExcludingST =
-                        CalculateValueSalesExcludingST(d, 17);
-
-                    detail.salesTaxApplicable =
-                        CalculateSalesTax(d, 17);
-
-                    detail.totalValues =
-                        detail.valueSalesExcludingST +
-                        detail.salesTaxApplicable;
-
+                    detail.rate = $"{tax}%";
+                    detail.hsCode = d.HS_CODE;
+                    detail.productDescription = d.ITEM_NAME;
+                    detail.uoM = d.UOM;
+                    detail.quantity = d.QTY;
+                    detail.totalValues = d.TOTAL_VALUES;
+                    detail.valueSalesExcludingST = d.TOTAL_VALUES;
+                    detail.fixedNotifiedValueOrRetailPrice = d.TOTAL_VALUES;
+                    detail.salesTaxApplicable = d.TAX_AMT;
+                    detail.salesTaxWithheldAtSource = 0;
+                    detail.extraTax = "";
+                    detail.furtherTax = 0;
+                    detail.fedPayable = 0;
+                    detail.discount = 0;
+                    detail.sroScheduleNo = d.SRO_SCH_NO;
+                    detail.saleType = d.S_NAME;
+                    detail.sroItemSerialNo = d.SERIAL_NO?.ToString();
                     break;
 
                 case "SN011":
-
-                    detail.rate = "18%";
-
-                    detail.valueSalesExcludingST =
-                        CalculateValueSalesExcludingST(d, 18);
-
-                    detail.salesTaxApplicable =
-                        CalculateSalesTax(d, 18);
-
-                    detail.totalValues =
-                        detail.valueSalesExcludingST +
-                        detail.salesTaxApplicable;
-
+                    detail.rate = $"{tax}%";
+                    detail.hsCode = d.HS_CODE;
+                    detail.productDescription = d.ITEM_NAME;
+                    detail.uoM = d.UOM;
+                    detail.quantity = d.QTY;
+                    detail.totalValues = d.TOTAL_VALUES;
+                    detail.valueSalesExcludingST = d.TOTAL_VALUES;
+                    detail.fixedNotifiedValueOrRetailPrice = d.TOTAL_VALUES;
+                    detail.salesTaxApplicable = d.TAX_AMT;
+                    detail.salesTaxWithheldAtSource = 0;
+                    detail.extraTax = "";
+                    detail.furtherTax = 0;
+                    detail.fedPayable = 0;
+                    detail.discount = 0;
+                    detail.sroScheduleNo = d.SRO_SCH_NO;
+                    detail.saleType = d.S_NAME;
+                    detail.sroItemSerialNo = d.SERIAL_NO?.ToString();
                     break;
 
-
                 case "SN012":
-
-                    detail.rate = "1.43%";
-
-                    detail.valueSalesExcludingST =
-                        CalculateValueSalesExcludingST(d, 1);
-
-                    detail.salesTaxApplicable =
-                        CalculateSalesTax(d,1);
-
-                    detail.totalValues =
-                        detail.valueSalesExcludingST +
-                        detail.salesTaxApplicable;
-
+                    detail.rate = $"{tax}%";
+                    detail.hsCode = d.HS_CODE;
+                    detail.productDescription = d.ITEM_NAME;
+                    detail.uoM = d.UOM;
+                    detail.quantity = d.QTY;
+                    detail.totalValues = d.TOTAL_VALUES;
+                    detail.valueSalesExcludingST = d.TOTAL_VALUES;
+                    detail.fixedNotifiedValueOrRetailPrice = d.TOTAL_VALUES;
+                    detail.salesTaxApplicable = d.TAX_AMT;
+                    detail.salesTaxWithheldAtSource = 0;
+                    detail.extraTax = "";
+                    detail.furtherTax = 0;
+                    detail.fedPayable = 0;
+                    detail.discount = 0;
+                    detail.sroScheduleNo = d.SRO_SCH_NO;
+                    detail.saleType = d.S_NAME;
+                    detail.sroItemSerialNo = d.SERIAL_NO?.ToString();
                     break;
 
                 case "SN013":
-
-                    detail.rate = "5%";
-
-                    detail.valueSalesExcludingST =
-                        CalculateValueSalesExcludingST(d,5);
-
-                    detail.salesTaxApplicable =
-                        CalculateSalesTax(d,5);
-
-                    detail.totalValues =
-                        detail.valueSalesExcludingST +
-                        detail.salesTaxApplicable;
-
+                    detail.rate = $"{tax}%";
+                    detail.hsCode = d.HS_CODE;
+                    detail.productDescription = d.ITEM_NAME;
+                    detail.uoM = d.UOM;
+                    detail.quantity = d.QTY;
+                    detail.totalValues = d.TOTAL_VALUES;
+                    detail.valueSalesExcludingST = d.TOTAL_VALUES;
+                    detail.fixedNotifiedValueOrRetailPrice = d.TOTAL_VALUES;
+                    detail.salesTaxApplicable = d.TAX_AMT;
+                    detail.salesTaxWithheldAtSource = 0;
+                    detail.extraTax = "";
+                    detail.furtherTax = 0;
+                    detail.fedPayable = 0;
+                    detail.discount = 0;
+                    detail.sroScheduleNo = d.SRO_SCH_NO;
+                    detail.saleType = d.S_NAME;
+                    detail.sroItemSerialNo = d.SERIAL_NO?.ToString();
                     break;
 
-
                 case "SN014":
-
-                    detail.rate = "18%";
-
-                    detail.valueSalesExcludingST =
-                        CalculateValueSalesExcludingST(d,18);
-
-                    detail.salesTaxApplicable =
-                        CalculateSalesTax(d, 18);
-
-                    detail.totalValues =
-                        detail.valueSalesExcludingST +
-                        detail.salesTaxApplicable;
-
+                    detail.rate = $"{tax}%";
+                    detail.hsCode = d.HS_CODE;
+                    detail.productDescription = d.ITEM_NAME;
+                    detail.uoM = d.UOM;
+                    detail.quantity = d.QTY;
+                    detail.totalValues = d.TOTAL_VALUES;
+                    detail.valueSalesExcludingST = d.TOTAL_VALUES;
+                    detail.fixedNotifiedValueOrRetailPrice = d.TOTAL_VALUES;
+                    detail.salesTaxApplicable = d.TAX_AMT;
+                    detail.salesTaxWithheldAtSource = 0;
+                    detail.extraTax = "";
+                    detail.furtherTax = 0;
+                    detail.fedPayable = 0;
+                    detail.discount = 0;
+                    detail.sroScheduleNo = d.SRO_SCH_NO;
+                    detail.saleType = d.S_NAME;
+                    detail.sroItemSerialNo = d.SERIAL_NO?.ToString();
                     break;
 
                 case "SN015":
-
-                    detail.rate = "18%";
-
-                    detail.valueSalesExcludingST =
-                        CalculateValueSalesExcludingST(d, 18);
-
-                    detail.salesTaxApplicable =
-                        CalculateSalesTax(d, 18);
-
-                    detail.totalValues =
-                        detail.valueSalesExcludingST +
-                        detail.salesTaxApplicable;
-
+                    detail.rate = $"{tax}%";
+                    detail.hsCode = d.HS_CODE;
+                    detail.productDescription = d.ITEM_NAME;
+                    detail.uoM = d.UOM;
+                    detail.quantity = d.QTY;
+                    detail.totalValues = d.TOTAL_VALUES;
+                    detail.valueSalesExcludingST = d.TOTAL_VALUES;
+                    detail.fixedNotifiedValueOrRetailPrice = d.TOTAL_VALUES;
+                    detail.salesTaxApplicable = d.TAX_AMT;
+                    detail.salesTaxWithheldAtSource = 0;
+                    detail.extraTax = "";
+                    detail.furtherTax = 0;
+                    detail.fedPayable = 0;
+                    detail.discount = 0;
+                    detail.sroScheduleNo = d.SRO_SCH_NO;
+                    detail.saleType = d.S_NAME;
+                    detail.sroItemSerialNo = d.SERIAL_NO?.ToString();
                     break;
-
 
                 case "SN016":
-
-                    detail.rate = "5%";
-
-                    detail.valueSalesExcludingST =
-                        CalculateValueSalesExcludingST(d, 5);
-
-                    detail.salesTaxApplicable =
-                        CalculateSalesTax(d,5);
-
-                    detail.totalValues =
-                        detail.valueSalesExcludingST +
-                        detail.salesTaxApplicable;
-
+                    detail.rate = $"{tax}%";
+                    detail.hsCode = d.HS_CODE;
+                    detail.productDescription = d.ITEM_NAME;
+                    detail.uoM = d.UOM;
+                    detail.quantity = d.QTY;
+                    detail.totalValues = d.TOTAL_VALUES;
+                    detail.valueSalesExcludingST = d.TOTAL_VALUES;
+                    detail.fixedNotifiedValueOrRetailPrice = d.TOTAL_VALUES;
+                    detail.salesTaxApplicable = d.TAX_AMT;
+                    detail.salesTaxWithheldAtSource = 0;
+                    detail.extraTax = "";
+                    detail.furtherTax = 0;
+                    detail.fedPayable = 0;
+                    detail.discount = 0;
+                    detail.sroScheduleNo = d.SRO_SCH_NO;
+                    detail.saleType = d.S_NAME;
+                    detail.sroItemSerialNo = d.SERIAL_NO?.ToString();
                     break;
 
-
-               
                 case "SN017":
-
-                    detail.rate = "8%";
-
-                    detail.valueSalesExcludingST =
-                        CalculateValueSalesExcludingST(d,8);
-
-                    detail.salesTaxApplicable =
-                        CalculateSalesTax(d,8);
-
-                    detail.fedPayable =
-                        CalculateFED(d,0);
-
-                    detail.totalValues =
-                        detail.valueSalesExcludingST +
-                        detail.salesTaxApplicable +
-                        detail.fedPayable;
-
+                    detail.rate = $"{tax}%";
+                    detail.hsCode = d.HS_CODE;
+                    detail.productDescription = d.ITEM_NAME;
+                    detail.uoM = d.UOM;
+                    detail.quantity = d.QTY;
+                    detail.totalValues = d.TOTAL_VALUES;
+                    detail.valueSalesExcludingST = d.TOTAL_VALUES;
+                    detail.fixedNotifiedValueOrRetailPrice = d.TOTAL_VALUES;
+                    detail.salesTaxApplicable = d.TAX_AMT;
+                    detail.salesTaxWithheldAtSource = 0;
+                    detail.extraTax = "";
+                    detail.furtherTax = 0;
+                    detail.fedPayable = 0;
+                    detail.discount = 0;
+                    detail.sroScheduleNo = d.SRO_SCH_NO;
+                    detail.saleType = d.S_NAME;
+                    detail.sroItemSerialNo = d.SERIAL_NO?.ToString();
                     break;
-                
-                  
+
                 case "SN024":
-
-                    detail.rate = "25%";
-
-                    detail.valueSalesExcludingST =
-                        CalculateValueSalesExcludingST(d,25);
-
-                    detail.salesTaxApplicable =
-                        CalculateSalesTax(d,25);
-
-                    detail.fedPayable =
-                        CalculateFED(d,0);
-
-                    detail.totalValues =
-                        detail.valueSalesExcludingST +
-                        detail.salesTaxApplicable +
-                        detail.fedPayable;
-
+                    detail.rate = $"{tax}%";
+                    detail.hsCode = d.HS_CODE;
+                    detail.productDescription = d.ITEM_NAME;
+                    detail.uoM = d.UOM;
+                    detail.quantity = d.QTY;
+                    detail.totalValues = d.TOTAL_VALUES;
+                    detail.valueSalesExcludingST = d.TOTAL_VALUES;
+                    detail.fixedNotifiedValueOrRetailPrice = d.TOTAL_VALUES;
+                    detail.salesTaxApplicable = d.TAX_AMT;
+                    detail.salesTaxWithheldAtSource = 0;
+                    detail.extraTax = "";
+                    detail.furtherTax = 0;
+                    detail.fedPayable = 0;
+                    detail.discount = 0;
+                    detail.sroScheduleNo = d.SRO_SCH_NO;
+                    detail.saleType = d.S_NAME;
+                    detail.sroItemSerialNo = d.SERIAL_NO?.ToString();
                     break;
 
-
-                // =================================================
-                // Default
-                // =================================================
                 default:
-
                     throw new Exception(
                         $"Invalid FBR Scenario ID: {scenarioId}"
                     );
@@ -986,48 +1010,51 @@ namespace Empire_ERP.Controllers
 
             return detail;
         }
-        private decimal CalculateValueSalesExcludingST(dynamic d, decimal taxRate = 0)
+        private decimal ParseFbrTaxRate(string rate)
         {
-            decimal totalValue = 0;
+            if (string.IsNullOrWhiteSpace(rate))
+                return 0;
 
+            var match = Regex.Match(rate, @"[\d.]+");
+            if (!match.Success)
+                return 0;
+
+            decimal.TryParse(
+                match.Value,
+                NumberStyles.Any,
+                CultureInfo.InvariantCulture,
+                out decimal taxRate
+            );
+
+            return taxRate;
+        }
+        private decimal GetInclusiveTotalValues(dynamic d)
+        {
             decimal quantity = d.QTY ?? 0;
-            decimal rate = 0;
+            decimal unitRate = 0;
 
             decimal.TryParse(
                 Convert.ToString(d.RATE),
-                out rate
+                out unitRate
             );
 
-            totalValue = quantity * rate;
+            return Math.Round(quantity * unitRate, 2);
+        }
+        private decimal CalculateValueSalesExcludingST(dynamic d, decimal taxRate = 0)
+        {
+            decimal totalValues = GetInclusiveTotalValues(d);
 
             if (taxRate <= 0)
-                return Math.Round(totalValue, 2);
+                return totalValues;
 
             decimal valueExcludingST =
-                totalValue / (1 + (taxRate / 100));
+                totalValues / (1 + (taxRate / 100));
 
             return Math.Round(valueExcludingST, 2);
         }
-        private decimal CalculateSalesTax(dynamic d, decimal taxRate = 0)
+        private decimal CalculateSalesTax(decimal inclusiveTotal, decimal taxRate)
         {
-            decimal quantity = d.QTY ?? 0;
-
-            decimal rate = 0;
-
-            decimal.TryParse(
-                Convert.ToString(d.RATE),
-                out rate
-            );
-
-            decimal totalValue = quantity * rate;
-
-            decimal valueExcludingST =
-                CalculateValueSalesExcludingST(d, taxRate);
-
-            decimal salesTax =
-                valueExcludingST * taxRate / 100;
-
-            return Math.Round(salesTax, 2);
+            return inclusiveTotal * taxRate / (100 + taxRate);
         }
         private decimal CalculateFED(dynamic d, decimal fedRate = 0)
         {
@@ -1128,11 +1155,20 @@ namespace Empire_ERP.Controllers
                             }
 
                             string qrRelativePath = GenerateQrCodeZXingToFile(reportData.Master?.FBR_NO);
-
                             string qrFullPath = Path.Combine(_hostingEnvironment.WebRootPath, qrRelativePath.TrimStart('/'));
-
-
                             ReportParameter parameter23 = new ReportParameter("InvoiceQR", new Uri(qrFullPath).AbsoluteUri);
+
+                            //string qrValue = null;
+                            //if (!string.IsNullOrEmpty(reportData.Master?.FBR_NO))
+                            //{
+                            //    string qrRelativePath = GenerateQrCodeZXingToFile(reportData.Master?.FBR_NO);
+                            //    if (!string.IsNullOrEmpty(qrRelativePath))
+                            //    {
+                            //        string qrFullPath = Path.Combine(_hostingEnvironment.WebRootPath, qrRelativePath.TrimStart('/'));
+                            //        qrValue = new Uri(qrFullPath).AbsoluteUri;
+                            //    }
+                            //}
+                            //ReportParameter parameter23 = new ReportParameter("InvoiceQR", qrValue);
 
                             ReportParameter parameter1 = new ReportParameter("Header", reportData.Master?.HEADER_NAME);
                             ReportParameter parameter2 = new ReportParameter("InvoiceNumber", reportData.Master?.INVOICE_NUMBER);
@@ -1164,9 +1200,15 @@ namespace Empire_ERP.Controllers
                             ReportParameter parameter25 = new ReportParameter("BWeb", reportData.Master?.B_WEBSITE);
                             ReportParameter parameter26 = new ReportParameter("BEmail", reportData.Master?.EMAIL);
 
+                            string fbrNo = reportData.Master?.FBR_NO ?? string.Empty;
+
+                            //bool isValidFbrNo = !string.IsNullOrWhiteSpace(fbrNo) && Regex.IsMatch(fbrNo, "^[A-Z0-9]{21}$");
+                            bool isValidFbrNo = !string.IsNullOrWhiteSpace(fbrNo) && Regex.IsMatch(fbrNo, @"^\S+$");
+                            ReportParameter parameter27 = new ReportParameter("IsVerified", Convert.ToString(isValidFbrNo));
+
                             report.SetParameters(new ReportParameter[] { parameter1, parameter2, parameter3, parameter4, parameter5, parameter6, parameter7, parameter8, parameter9,
                             parameter10, parameter11, parameter12, parameter13, parameter14, parameter15, parameter16, parameter17, parameter18, parameter19, parameter20, parameter21,
-                                parameter22, parameter23, parameter24, parameter25, parameter26 });
+                                parameter22, parameter23, parameter24, parameter25, parameter26, parameter27 });
                         }
 
                         report.Refresh();

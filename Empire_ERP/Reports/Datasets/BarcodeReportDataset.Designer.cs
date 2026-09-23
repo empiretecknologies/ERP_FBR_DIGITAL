@@ -9142,6 +9142,8 @@ namespace Empire_ERP.Reports.Datasets {
             
             private global::System.Data.DataColumn columnNetAmt;
             
+            private global::System.Data.DataColumn columnUnit;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public SaleTaxInvoiceDataTable() {
@@ -9257,6 +9259,14 @@ namespace Empire_ERP.Reports.Datasets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn UnitColumn {
+                get {
+                    return this.columnUnit;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -9292,7 +9302,7 @@ namespace Empire_ERP.Reports.Datasets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public SaleTaxInvoiceRow AddSaleTaxInvoiceRow(string ItemName, string HSCode, decimal Qty, decimal Rate, decimal Amt, decimal Disc, decimal DiscAmt, decimal Tax, decimal TaxAmt, decimal NetAmt) {
+            public SaleTaxInvoiceRow AddSaleTaxInvoiceRow(string ItemName, string HSCode, decimal Qty, decimal Rate, decimal Amt, decimal Disc, decimal DiscAmt, decimal Tax, decimal TaxAmt, decimal NetAmt, string Unit) {
                 SaleTaxInvoiceRow rowSaleTaxInvoiceRow = ((SaleTaxInvoiceRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         ItemName,
@@ -9304,7 +9314,8 @@ namespace Empire_ERP.Reports.Datasets {
                         DiscAmt,
                         Tax,
                         TaxAmt,
-                        NetAmt};
+                        NetAmt,
+                        Unit};
                 rowSaleTaxInvoiceRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowSaleTaxInvoiceRow);
                 return rowSaleTaxInvoiceRow;
@@ -9337,6 +9348,7 @@ namespace Empire_ERP.Reports.Datasets {
                 this.columnTax = base.Columns["Tax"];
                 this.columnTaxAmt = base.Columns["TaxAmt"];
                 this.columnNetAmt = base.Columns["NetAmt"];
+                this.columnUnit = base.Columns["Unit"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -9362,6 +9374,8 @@ namespace Empire_ERP.Reports.Datasets {
                 base.Columns.Add(this.columnTaxAmt);
                 this.columnNetAmt = new global::System.Data.DataColumn("NetAmt", typeof(decimal), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnNetAmt);
+                this.columnUnit = new global::System.Data.DataColumn("Unit", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnUnit);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -17605,6 +17619,22 @@ namespace Empire_ERP.Reports.Datasets {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public string Unit {
+                get {
+                    try {
+                        return ((string)(this[this.tableSaleTaxInvoice.UnitColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Unit\' in table \'SaleTaxInvoice\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSaleTaxInvoice.UnitColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public bool IsItemNameNull() {
                 return this.IsNull(this.tableSaleTaxInvoice.ItemNameColumn);
             }
@@ -17721,6 +17751,18 @@ namespace Empire_ERP.Reports.Datasets {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public void SetNetAmtNull() {
                 this[this.tableSaleTaxInvoice.NetAmtColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool IsUnitNull() {
+                return this.IsNull(this.tableSaleTaxInvoice.UnitColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void SetUnitNull() {
+                this[this.tableSaleTaxInvoice.UnitColumn] = global::System.Convert.DBNull;
             }
         }
         

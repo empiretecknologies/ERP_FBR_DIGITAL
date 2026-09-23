@@ -155,6 +155,8 @@ namespace Empire_ERP.Core.Entities
         public double? WEIGHT { get; set; }
         public double? RATE { get; set; }
         public double? AMT { get; set; }
+        public double? W_RATE { get; set; }
+        public double? W_AMT { get; set; }
         public double? DISC { get; set; }
         public double? DISC_AMT { get; set; }
         public double? TAX { get; set; }
@@ -227,5 +229,23 @@ namespace Empire_ERP.Core.Entities
         public string? CHARGES_CODE { get; set; }
         public string? SIGN { get; set; }
         public double? AMT { get; set; }
+    }
+
+    public class DashboardData
+    {
+        public int FbrInvoiceCount { get; set; }
+        public double TotalAmount { get; set; }
+        public double TotalTaxAmount { get; set; }
+        public List<DashboardSalesPoint> SalesChart { get; set; } = new List<DashboardSalesPoint>();
+        public List<DashboardSalesPoint> DayWiseSales { get; set; } = new List<DashboardSalesPoint>();
+        public List<DashboardSalesPoint> Sparkline { get; set; } = new List<DashboardSalesPoint>();
+    }
+
+    public class DashboardSalesPoint
+    {
+        public string Month { get; set; }
+        public double Amount { get; set; }
+        public double TaxAmount { get; set; }
+        public int Count { get; set; }
     }
 }

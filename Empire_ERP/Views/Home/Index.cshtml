@@ -1,137 +1,424 @@
-﻿@{
+﻿@using Empire_ERP.Core.Entities
+@using System.Linq
+@{
 	ViewData["Title"] = "Home Page";
 	Layout = "~/Views/Shared/_Layout.cshtml";
+	var dashboard = ViewBag.DashboardData as DashboardData ?? new DashboardData();
 }
 
-<div class="row">
-	<div class="col-lg-3 col-md-6">
-		<div class="bx-kpi">
-			<div class="kpi-inner">
-				<h4>Sales</h4>
-				<h2>0.00</h2>
-				<h6 class="color-green"><i class="fa-solid fa-arrow-up"></i> 0.00%</h6>
+<style>
+	.dashboard-wrap {
+		padding-bottom: 8px;
+	}
+
+	.dashboard-wrap .bx-kpi {
+		margin-bottom: 16px;
+		padding: 20px 22px;
+		min-height: 118px;
+		border-radius: 10px;
+		border: 1px solid #e6eef3;
+		display: flex;
+		flex-wrap: nowrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: 16px;
+		box-shadow: 0 6px 16px rgb(5 90 135 / 6%);
+	}
+
+	.dashboard-wrap .bx-kpi .kpi-inner:first-child {
+		flex: 1 1 auto;
+		min-width: 0;
+		padding-right: 8px;
+	}
+
+	.dashboard-wrap .bx-kpi .kpi-inner:last-child {
+		flex: 0 0 118px;
+		width: 118px;
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
+	}
+
+	.dashboard-wrap .kpi-label {
+		display: block;
+		font-size: 12px;
+		font-weight: 600;
+		letter-spacing: 0.6px;
+		text-transform: uppercase;
+		line-height: 1.35;
+		margin-bottom: 8px;
+		color: #055a87;
+	}
+
+	.dashboard-wrap .kpi-value {
+		font-size: 26px;
+		font-weight: 700;
+		line-height: 1.2;
+		margin: 0;
+		color: #1b1b1b;
+		word-break: break-word;
+	}
+
+	.dashboard-wrap .kpi-spark {
+		width: 118px;
+		height: 48px;
+	}
+
+	.dashboard-wrap .card {
+		border: 1px solid #e6eef3;
+		border-radius: 10px;
+		box-shadow: 0 6px 16px rgb(5 90 135 / 6%);
+	}
+
+	.dashboard-wrap .card-header {
+		padding: 16px 18px 12px;
+		border-bottom: 1px solid #e6eef3;
+	}
+
+	.dashboard-wrap .sales-chart-head {
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		gap: 12px 16px;
+	}
+
+	.dashboard-wrap .card-title {
+		font-size: 18px;
+		font-weight: 700;
+		color: #055a87;
+		margin-bottom: 6px;
+	}
+
+	.dashboard-wrap .sales-total {
+		display: flex;
+		align-items: baseline;
+		flex-wrap: wrap;
+		gap: 8px;
+	}
+
+	.dashboard-wrap .sales-total-label {
+		font-size: 12px;
+		font-weight: 600;
+		letter-spacing: 0.5px;
+		text-transform: uppercase;
+		color: #6b7c86;
+	}
+
+	.dashboard-wrap .sales-total-value {
+		font-size: 22px;
+		font-weight: 700;
+		color: #055a87;
+		line-height: 1.2;
+	}
+
+	.dashboard-wrap .sales-view-toggle .btn {
+		border: 1px solid #055a87;
+		color: #055a87;
+		background: #fff;
+		font-size: 13px;
+		font-weight: 600;
+		padding: 6px 14px;
+		line-height: 1.2;
+	}
+
+	.dashboard-wrap .sales-view-toggle .btn.active,
+	.dashboard-wrap .sales-view-toggle .btn:hover,
+	.dashboard-wrap .sales-view-toggle .btn:focus {
+		background: #055a87;
+		color: #fff;
+		border-color: #055a87;
+		box-shadow: none;
+	}
+
+	.dashboard-wrap .card-body {
+		padding: 12px 16px 16px;
+		position: relative;
+	}
+
+	#salesChart {
+		width: 100%;
+		height: 380px;
+		min-height: 380px;
+	}
+
+	.dashboard-wrap .sales-empty {
+		display: none;
+		align-items: center;
+		justify-content: center;
+		min-height: 240px;
+		color: #6b7c86;
+		font-size: 14px;
+		font-weight: 500;
+	}
+
+	@@media (max-width: 991px) {
+		#salesChart {
+			height: 320px;
+			min-height: 320px;
+		}
+
+		.dashboard-wrap .kpi-value {
+			font-size: 22px;
+		}
+	}
+
+	@@media (max-width: 767px) {
+		.dashboard-wrap .bx-kpi {
+			padding: 16px 16px;
+			min-height: 102px;
+			gap: 12px;
+		}
+
+		.dashboard-wrap .bx-kpi .kpi-inner:last-child,
+		.dashboard-wrap .kpi-spark {
+			flex: 0 0 96px;
+			width: 96px;
+		}
+
+		.dashboard-wrap .kpi-value {
+			font-size: 20px;
+		}
+
+		.dashboard-wrap .sales-total-value {
+			font-size: 18px;
+		}
+
+		#salesChart {
+			height: 260px;
+			min-height: 260px;
+		}
+
+		.dashboard-wrap .sales-view-toggle {
+			width: 100%;
+		}
+
+		.dashboard-wrap .sales-view-toggle .btn {
+			flex: 1 1 auto;
+		}
+	}
+</style>
+
+<div class="dashboard-wrap">
+	<div class="row">
+		<div class="col-xl-4 col-md-6 col-12">
+			<div class="bx-kpi">
+				<div class="kpi-inner">
+					<span class="kpi-label">FBR Invoice Count</span>
+					<h2 class="kpi-value">@dashboard.FbrInvoiceCount.ToString("N0")</h2>
+				</div>
+				<div class="kpi-inner">
+					<div id="kpiCountSpark" class="kpi-spark"></div>
+				</div>
 			</div>
-			<div class="kpi-inner">
-				<span class="kpiicn">
-					<i class="fa-solid fa-shop"></i>
-				</span>
+		</div>
+		<div class="col-xl-4 col-md-6 col-12">
+			<div class="bx-kpi">
+				<div class="kpi-inner">
+					<span class="kpi-label">Total Amount</span>
+					<h2 class="kpi-value">@dashboard.TotalAmount.ToString("N2")</h2>
+				</div>
+				<div class="kpi-inner">
+					<div id="kpiAmountSpark" class="kpi-spark"></div>
+				</div>
+			</div>
+		</div>
+		<div class="col-xl-4 col-md-6 col-12">
+			<div class="bx-kpi">
+				<div class="kpi-inner">
+					<span class="kpi-label">Total Tax Amount</span>
+					<h2 class="kpi-value">@dashboard.TotalTaxAmount.ToString("N2")</h2>
+				</div>
+				<div class="kpi-inner">
+					<div id="kpiTaxSpark" class="kpi-spark"></div>
+				</div>
 			</div>
 		</div>
 	</div>
-	<div class="col-lg-3 col-md-6">
-		<div class="bx-kpi">
-			<div class="kpi-inner">
-				<h4>Purchase</h4>
-				<h2>0.00</h2>
-				<h6 class="color-red"><i class="fa-solid fa-arrow-down"></i> 0.00%</h6>
-			</div>
-			<div class="kpi-inner">
-				<span class="kpiicn">
-					<i class="fa-solid fa-money-bill"></i>
-				</span>
-			</div>
-		</div>
-	</div>
-	<div class="col-lg-3 col-md-6">
-		<div class="bx-kpi">
-			<div class="kpi-inner">
-				<h4>Return</h4>
-				<h2>0.00</h2>
-				<h6 class="color-green"><i class="fa-solid fa-arrow-up"></i> 0.00%</h6>
-			</div>
-			<div class="kpi-inner">
-				<span class="kpiicn">
-					<i class="fa-solid fa-rotate-left"></i>
-				</span>
-			</div>
-		</div>
-	</div>
-	<div class="col-lg-3 col-md-6">
-		<div class="bx-kpi">
-			<div class="kpi-inner">
-				<h4>Marketing</h4>
-				<h2>0.00</h2>
-				<h6 class="color-red"><i class="fa-solid fa-arrow-down"></i> 0.00%</h6>
-			</div>
-			<div class="kpi-inner">
-				<span class="kpiicn">
-					<i class="fa-solid fa-chart-line"></i>
-				</span>
+	<div class="row">
+		<div class="col-12">
+			<div class="card">
+				<div class="card-header">
+					<div class="sales-chart-head">
+						<div>
+							<h3 class="card-title">Sales</h3>
+							<div class="sales-total">
+								<span class="sales-total-label">Total Sale</span>
+								<strong id="totalSaleValue" class="sales-total-value">0.00</strong>
+							</div>
+						</div>
+						<div class="btn-group sales-view-toggle" role="group" aria-label="Sales view">
+							<button type="button" class="btn" data-view="day">Day Wise</button>
+							<button type="button" class="btn active" data-view="month">Month Wise</button>
+						</div>
+					</div>
+				</div>
+				<div class="card-body">
+					<div id="salesChartEmpty" class="sales-empty">No sales data available.</div>
+					<div id="salesChart" class="w-100"></div>
+				</div>
 			</div>
 		</div>
 	</div>
 </div>
-<div class="row">
-	<div class="col-lg-12">
-		<div class="card">
-			<div class="card-header">
-				<h3 class="card-title">Bubble Chart</h3>
-			</div>
-			<div class="card-body">
-				<div class="dx-viewport demo-container">
-					<div id="bubble" class="w-100"></div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="col-lg-6">
-		<div class="card">
-			<div class="card-header">
-				<h3 class="card-title">Area Chart</h3>
-			</div>
-			<div class="card-body">
-				<div class="dx-viewport demo-container">
-					<div id="area" class="w-100"></div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="col-lg-6">
-		<div class="card">
-			<div class="card-header">
-				<h3 class="card-title">Bar Chart</h3>
-			</div>
-			<div class="card-body">
-				<div class="dx-viewport demo-container">
-					<div id="bar" class="w-100"></div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="col-lg-6">
-		<div class="card">
-			<div class="card-header">
-				<h3 class="card-title">Pie Chart</h3>
-			</div>
-			<div class="card-body">
-				<div class="dx-viewport demo-container">
-					<div id="pie" class="w-100"></div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="col-lg-6">
-		<div class="card">
-			<div class="card-header">
-				<h3 class="card-title">Radar Chart</h3>
-			</div>
-			<div class="card-body">
-				<div class="dx-viewport demo-container">
-					<div id="radarchart" class="w-100"></div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="col-lg-6">
-		<div class="card">
-			<div class="card-header">
-				<h3 class="card-title">Doughnut Chart</h3>
-			</div>
-			<div class="card-body">
-				<div class="dx-viewport demo-container">
-					<div id="pie2" class="w-100"></div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
+
+@section LinkScriptSection {
+	<script type="text/javascript">
+		$(function () {
+			var monthWiseData = @Html.Raw(Json.Serialize((dashboard.SalesChart ?? new List<DashboardSalesPoint>()).Select(x => new { month = x.Month, amount = x.Amount })));
+			var dayWiseData = @Html.Raw(Json.Serialize((dashboard.DayWiseSales ?? new List<DashboardSalesPoint>()).Select(x => new { month = x.Month, amount = x.Amount })));
+			var sparkData = @Html.Raw(Json.Serialize((dashboard.Sparkline ?? new List<DashboardSalesPoint>()).Select(x => new { month = x.Month, amount = x.Amount, taxAmount = x.TaxAmount, count = x.Count })));
+			var currentView = "month";
+
+			function formatAmount(value) {
+				return value != null ? Number(value).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : "0.00";
+			}
+
+			function getTotal(data) {
+				if (!data || !data.length) {
+					return 0;
+				}
+				return data.reduce(function (sum, item) {
+					return sum + (Number(item.amount) || 0);
+				}, 0);
+			}
+
+			function getViewData(view) {
+				return view === "day" ? dayWiseData : monthWiseData;
+			}
+
+			function updateTotalSale(data) {
+				$("#totalSaleValue").text(formatAmount(getTotal(data)));
+			}
+
+			function toggleEmptyState(data) {
+				var isEmpty = !data || !data.length;
+				$("#salesChartEmpty").css("display", isEmpty ? "flex" : "none");
+				$("#salesChart").toggle(!isEmpty);
+			}
+
+			function initSparkline(selector, valueField) {
+				if (!$(selector).length) {
+					return;
+				}
+
+				$(selector).dxSparkline({
+					dataSource: sparkData,
+					argumentField: "month",
+					valueField: valueField,
+					type: "splinearea",
+					lineColor: "#055a87",
+					firstLastColor: "#055a87",
+					pointSize: 0,
+					showMinMax: false,
+					showFirstLast: false,
+					tooltip: {
+						enabled: true
+					}
+				});
+			}
+
+			function getChartOptions(data, view) {
+				return {
+					dataSource: data,
+					palette: ["#055a87", "#04003b", "#7f76ff", "#d2e1e9"],
+					commonSeriesSettings: {
+						argumentField: "month",
+						type: "splinearea",
+						opacity: 0.28,
+						point: {
+							visible: view !== "day",
+							size: 6,
+							hoverStyle: {
+								size: 8
+							}
+						}
+					},
+					series: [{
+						valueField: "amount",
+						name: "Total Sale",
+						color: "#055a87"
+					}],
+					legend: {
+						visible: false
+					},
+					tooltip: {
+						enabled: true,
+						customizeTooltip: function (arg) {
+							return {
+								text: arg.argumentText + "<br/>Total Sale: " + formatAmount(arg.value)
+							};
+						}
+					},
+					crosshair: {
+						enabled: true,
+						color: "#055a87",
+						width: 1,
+						dashStyle: "dot",
+						label: {
+							visible: false
+						}
+					},
+					argumentAxis: {
+						label: {
+							overlappingBehavior: view === "day" ? "hide" : "rotate",
+							rotationAngle: view === "day" ? 0 : 45
+						}
+					},
+					valueAxis: {
+						title: {
+							text: "Total Sale"
+						}
+					},
+					"export": {
+						enabled: false
+					}
+				};
+			}
+
+			function renderSalesChart(view) {
+				var data = getViewData(view);
+				updateTotalSale(data);
+				toggleEmptyState(data);
+
+				if (!$("#salesChart").length || !data.length) {
+					if ($("#salesChart").data("dxChart")) {
+						$("#salesChart").dxChart("instance").option("dataSource", []);
+					}
+					return;
+				}
+
+				if ($("#salesChart").data("dxChart")) {
+					$("#salesChart").dxChart("instance").option(getChartOptions(data, view));
+					$("#salesChart").dxChart("render");
+					return;
+				}
+
+				$("#salesChart").dxChart(getChartOptions(data, view));
+			}
+
+			initSparkline("#kpiCountSpark", "count");
+			initSparkline("#kpiAmountSpark", "amount");
+			initSparkline("#kpiTaxSpark", "taxAmount");
+			renderSalesChart(currentView);
+
+			$(".sales-view-toggle .btn").on("click", function () {
+				var view = $(this).data("view");
+				if (!view || view === currentView) {
+					return;
+				}
+
+				currentView = view;
+				$(".sales-view-toggle .btn").removeClass("active");
+				$(this).addClass("active");
+				renderSalesChart(currentView);
+			});
+
+			$(window).on("resize", function () {
+				if ($("#salesChart").data("dxChart") && $("#salesChart").is(":visible")) {
+					$("#salesChart").dxChart("render");
+				}
+			});
+		});
+	</script>
+}

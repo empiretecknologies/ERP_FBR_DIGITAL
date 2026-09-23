@@ -16,29 +16,41 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-xl-2">
+                            <div class="col-xl-2 col-md-4 col-sm-6 mb-1">
                                 <label class="form-label" for="Code">Code :</label>
                                 <input class="form-control" id="Code" readonly type="text" autocomplete="off">
                             </div>
-                            <div class="col-xl-10">
+                            <div class="col-xl-7 col-md-8 col-sm-12 mb-1">
                                 <label class="form-label" for="PARTY_NAME">Name :</label>
                                 <input class="form-control" id="PARTY_NAME" type="text" autocomplete="off">
                             </div>
-                            <span class="text-center span name-validation"></span>
-                            <div class="col-xl-2">
+                            <div class="col-xl-3 col-md-4 col-sm-6 mb-1">
+                                <label class="form-label" for="ASTATUS">Status :</label>
+                                <div id="ASTATUS"></div>
+                            </div>
+                            <span class="text-center span name-validation d-none"></span>
+                            <div class="col-xl-2 d-none">
                                 <label class="form-label" for="PARTY_SHORT_NAME">Short Name :</label>
                                 <input class="form-control" id="PARTY_SHORT_NAME" type="text" autocomplete="off">
                             </div>
-                            <div class="col-xl-10">
-                                <label class="form-label" for="ACT_CODE">ChartAccount:</label>
+                            <div class="col-xl-4 col-md-6 mb-1">
+                                <label class="form-label" for="ACT_CODE">ChartAccount :</label>
                                 <div id="chartofaccount"></div>
                             </div>
-                            <span class="text-center span account-validation"></span>
-                            <div class="col-xl-12">
+                            <span class="text-center span account-validation d-none"></span>
+                            <div class="col-xl-5 col-md-6 mb-1">
                                 <label class="form-label" for="PADDRESS">Address :</label>
-                                <textarea class="form-control" id="PADDRESS" rows="1" type="text" autocomplete="off"></textarea>
+                                <input class="form-control" id="PADDRESS" type="text" autocomplete="off">
                             </div>
-                            <div class="col-xl-3">
+                            <div class="col-xl-3 col-md-6 mb-1">
+                                <label class="form-label" for="REMARKS">Region :</label>
+                                <input class="form-control" id="REMARKS" type="text" autocomplete="off">
+                            </div>
+                            <div class="col-xl-3 col-md-6 mb-1">
+                                <label class="form-label" for="REG_TYPE">Reg.Type :</label>
+                                <div id="REG_TYPE"></div>
+                            </div>
+                            <div class="col-xl-3 d-none">
                                 <label class="form-label" for="REGION">Status :</label>
                                 <div id="REGION"></div>
                             </div>
@@ -46,52 +58,52 @@
                                 <label class="form-label" for="COMM">Commission%:</label>
                                 <input class="form-control" id="COMM" type="text" autocomplete="off" oninput="empr_helper.DecimalFieldValidation(this)">
                             </div> *@
-                            <div class="col-xl-3">
+                            <div class="col-xl-3 d-none">
                                 <label class="form-label" for="CAT_CODE">Category :</label>
                                 <div id="CATDDLDX"></div>
                             </div>
-                            <div class="col-xl-3">
-                                <label class="form-label" for="NTN">NTN # :</label>
+                            <div class="col-xl-3 col-md-6 mb-1">
+                                <label class="form-label" for="NTN">NTN # / CNIC # :</label>
                                 <input class="form-control" id="NTN" type="text" autocomplete="off">
                             </div>
-                            <div class="col-xl-3">
-                                <label class="form-label" for="EMAIL">Email:</label>
+                            <div class="col-xl-3 col-md-6 mb-1">
+                                <label class="form-label" for="EMAIL">Email :</label>
                                 <input class="form-control" id="EMAIL" type="email" autocomplete="off">
                             </div>
-                            <div class="col-xl-3">
-                                <label class="form-label" for="CNIC">Cnic No :</label>
-                                <input class="form-control cnic" id="CNIC" type="text" autocomplete="off">
+                            <div class="col-xl-3 col-md-6 mb-1">
+                                <label class="form-label" for="CNIC">ST.Reg# :</label>
+                                <input class="form-control" id="CNIC" type="text" autocomplete="off">
                             </div>
-                            <div class="col-xl-3">
+                            <div class="col-xl-3 d-none">
                                 <label class="form-label" for="CnicFile">Cnic File :</label>
                                 <input class="form-control" id="CnicFile" type="file" autocomplete="off">
                             </div>
-                            <div class="col-xl-3">
+                            <div class="col-xl-3 d-none">
                                 <label class="form-label" for="CNIC_EXP">Cnic Expire :</label>
                                 <input class="form-control" id="CNIC_EXP" type="date" autocomplete="off">
                             </div>
-                            <div class="col-xl-3">
+                            <div class="col-xl-3 col-md-6 mb-1">
                                 <label class="form-label" for="CELL">Cell No :</label>
-                                <input class="form-control ContactNo" id="CELL" type="text" autocomplete="off">
+                                <input class="form-control" id="CELL" type="text" autocomplete="off">
                             </div>
-                            <div class="col-xl-3">
+                            <div class="col-xl-3 d-none">
                                 <label class="form-label" for="CONTACT_PERSON">Contact Person:</label>
                                 @* <input class="form-control" id="CONTACT_PERSON" type="text" autocomplete="off" oninput="return $(this).val($(this).val().replace(/[^a-zA-Z]/g, ''))"> *@
                                 <input class="form-control" id="CONTACT_PERSON" type="text" autocomplete="off">
                             </div>
-                            <div class="col-xl-3">
+                            <div class="col-xl-3 d-none">
                                 <label class="form-label" for="WB">Primary Contact:</label>
                                 <input class="form-control ContactNo" id="WB" type="text" autocomplete="off" oninput="empr_helper.OnlyNumberAndHyphen(this)">
                             </div>
-                            <div class="col-xl-3">
+                            <div class="col-xl-3 d-none">
                                 <label class="form-label" for="TELL">Telephone No:</label>
                                 <input class="form-control" id="TELL" type="text" maxlength="12" autocomplete="off" oninput="empr_helper.OnlyNumberAndHyphen(this)">
                             </div>
-                            <div class="col-xl-3 mb-1">
+                            <div class="col-xl-3 col-md-6 mb-1">
                                 <label class="form-label" for="WEBSITE">Website :</label>
                                 <input class="form-control" id="WEBSITE" type="text" autocomplete="off">
                             </div>
-                            <div class="col-xl-12 text-end">
+                            <div class="col-xl-12 text-end mt-1">
                                 <button class="btn btn-danger btn-delete delete" style="display:none"><i class="fa fa-trash"></i> Delete</button>
                                 <button class="btn btn-primary btn-save saveAttempt"><i class="fa fa-save"></i> Save</button>
                             </div>
@@ -163,10 +175,6 @@
                                 <input class="form-control" id="DocumentFile" type="file" autocomplete="off">
                             </div>
                             <div class="col-xl-3">
-                                <label class="form-label" for="ASTATUS">Status :</label>
-                                <div id="ASTATUS"></div>
-                            </div>
-                            <div class="col-xl-3">
                                 <label class="form-label" for="ACCOUNT_NUM">Account No :</label>
                                 <input class="form-control" id="ACCOUNT_NUM" type="text" autocomplete="off">
                             </div>
@@ -187,8 +195,8 @@
                                 <textarea class="form-control" id="BANK_ADDRESS" type="text" autocomplete="off" rows="1"></textarea>
                             </div>
                             <div class="col-xl-12">
-                                <label class="form-label" for="REMARKS">Remarks:</label>
-                                <textarea class="form-control" id="REMARKS" type="text" autocomplete="off" rows="1"></textarea>
+                                <label class="form-label" for="REMARKS">Region:</label>
+                                <textarea class="form-control" type="text" autocomplete="off" rows="1"></textarea>
                             </div>
                             <div class="col-xl-12 mb-1">
                                 <label class="form-label" for="TERMS_CONDITION">Condition:</label>

@@ -1,4 +1,5 @@
-﻿using Empire_ERP.Core.Interfaces;
+﻿using Empire_ERP.Core.Entities;
+using Empire_ERP.Core.Interfaces;
 using Empire_ERP.Helpers;
 using Empire_ERP.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -13,11 +14,13 @@ namespace Empire_ERP.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IConfiguration _configuration;
+        private readonly IPurchaseBillService _purchaseBillService;
 
-        public HomeController(ILogger<HomeController> logger, IMenuService IMenuService, IConfiguration configuration ,IBaseService baseService) : base(IMenuService, baseService)
+        public HomeController(ILogger<HomeController> logger, IMenuService IMenuService, IConfiguration configuration, IBaseService baseService, IPurchaseBillService purchaseBillService) : base(IMenuService, baseService)
         {
             _logger = logger;
             _configuration = configuration;
+            _purchaseBillService = purchaseBillService;
         }
 
         public void StopApplication()
@@ -58,48 +61,12 @@ namespace Empire_ERP.Controllers
             {
                 return RedirectToAction("Details", "Login");
             }
-        //    string basePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "client");
 
-        //    // Static list of folders to delete
-        //    List<string> folderNames = new List<string>
-        //{
-        ////    "DailyProduction",
-        ////    "DeliveryFeedingReport",
-        ////    "DeliveryFormat",
-        ////    "DeliveryOrder",
-        ////    "MaterialRequisition",
-        ////    "MerchantPurchaseOrderDetail",
-        ////    "MpoLayout",
-        ////    "PurchaseBillReport",
-        ////    "PurchaseOrder",
-        ////    "PurchaseSaleFormatList",
-        ////    "SaleTaxInvoice",
-        //    "StockReport"
-        //};
+            var dashboardResponse = _purchaseBillService.GetDashboardData(CommonHelper.GetValues(HttpContext));
+            ViewBag.DashboardData = (dashboardResponse != null && dashboardResponse.data is DashboardData)
+                ? dashboardResponse.data
+                : new DashboardData();
 
-        //    List<string> results = new List<string>();
-
-        //    foreach (var folderName in folderNames)
-        //    {
-        //        string folderPath = Path.Combine(basePath, folderName);
-
-        //        if (Directory.Exists(folderPath))
-        //        {
-        //            try
-        //            {
-        //                Directory.Delete(folderPath, true); 
-        //                results.Add($"Folder '{folderName}' deleted successfully.");
-        //            }
-        //            catch (Exception ex)
-        //            {
-        //                results.Add($"Error deleting '{folderName}': {ex.Message}");
-        //            }
-        //        }
-        //        else
-        //        {
-        //            results.Add($"Folder '{folderName}' not found.");
-        //        }
-        //    }
             return View();
         }
 

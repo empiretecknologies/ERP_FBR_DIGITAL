@@ -407,7 +407,7 @@ namespace Empire_ERP.Infrastructure.Repositories
                     using (SqlConnection connection = new SqlConnection(new SQLService().getconnstring()))
                     {
 
-                        string query = $@"SELECT D.TRAN_ID, D.DT_CODE, D.ITEM_CODE, D.QTY, D.BAGS, D.UNIT, D.RATE, D.AMT, D.TAX, D.TAX_AMT, D.NET_AMT, D.DT_DESC, D.VEHICLE, D.DEL_DATE, D.HS_CODE,
+                        string query = $@"SELECT D.TRAN_ID, D.DT_CODE, D.ITEM_CODE, D.QTY, D.BAGS, D.UNIT, D.RATE, D.AMT, D.W_RATE, D.W_AMT, D.TAX, D.TAX_AMT, D.NET_AMT, D.DT_DESC, D.VEHICLE, D.DEL_DATE, D.HS_CODE,
                                             D.PAY_TERM, D.DUE_DATE, D.INC_EXC, D.PARTY_CODE, D.ACT_CODE, D.COMM_TYPE, D.COMM_VAL, D.WAREHOUSE, D.LOT_REG, D.PICK_ID, D.PICK_ID_D,
                                             PM.VOUCHER_NO, PM.TRAN_ID AS PTRAN_ID,  PM.MENU_ID AS PMENU_ID, MB.MENU_PAGE AS MENU_PAGE, MB.MENU_PARENT_CODE,D.FBR_TYPE,D.SCHEDULE_NO,D.SERIAL_NO,D.ITEM_SNO
                                             FROM {tableDetail} D
@@ -440,6 +440,8 @@ namespace Empire_ERP.Infrastructure.Repositories
 
                                 RATE = reader["RATE"] == DBNull.Value ? "" : Convert.ToString(reader["RATE"]),
                                 AMT = reader["AMT"] == DBNull.Value ? "" : Convert.ToString(reader["AMT"]),
+                                W_RATE = reader["W_RATE"] == DBNull.Value ? "" : Convert.ToString(reader["W_RATE"]),
+                                W_AMT = reader["W_AMT"] == DBNull.Value ? "" : Convert.ToString(reader["W_AMT"]),
                                 TAX = reader["TAX"] == DBNull.Value ? "" : Convert.ToString(reader["TAX"]),
                                 TAX_AMT = reader["TAX_AMT"] == DBNull.Value ? "" : Convert.ToString(reader["TAX_AMT"]),
                                 NET_AMT = reader["NET_AMT"] == DBNull.Value ? "" : Convert.ToString(reader["NET_AMT"]),
@@ -829,12 +831,12 @@ namespace Empire_ERP.Infrastructure.Repositories
 
                                             insertQueryBuilder.AppendLine(
                                                 $"INSERT INTO {detailTable} (TRAN_ID, DT_CODE, ITEM_CODE, PARTY_CODE, ACT_CODE, QTY, COMP, VEHICLE," +
-                                                $"UNIT, BAGS, RATE, AMT, TAX, TAX_AMT, NET_AMT, DT_DESC, DEL_DATE, PAY_TERM, DUE_DATE, INC_EXC, COMM_TYPE, COMM_VAL, WAREHOUSE, LOT_REG, HS_CODE, BCODE, PERIOD_ID, ADD_USER_ID, " +
+                                                $"UNIT, BAGS, RATE, AMT, W_RATE, W_AMT, TAX, TAX_AMT, NET_AMT, DT_DESC, DEL_DATE, PAY_TERM, DUE_DATE, INC_EXC, COMM_TYPE, COMM_VAL, WAREHOUSE, LOT_REG, HS_CODE, BCODE, PERIOD_ID, ADD_USER_ID, " +
                                                 $"ADD_DATE, ADD_COMPUTER_NAME, ADD_IP_ADDRESS, EDIT_USER_ID, " +
                                                 $"EDIT_DATE, EDIT_COMPUTER_NAME, EDIT_IP_ADDRESS, " +
                                                 $"ADD_POSTALCODE, EDIT_POSTALCODE, MENU_ID, DLT, PICK_ID, PICK_ID_D,FBR_TYPE,SCHEDULE_NO,SERIAL_NO,ITEM_SNO) VALUES " +
                                                 $"('{modelRecord.Master.TRAN_ID}', '{detailCode}', '{item.ITEM_CODE}', '{item.BPARTY_CODE}', '{item.BACT_CODE}','{item.QTY}', '0', '{item.VEHICLE}'," +
-                                                $"'{item.UNIT}', '{item.BAGS}', '{item.RATE}', '{item.AMT}', '{item.TAX ?? 0}', '{item.TAX_AMT ?? 0}', '{item.NET_AMT ?? item.AMT}', '{item.DT_DESC}', " +
+                                                $"'{item.UNIT}', '{item.BAGS}', '{item.RATE}', '{item.AMT}', '{item.W_RATE}', '{item.W_AMT}', '{item.TAX ?? 0}', '{item.TAX_AMT ?? 0}', '{item.NET_AMT ?? item.AMT}', '{item.DT_DESC}', " +
                                                 $"'{item.DEL_DATE}', '{item.PAY_TERM}', '{item.DUE_DATE}','{item.INC_EXC}', '{item.COMM_TYPE}', '{item.COMM_VALUE}', '{item.WAREHOUSE}', '{item.LOT}', '{item.HS_CODE}', '{branch}', '{period}', '{username}', " +
                                                 $"'{CommonService.GetDateTime("Pakistan Standard Time")}', '{Computer}', '{Ip}', '{username}', " +
                                                 $"'{CommonService.GetDateTime("Pakistan Standard Time")}', '{Computer}', '{Ip}', " +
@@ -863,6 +865,8 @@ namespace Empire_ERP.Infrastructure.Repositories
                                             $"HS_CODE = '{item.HS_CODE}', " +
                                             $"RATE = '{item.RATE}', " +
                                             $"AMT = '{item.AMT}', " +
+                                            $"W_RATE = '{item.W_RATE}', " +
+                                            $"W_AMT = '{item.W_AMT}', " +
                                             $"TAX = '{item.TAX ?? 0}', " +
                                             $"TAX_AMT = '{item.TAX_AMT ?? 0}', " +
                                             $"NET_AMT = '{item.NET_AMT ?? item.AMT}', " +
@@ -1196,6 +1200,8 @@ namespace Empire_ERP.Infrastructure.Repositories
                             BAL_QTY = Convert.ToDouble(detail_Reader["BAL_QTY"]),
                             RATE = Convert.ToDouble(detail_Reader["RATE"]),
                             AMT = Convert.ToDouble(detail_Reader["AMT"]),
+                            W_RATE = detail_Reader["W_RATE"] == DBNull.Value ? 0 : Convert.ToDouble(detail_Reader["W_RATE"]),
+                            W_AMT = detail_Reader["W_AMT"] == DBNull.Value ? 0 : Convert.ToDouble(detail_Reader["W_AMT"]),
                             DISC = Convert.ToDouble(detail_Reader["DISC"]),
                             DISC_AMT = Convert.ToDouble(detail_Reader["DISC_AMT"]),
                             TAX = Convert.ToDouble(detail_Reader["TAX"]),
@@ -1558,6 +1564,7 @@ namespace Empire_ERP.Infrastructure.Repositories
                         DataRow dataRow = dataTable.NewRow();
                         dataRow["ItemName"] = Convert.ToString(reader["ITEM_NAME"]);
                         dataRow["HSCode"] = Convert.ToString(reader["HS_CODE"]);
+                        dataRow["Unit"] = Convert.ToString(reader["UNIT"]);
                         dataRow["Qty"] = reader["QTY"] == DBNull.Value ? 0 : Convert.ToDecimal(reader["QTY"]);
                         dataRow["Rate"] = reader["RATE"] == DBNull.Value ? 0 : Convert.ToDecimal(reader["RATE"]);
                         dataRow["Amt"] = reader["AMT"] == DBNull.Value ? 0 : Convert.ToDecimal(reader["AMT"]);
@@ -1676,12 +1683,12 @@ namespace Empire_ERP.Infrastructure.Repositories
                                         B.B_ADDRESS AS SELLER_ADDRESS,
                                         CASE WHEN P.NTN IS NULL OR P.NTN = '' THEN P.CNIC WHEN P.CNIC IS NULL OR P.CNIC = '' THEN P.NTN ELSE P.NTN END AS BUYER_NTN,
                                         P.PARTY_NAME AS BUYER_BNAME,
-                                        R.DESCR AS BUYER_PROVINCE,
+                                        P.REMARKS AS BUYER_PROVINCE,
                                         P.PADDRESS AS BUYER_ADDRESS,
                                         P.REG_STATUS AS BUYER_REG,
                                         D.ITEM_SNO AS SCENARIO_ID,
-                                        P.REG_STATUS AS BUYER_REG_TYPE
-
+                                        P.REG_STATUS AS BUYER_REG_TYPE,
+                                        P.PARTY_TYPE AS REG_TYPE
                                         FROM {table} M
                                         LEFT OUTER JOIN TBL_SB_DETAIL D ON D.TRAN_ID = M.TRAN_ID
                                         LEFT OUTER JOIN TBL_BRANCH B ON B.BCODE = M.BCODE
@@ -1713,6 +1720,7 @@ namespace Empire_ERP.Infrastructure.Repositories
                             BUYER_REG = SafeString(reader["BUYER_REG"]),
                             SCENARIO_ID = SafeString(reader["SCENARIO_ID"]),
                             BUYER_REG_TYPE = SafeString(reader["BUYER_REG_TYPE"]),
+                            REG_TYPE = SafeString(reader["REG_TYPE"]),
 
                         };
 
@@ -1768,12 +1776,15 @@ namespace Empire_ERP.Infrastructure.Repositories
                                             D.QTY,
                                             D.AMT AS TOTAL_VALUES,
                                             (D.AMT - D.DISC_AMT) AS VALUE_SALES_EXCLUDING,
+                                            D.W_AMT,
                                             D.AMT AS FIXEDVALUE_RETAILPRICE,
                                             (D.AMT - D.DISC_AMT) * D.TAX / 100 AS ST_APPLICABLE,
                                             D.SCHEDULE_NO AS SRO_SCH_NO,
+                                            D.NET_AMT As NET_AMT,
                                             FBR.S_NAME,
                                             D.SERIAL_NO,
-                                            D.TAX
+                                            D.TAX,
+                                            D.TAX_AMT
                                             FROM {detailTable} AS D 
                                             LEFT OUTER JOIN TBL_ITEMSMASTER I ON I.ITEM_CODE = D.ITEM_CODE
                                             LEFT OUTER JOIN TBL_UNIT U ON U.GROUP_CODE = D.UNIT
@@ -1794,13 +1805,16 @@ namespace Empire_ERP.Infrastructure.Repositories
                                 UOM = SafeString(reader["UOM"]),
                                 QTY = SafeDecimal(reader["QTY"]),
                                 TOTAL_VALUES = Math.Round(SafeDouble(reader["TOTAL_VALUES"])),
+                                NET_AMT = Math.Round(SafeDouble(reader["NET_AMT"])),
                                 VALUE_SALES_EXCLUDING = Math.Round(SafeDouble(reader["VALUE_SALES_EXCLUDING"])),
+                                W_AMT = Math.Round(SafeDouble(reader["W_AMT"])),
                                 FIXEDVALUE_RETAILPRICE = Math.Round(SafeDouble(reader["FIXEDVALUE_RETAILPRICE"])),
                                 ST_APPLICABLE = Math.Round(SafeDouble(reader["ST_APPLICABLE"]), 2),
                                 SRO_SCH_NO = SafeString(reader["SRO_SCH_NO"]),
                                 S_NAME = SafeString(reader["S_NAME"]),
                                 SERIAL_NO = SafeInt(reader["SERIAL_NO"]),
                                 TAX = Math.Round(SafeDouble(reader["TAX"])),
+                                TAX_AMT = SafeDecimal(reader["TAX_AMT"]),
 
                             };
 
@@ -1817,6 +1831,144 @@ namespace Empire_ERP.Infrastructure.Repositories
 
             return detailList;
         }
+
+        public MyHttpResponseMessage GetDashboardData(Common common)
+        {
+            MyHttpResponseMessage response = new MyHttpResponseMessage();
+            DashboardData dashboardData = new DashboardData();
+            try
+            {
+                string validFbrFilter = @"M.FBR_NO IS NOT NULL
+                    AND LTRIM(RTRIM(M.FBR_NO)) <> ''
+                    AND M.FBR_NO NOT LIKE '%[^A-Z0-9]%'
+                    AND M.FBR_NO LIKE '%[A-Z]%'
+                    AND M.FBR_NO LIKE '%[0-9]%'
+                    AND LEN(LTRIM(RTRIM(M.FBR_NO))) >= 15";
+
+                using (SqlConnection connection = new SqlConnection(new SQLService().getconnstring()))
+                {
+                    connection.Open();
+
+                    string kpiQuery = $@"SELECT COUNT(DISTINCT M.TRAN_ID) AS FBR_COUNT,
+                                            ISNULL(SUM(D.AMT), 0) AS TOTAL_AMT,
+                                            ISNULL(SUM(D.TAX_AMT), 0) AS TOTAL_TAX
+                                            FROM TBL_SB_MASTER M
+                                            LEFT OUTER JOIN TBL_SB_DETAIL D ON D.TRAN_ID = M.TRAN_ID AND D.BCODE = M.BCODE AND D.PERIOD_ID = M.PERIOD_ID AND D.DLT = 'T'
+                                            WHERE M.DLT = 'T' AND M.BCODE = '{common.Branch}' AND M.PERIOD_ID = '{common.Period}'
+                                            AND {validFbrFilter}";
+
+                    SqlCommand kpiCommand = new SqlCommand(kpiQuery, connection);
+                    SqlDataReader kpiReader = kpiCommand.ExecuteReader();
+                    if (kpiReader.Read())
+                    {
+                        dashboardData.FbrInvoiceCount = kpiReader["FBR_COUNT"] == DBNull.Value ? 0 : Convert.ToInt32(kpiReader["FBR_COUNT"]);
+                        dashboardData.TotalAmount = kpiReader["TOTAL_AMT"] == DBNull.Value ? 0 : Convert.ToDouble(kpiReader["TOTAL_AMT"]);
+                        dashboardData.TotalTaxAmount = kpiReader["TOTAL_TAX"] == DBNull.Value ? 0 : Convert.ToDouble(kpiReader["TOTAL_TAX"]);
+                    }
+                    kpiReader.Close();
+
+                    string chartQuery = $@"SELECT YEAR(M.V_DATE) AS YR, MONTH(M.V_DATE) AS MTH,
+                                            ISNULL(SUM(D.AMT), 0) AS TOTAL_AMT
+                                            FROM TBL_SB_MASTER M
+                                            LEFT OUTER JOIN TBL_SB_DETAIL D ON D.TRAN_ID = M.TRAN_ID AND D.BCODE = M.BCODE AND D.PERIOD_ID = M.PERIOD_ID AND D.DLT = 'T'
+                                            WHERE M.DLT = 'T' AND M.BCODE = '{common.Branch}' AND M.PERIOD_ID = '{common.Period}' AND M.V_DATE IS NOT NULL AND {validFbrFilter}
+                                            GROUP BY YEAR(M.V_DATE), MONTH(M.V_DATE) 
+                                            ORDER BY YR, MTH";
+
+                    SqlCommand chartCommand = new SqlCommand(chartQuery, connection);
+                    SqlDataReader chartReader = chartCommand.ExecuteReader();
+                    while (chartReader.Read())
+                    {
+                        int year = chartReader["YR"] == DBNull.Value ? 0 : Convert.ToInt32(chartReader["YR"]);
+                        int month = chartReader["MTH"] == DBNull.Value ? 0 : Convert.ToInt32(chartReader["MTH"]);
+                        if (year > 0 && month > 0)
+                        {
+                            dashboardData.SalesChart.Add(new DashboardSalesPoint
+                            {
+                                Month = new DateTime(year, month, 1).ToString("MMM yyyy"),
+                                Amount = chartReader["TOTAL_AMT"] == DBNull.Value ? 0 : Convert.ToDouble(chartReader["TOTAL_AMT"])
+                            });
+                        }
+                    }
+                    chartReader.Close();
+
+                    string dayChartQuery = $@"SELECT CONVERT(date, M.V_DATE) AS VDT,
+                                            ISNULL(SUM(D.AMT), 0) AS TOTAL_AMT
+                                            FROM TBL_SB_MASTER M
+                                            LEFT OUTER JOIN TBL_SB_DETAIL D ON D.TRAN_ID = M.TRAN_ID AND D.BCODE = M.BCODE AND D.PERIOD_ID = M.PERIOD_ID AND D.DLT = 'T'
+                                            WHERE M.DLT = 'T' AND M.BCODE = '{common.Branch}' AND M.PERIOD_ID = '{common.Period}' AND M.V_DATE IS NOT NULL
+                                            AND {validFbrFilter}
+                                            GROUP BY CONVERT(date, M.V_DATE)
+                                            ORDER BY VDT";
+
+                    SqlCommand dayChartCommand = new SqlCommand(dayChartQuery, connection);
+                    SqlDataReader dayChartReader = dayChartCommand.ExecuteReader();
+                    while (dayChartReader.Read())
+                    {
+                        if (dayChartReader["VDT"] == DBNull.Value)
+                        {
+                            continue;
+                        }
+
+                        DateTime voucherDate = Convert.ToDateTime(dayChartReader["VDT"]);
+                        dashboardData.DayWiseSales.Add(new DashboardSalesPoint
+                        {
+                            Month = voucherDate.ToString("dd MMM yyyy"),
+                            Amount = dayChartReader["TOTAL_AMT"] == DBNull.Value ? 0 : Convert.ToDouble(dayChartReader["TOTAL_AMT"])
+                        });
+                    }
+                    dayChartReader.Close();
+
+                    string sparkQuery = $@"SELECT CONVERT(date, M.V_DATE) AS VDT,
+                                            COUNT(DISTINCT M.TRAN_ID) AS INV_COUNT,
+                                            ISNULL(SUM(D.AMT), 0) AS TOTAL_AMT,
+                                            ISNULL(SUM(D.TAX_AMT), 0) AS TOTAL_TAX
+                                            FROM TBL_SB_MASTER M
+                                            LEFT OUTER JOIN TBL_SB_DETAIL D ON D.TRAN_ID = M.TRAN_ID AND D.BCODE = M.BCODE AND D.PERIOD_ID = M.PERIOD_ID AND D.DLT = 'T'
+                                            WHERE M.DLT = 'T' AND M.BCODE = '{common.Branch}' AND M.PERIOD_ID = '{common.Period}' AND M.V_DATE IS NOT NULL
+                                            AND {validFbrFilter}
+                                            GROUP BY CONVERT(date, M.V_DATE)
+                                            ORDER BY VDT";
+
+                    SqlCommand sparkCommand = new SqlCommand(sparkQuery, connection);
+                    SqlDataReader sparkReader = sparkCommand.ExecuteReader();
+                    while (sparkReader.Read())
+                    {
+                        if (sparkReader["VDT"] == DBNull.Value)
+                        {
+                            continue;
+                        }
+
+                        DateTime sparkDate = Convert.ToDateTime(sparkReader["VDT"]);
+                        dashboardData.Sparkline.Add(new DashboardSalesPoint
+                        {
+                            Month = sparkDate.ToString("dd MMM yyyy"),
+                            Count = sparkReader["INV_COUNT"] == DBNull.Value ? 0 : Convert.ToInt32(sparkReader["INV_COUNT"]),
+                            Amount = sparkReader["TOTAL_AMT"] == DBNull.Value ? 0 : Convert.ToDouble(sparkReader["TOTAL_AMT"]),
+                            TaxAmount = sparkReader["TOTAL_TAX"] == DBNull.Value ? 0 : Convert.ToDouble(sparkReader["TOTAL_TAX"])
+                        });
+                    }
+                    sparkReader.Close();
+                }
+
+                response.data = dashboardData;
+                response.msg = "";
+                response.msgType = 1;
+            }
+            catch (Exception ex)
+            {
+                string _catchMessage = ex.Message;
+                if (ex.InnerException != null)
+                {
+                    _catchMessage += "<br/>" + ex.InnerException.Message;
+                }
+                response.data = dashboardData;
+                response.msg = _catchMessage;
+                response.msgType = 2;
+            }
+            return response;
+        }
+
         private double SafeDouble(object value)
         {
             if (value == DBNull.Value || value == null || string.IsNullOrWhiteSpace(value.ToString()))

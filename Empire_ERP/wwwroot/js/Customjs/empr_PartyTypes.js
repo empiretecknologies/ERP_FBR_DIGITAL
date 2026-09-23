@@ -163,8 +163,33 @@ var empr_partyTypes = {
             valid = false;
         }
 
-        if (data.REGION == '' || data.REGION == null) {
+        if (data.PADDRESS == null || data.PADDRESS.trim() == '') {
+            empr_helper.notify("Address is required.", 2);
+            valid = false;
+        }
+
+        if (data.REMARKS == null || data.REMARKS.trim() == '') {
             empr_helper.notify("Region is required.", 2);
+            valid = false;
+        }
+
+        if (data.ASTATUS == '' || data.ASTATUS == null) {
+            empr_helper.notify("Status is required.", 2);
+            valid = false;
+        }
+
+        if (data.REG_TYPE == '' || data.REG_TYPE == null) {
+            empr_helper.notify("Reg. Type is required.", 2);
+            valid = false;
+        }
+
+        if (data.NTN == null || data.NTN.trim() == '') {
+            empr_helper.notify("NTN # / CNIC # is required.", 2);
+            valid = false;
+        }
+
+        if (data.CNIC == null || data.CNIC.trim() == '') {
+            empr_helper.notify("ST.Reg# is required.", 2);
             valid = false;
         }
 
@@ -351,35 +376,38 @@ var empr_partyTypes = {
                             </div>`).appendTo(container);
                 }
             },
-            { dataField: 'id', caption: 'Code', visible: false },
+            { dataField: 'id', caption: 'Code' },
             { dataField: 'partY_NAME', caption: 'Name' },
-            { dataField: 'partY_SHORT_NAME', caption: 'Short Name' },
-            { dataField: 'acT_NAME', caption: 'Account Name' },
+            { dataField: 'statuS_NAME', caption: 'Status' },
+            { dataField: 'acT_NAME', caption: 'ChartAccount' },
             { dataField: 'paddress', caption: 'Address' },
-            { dataField: 'comm', caption: 'Commission%' },
-            { dataField: 'category', caption: 'Category' },
-            { dataField: 'ntn', caption: 'NTN' },
+            { dataField: 'remarks', caption: 'Region' },
+            { dataField: 'ntn', caption: 'NTN # / CNIC #' },
             { dataField: 'email', caption: 'Email' },
-            { dataField: 'cnic', caption: 'CNIC' },
-            { dataField: 'cniC_EXP', caption: 'CNIC Expiry', dataType: 'date', format: 'dd-MM-yyy' },
-            { dataField: 'cell', caption: 'Cell No.' },
-            { dataField: 'contacT_PERSON', caption: 'Contact Person' },
-            { dataField: 'wb', caption: 'Whatsapp No.' },
-            { dataField: 'tell', caption: 'Telephone No.' },
+            { dataField: 'cnic', caption: 'ST.Reg#' },
+            { dataField: 'cell', caption: 'Cell No' },
             { dataField: 'website', caption: 'Website' },
-            { dataField: 'paymenT_TERMS', caption: 'Terms' },
-            { dataField: 'crediT_LIMIT', caption: 'Limit' },
-            { dataField: 'salesperson', caption: 'Salesman' },
-            { dataField: 'regioN_NAME', caption: 'Region' },
-            { dataField: 'gst', caption: 'GST' },
-            { dataField: 'servicE_TAX', caption: 'Service Tax' },
-            { dataField: 't_CAT', caption: 'Tax Cat' },
-            { dataField: 'wht', caption: 'WHT' },
+            { dataField: 'partY_SHORT_NAME', caption: 'Short Name', visible: false },
+            { dataField: 'comm', caption: 'Commission%', visible: false },
+            { dataField: 'category', caption: 'Category', visible: false },
+            { dataField: 'cniC_EXP', caption: 'CNIC Expiry', dataType: 'date', format: 'dd-MM-yyy', visible: false },
+            { dataField: 'contacT_PERSON', caption: 'Contact Person', visible: false },
+            { dataField: 'wb', caption: 'Whatsapp No.', visible: false },
+            { dataField: 'tell', caption: 'Telephone No.', visible: false },
+            { dataField: 'paymenT_TERMS', caption: 'Terms', visible: false },
+            { dataField: 'crediT_LIMIT', caption: 'Limit', visible: false },
+            { dataField: 'salesperson', caption: 'Salesman', visible: false },
+            { dataField: 'regioN_NAME', caption: 'Region', visible: false },
+            { dataField: 'gst', caption: 'GST', visible: false },
+            { dataField: 'servicE_TAX', caption: 'Service Tax', visible: false },
+            { dataField: 't_CAT', caption: 'Tax Cat', visible: false },
+            { dataField: 'wht', caption: 'WHT', visible: false },
             {
                 dataField: 'exempT_DATE',
                 caption: 'Exemption Date',
                 dataType: 'date',
                 format: 'dd-MM-yyyy',
+                visible: false,
                 calculateCellValue: function (rowData) {
                     if (rowData.t_CAT === 'Exempted' && rowData.exempT_DATE) {
                         return new Date(rowData.exempT_DATE); 
@@ -387,16 +415,13 @@ var empr_partyTypes = {
                     return null;
                 }
             },
-
-            { dataField: 'f_NAME', caption: 'Tax Payer' },
-            { dataField: 'entitY_NAME', caption: 'Entity' },
-            { dataField: 'statuS_NAME', caption: 'Status' },
-            { dataField: 'accounT_NUM', caption: 'Account No.' },
-            { dataField: 'banK_NAME', caption: 'Bank Name' },
-            { dataField: 'brancH_NAME', caption: 'Branch Name' },
-            { dataField: 'BANK_ADDRESS', caption: 'Bank Address' },
-            { dataField: 'remarks', caption: 'Remarks' },
-            { dataField: 'termS_CONDITION', caption: 'Condition' },
+            { dataField: 'f_NAME', caption: 'Tax Payer', visible: false },
+            { dataField: 'entitY_NAME', caption: 'Entity', visible: false },
+            { dataField: 'accounT_NUM', caption: 'Account No.', visible: false },
+            { dataField: 'banK_NAME', caption: 'Bank Name', visible: false },
+            { dataField: 'brancH_NAME', caption: 'Branch Name', visible: false },
+            { dataField: 'BANK_ADDRESS', caption: 'Bank Address', visible: false },
+            { dataField: 'termS_CONDITION', caption: 'Condition', visible: false },
             //{ dataField: 'adD_USER_ID', caption: 'Created By', visible: false, },
             //{ dataField: 'adD_DATE', caption: 'Created Date', dataType: 'date', visible: false, format: 'dd-MM-yyy' },
             //{ dataField: 'adD_COMPUTER_NAME', caption: 'Created Computer', visible: false, },
@@ -424,6 +449,7 @@ var empr_partyTypes = {
             empr_partyTypes.InitEntityDDL(partydata.entity);
             empr_partyTypes.InitSalesManDDL(partydata.s_CODE);
             empr_partyTypes.InitChartOfAccountDDL(partydata.acT_CODE);
+            empr_partyTypes.InitRegTypeDDL(partydata.reG_TYPE);
             debugger;
 
             $('#taxpayer').dxSelectBox('instance').option("value", partydata.f_CODE);
@@ -480,8 +506,8 @@ var empr_partyTypes = {
             $("#COMM").val(partydata.comm);
             $("#DISC").val(partydata.disc);
 
-            $('#pills-warningprofile-tab').show();
-            $('#pills-warningcontact-tab').show();
+            //$('#pills-warningprofile-tab').show();
+            //$('#pills-warningcontact-tab').show();
             //$('.btn-delete').show();
             if (Permissions != "Admin") {
                 if (Permissions.r_DLT) {
@@ -716,6 +742,7 @@ var empr_partyTypes = {
         var EXEMPT_DATE = $("#EXEM_DATE").val();
 
         var ASTATUS = $('#ASTATUS').dxSelectBox('option', 'value');
+        var REG_TYPE = $('#REG_TYPE').dxSelectBox('option', 'value');
 
         var ID = $("#Code").val();
         var MENU_ID = $("#MENU_ID").val();
@@ -750,6 +777,7 @@ var empr_partyTypes = {
         var modelRecord = {
             ID: ID,
             MENU_ID: MENU_ID,
+            REG_TYPE: REG_TYPE,
             PARTY_TYPE_CODE: PARTY_CODE,// need to discuss
             PARTY_CODE: PARTY_CODE,
             PARTY_NAME: PARTY_NAME,
@@ -803,8 +831,8 @@ var empr_partyTypes = {
             if (data.msgType == 1) {
 
                 $('#Code').val(data.data);
-                $('#pills-warningprofile-tab').show();
-                $('#pills-warningcontact-tab').show();
+                //$('#pills-warningprofile-tab').show();
+                //$('#pills-warningcontact-tab').show();
                 //$('#pills-warningprofile').show();
                 //$('#pills-warningcontact').show();
                 $('.btn-delete').show();
@@ -895,6 +923,7 @@ var empr_partyTypes = {
         empr_partyTypes.InitEntityDDL();
         debugger;
         empr_partyTypes.InitTaxPayerDDL();
+        empr_partyTypes.InitRegTypeDDL();
 
         empr_partyTypes.InitTaxCatDDL();
         empr_partyTypes.InitSalesManDDL();
@@ -1247,5 +1276,25 @@ var empr_partyTypes = {
     },
     bindDxGridBoxDdl: function (divid, datasrc, col, hiddenid, selectedOjb, selectval, valueExpr, displayExpr, displayExprHidden, onchangeFun) {
         ati_dxHelper.DxGridBoxDropdown(divid, datasrc, col, hiddenid, selectedOjb, selectval, valueExpr, displayExpr, displayExprHidden, onchangeFun);
+    },
+
+    InitRegTypeDDL: function (selectedValue) {
+        $('#REG_TYPE').dxSelectBox({
+            dataSource: empr_helper.REG_TYPE,
+            displayExpr: 'value',
+            valueExpr: 'key',
+            value: selectedValue,
+            searchEnabled: true,
+            width: '100%',
+            placeholder: 'Select',
+            showClearButton: true,
+            dropDownOptions: {
+                height: 'auto',
+            },
+            pagingEnabled: true,
+            searchTimeout: 500,
+            onValueChanged: function (e) {
+            },
+        });
     },
 }

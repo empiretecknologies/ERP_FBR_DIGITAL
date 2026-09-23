@@ -134,15 +134,25 @@ var empr_ItemMaster = {
             valid = false;
         }
 
-        if (data.GROUP_CODE == '' || data.GROUP_CODE == null || data.GROUP_CODE == undefined) {
-            empr_helper.notify("Item group is required.", 2);
+        if (data.IUNIT_CODE == '' || data.IUNIT_CODE == null || data.IUNIT_CODE == undefined) {
+            empr_helper.notify("Unit is required.", 2);
             valid = false;
         }
 
-        if (data.ITEM_TYPE == '' || data.ITEM_TYPE == null || data.ITEM_TYPE == undefined) {
-            empr_helper.notify("Item type is required.", 2);
+        if (data.HS_CODE == null || String(data.HS_CODE).trim() == '') {
+            empr_helper.notify("HS Code is required.", 2);
             valid = false;
         }
+
+        //if (data.GROUP_CODE == '' || data.GROUP_CODE == null || data.GROUP_CODE == undefined) {
+        //    empr_helper.notify("Item group is required.", 2);
+        //    valid = false;
+        //}
+
+        //if (data.ITEM_TYPE == '' || data.ITEM_TYPE == null || data.ITEM_TYPE == undefined) {
+        //    empr_helper.notify("Item type is required.", 2);
+        //    valid = false;
+        //}
 
         //if (data.CAT_CODE == '' || data.CAT_CODE == null || data.CAT_CODE == undefined) {
         //    empr_helper.notify("Category is required.", 2);
@@ -154,90 +164,85 @@ var empr_ItemMaster = {
         //    valid = false;
         //}
 
-        if (data.IUNIT_CODE == '' || data.IUNIT_CODE == null || data.IUNIT_CODE == undefined) {
-            empr_helper.notify("Unit is required.", 2);
-            valid = false;
-        }
+        //if (data.PACK != '' && data.PACK != null && data.PACK != undefined) {
+        //    if (data.PUNIT_CODE == '' || data.PUNIT_CODE == null || data.PUNIT_CODE == undefined) {
+        //        empr_helper.notify("Packing Unit is required.", 2);
+        //        valid = false;
+        //    }
+        //}
 
-        if (data.PACK != '' && data.PACK != null && data.PACK != undefined) {
-            if (data.PUNIT_CODE == '' || data.PUNIT_CODE == null || data.PUNIT_CODE == undefined) {
-                empr_helper.notify("Packing Unit is required.", 2);
-                valid = false;
-            }
-        }
+        //if (data.ITEM_MAX != '') {
+        //    var max = 0;
+        //    var min = 0;
+        //    try {
+        //        max = parseFloat(data.ITEM_MAX);
+        //        if (isNaN(max)) {
+        //            empr_helper.notify("Please enter the correct maximum amount.", 2);
+        //            valid = false;
+        //            return valid;
+        //        }
+        //    }
+        //    catch (e) {
+        //        console.log(e);
+        //        empr_helper.notify("Please enter the correct maximum amount.", 2);
+        //        valid = false;
+        //        return valid;
+        //    }
 
-        if (data.ITEM_MAX != '') {
-            var max = 0;
-            var min = 0;
-            try {
-                max = parseFloat(data.ITEM_MAX);
-                if (isNaN(max)) {
-                    empr_helper.notify("Please enter the correct maximum amount.", 2);
-                    valid = false;
-                    return valid;
-                }
-            }
-            catch (e) {
-                console.log(e);
-                empr_helper.notify("Please enter the correct maximum amount.", 2);
-                valid = false;
-                return valid;
-            }
+        //    try {
+        //        min = parseFloat(data.ITEM_MIN);
+        //        if (isNaN(min)) {
+        //            empr_helper.notify("Please enter the correct minimum amount.", 2);
+        //            valid = false;
+        //            return valid;
+        //        }
+        //    }
+        //    catch (e) {
+        //        console.log(e);
+        //        empr_helper.notify("Please enter the correct minimum amount.", 2);
+        //        valid = false;
+        //        return valid;
+        //    }
 
-            try {
-                min = parseFloat(data.ITEM_MIN);
-                if (isNaN(min)) {
-                    empr_helper.notify("Please enter the correct minimum amount.", 2);
-                    valid = false;
-                    return valid;
-                }
-            }
-            catch (e) {
-                console.log(e);
-                empr_helper.notify("Please enter the correct minimum amount.", 2);
-                valid = false;
-                return valid;
-            }
+        //    if (max < min) {
+        //        empr_helper.notify("Minimum amount must be less than the maximum amount.", 2);
+        //        valid = false;
+        //    }
+        //}
 
-            if (max < min) {
-                empr_helper.notify("Minimum amount must be less than the maximum amount.", 2);
-                valid = false;
-            }
-        }
+        //if (data.ITEM_MIN != '') {
+        //    var max = 0;
+        //    var min = 0;
+        //    try {
+        //        max = parseFloat(data.ITEM_MAX);
+        //        if (isNaN(max)) {
+        //            empr_helper.notify("Please enter the correct maximum amount.", 2);
+        //            valid = false;
+        //            return valid;
+        //        }
+        //    }
+        //    catch (e) {
+        //        console.log(e);
+        //        empr_helper.notify("Please enter the correct maximum amount.", 2);
+        //        valid = false;
+        //        return valid;
+        //    }
 
-        if (data.ITEM_MIN != '') {
-            var max = 0;
-            var min = 0;
-            try {
-                max = parseFloat(data.ITEM_MAX);
-                if (isNaN(max)) {
-                    empr_helper.notify("Please enter the correct maximum amount.", 2);
-                    valid = false;
-                    return valid;
-                }
-            }
-            catch (e) {
-                console.log(e);
-                empr_helper.notify("Please enter the correct maximum amount.", 2);
-                valid = false;
-                return valid;
-            }
-
-            try {
-                min = parseFloat(data.ITEM_MIN);
-                if (isNaN(min)) {
-                    empr_helper.notify("Please enter the correct minimum amount.", 2);
-                    valid = false;
-                    return valid;
-                }
-            }
-            catch (e) {
-                console.log(e);
-                empr_helper.notify("Please enter the correct minimum amount.", 2);
-                valid = false;
-                return valid;
-            }
-        }
+        //    try {
+        //        min = parseFloat(data.ITEM_MIN);
+        //        if (isNaN(min)) {
+        //            empr_helper.notify("Please enter the correct minimum amount.", 2);
+        //            valid = false;
+        //            return valid;
+        //        }
+        //    }
+        //    catch (e) {
+        //        console.log(e);
+        //        empr_helper.notify("Please enter the correct minimum amount.", 2);
+        //        valid = false;
+        //        return valid;
+        //    }
+        //}
 
         return valid;
     },
@@ -664,7 +669,8 @@ var empr_ItemMaster = {
             {
                 dataField: 'id',
                 caption: 'Code',
-                alignment:'center'
+                alignment:'center',
+                visible: false,
             },
             {
                 dataField: 'iteM_NAME',
@@ -673,14 +679,17 @@ var empr_ItemMaster = {
             {
                 dataField: 'iteM_SHORT_NAME',
                 caption: 'Model #',
+                visible: false,
             },
             {
                 dataField: 'iteM_TYPE',
                 caption: 'Item Type',
+                visible: false,
             },
             {
                 dataField: 'grouP_NAME',
                 caption: ' Item Group',
+                visible: false,
             },
             {
                 dataField: 'unit',
@@ -689,42 +698,52 @@ var empr_ItemMaster = {
             {
                 dataField: 'pack',
                 caption: 'Pack.',
+                visible: false,
             },
             {
                 dataField: 'punit',
                 caption: 'Packing Unit',
+                visible: false,
             },
             {
                 dataField: 'salestax',
                 caption: 'Sale Tax',
+                visible: false,
             },
             {
                 dataField: 'taX_TYPE',
                 caption: 'Tax Type',
+                visible: false,
             },
             {
                 dataField: 'weight',
                 caption: 'Weight',
+                visible: false,
             },
             {
                 dataField: 'salE_RATE',
                 caption: 'Sale Rate.',
+                visible: false,
             },
             {
                 dataField: 'purchasE_RATE',
                 caption: 'Purchase Rate.',
+                visible: false,
             },
             {
                 dataField: 'iteM_MAX',
                 caption: 'Max',
+                visible: false,
             },
             {
                 dataField: 'iteM_MINI',
                 caption: 'Min',
+                visible: false,
             },
             {
                 dataField: 'caT_CODE',
                 caption: 'Category',
+                visible: false,
             },
             {
                 dataField: 'hS_CODE',
@@ -738,22 +757,27 @@ var empr_ItemMaster = {
             {
                 dataField: 'suB_CAT_CODE',
                 caption: 'Sub Category',
+                visible: false,
             },
             {
                 dataField: 'fabric',
                 caption: 'Fabric',
+                visible: false,
             },
             {
                 dataField: 'season',
                 caption: 'Season',
+                visible: false,
             },
             {
                 dataField: 'brand',
                 caption: 'Brand',
+                visible: false,
             },
             {
                 dataField: 'style',
                 caption: 'Style',
+                visible: false,
             },
             {
                 dataField: 'iteM_ID',
@@ -854,7 +878,7 @@ var empr_ItemMaster = {
                 $("#ITEM_MAX").val(response.iteM_MAX)
                 $("#ITEM_MIN").val(response.iteM_MIN)
                 $("#ProductImageHidden").val(response.ipic)
-                $('#pills-warningattributes-tab').show();
+                //$('#pills-warningattributes-tab').show();
                 $('#WASTAGE').prop('checked', response.wastage == 1);
 
                 // Attribute Data filling
@@ -872,8 +896,8 @@ var empr_ItemMaster = {
                 empr_ItemMaster.InitFabricDDL(attributeResponse.fabric);
 
 
-                if (BarcodeVisible == 'B')
-                    $('#pills-warningprofile-tab').show();
+                //if (BarcodeVisible == 'B')
+                //    $('#pills-warningprofile-tab').show();
 
                 //$('#BtnDelete').show();
                 //$('#BtnNew').show();
@@ -1360,9 +1384,9 @@ var empr_ItemMaster = {
             empr_helper.notify(data.msg, data.msgType);
             if (data.msgType == 1) {
                 $('#Code').val(data.data);
-                $('#pills-warningattributes-tab').show();
-                if (BarcodeVisible == 'B')
-                    $('#pills-warningprofile-tab').show();
+                //$('#pills-warningattributes-tab').show();
+                //if (BarcodeVisible == 'B')
+                //    $('#pills-warningprofile-tab').show();
                 if (dataClear == 1) {
                     $('#BtnNew').show();
                     $('#BtnDelete').show();

@@ -182,5 +182,10 @@ namespace Empire_ERP.Core.Services
             }
             return response;
         }
+
+        public MyHttpResponseMessage GetDashboardData(Common common)
+        {
+            return _PurchaseBillRepository.GetDashboardData(common);
+        }
     }
 }

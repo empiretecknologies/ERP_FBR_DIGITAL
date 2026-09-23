@@ -45,6 +45,7 @@
         public string? EDIT_IP_ADDRESS { get; set; }
         public string? ADD_POSTALCODE { get; set; }
         public string? EDIT_POSTALCODE { get; set; }
+        public string? REG_TYPE { get; set; }
         public int? MENU_ID { get; set; }
         public int? REGION { get; set; }
         public string? ADD_USER_ID { get; set; }

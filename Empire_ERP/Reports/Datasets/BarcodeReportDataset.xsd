@@ -101,7 +101,7 @@
               <xs:element name="Item" msprop:Generator_ColumnPropNameInTable="ItemColumn" msprop:Generator_ColumnPropNameInRow="Item" msprop:Generator_UserColumnName="Item" msprop:Generator_ColumnVarNameInTable="columnItem" type="xs:string" minOccurs="0" />
               <xs:element name="LOT" msprop:Generator_ColumnPropNameInTable="LOTColumn" msprop:Generator_ColumnPropNameInRow="LOT" msprop:Generator_UserColumnName="LOT" msprop:Generator_ColumnVarNameInTable="columnLOT" type="xs:string" minOccurs="0" />
               <xs:element name="PICK_TRANS" msprop:Generator_ColumnPropNameInTable="PICK_TRANSColumn" msprop:Generator_ColumnPropNameInRow="PICK_TRANS" msprop:Generator_UserColumnName="PICK_TRANS" msprop:Generator_ColumnVarNameInTable="columnPICK_TRANS" type="xs:string" minOccurs="0" />
-              <xs:element name="WAREHOUSE" msprop:Generator_ColumnPropNameInRow="WAREHOUSE" msprop:Generator_ColumnPropNameInTable="WAREHOUSEColumn" msprop:Generator_ColumnVarNameInTable="columnWAREHOUSE" msprop:Generator_UserColumnName="WAREHOUSE" type="xs:string" minOccurs="0" />
+              <xs:element name="WAREHOUSE" msprop:Generator_UserColumnName="WAREHOUSE" msprop:Generator_ColumnPropNameInTable="WAREHOUSEColumn" msprop:Generator_ColumnPropNameInRow="WAREHOUSE" msprop:Generator_ColumnVarNameInTable="columnWAREHOUSE" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -391,6 +391,7 @@
               <xs:element name="Tax" msprop:Generator_ColumnPropNameInTable="TaxColumn" msprop:Generator_ColumnPropNameInRow="Tax" msprop:Generator_UserColumnName="Tax" msprop:Generator_ColumnVarNameInTable="columnTax" type="xs:decimal" minOccurs="0" />
               <xs:element name="TaxAmt" msprop:Generator_ColumnPropNameInTable="TaxAmtColumn" msprop:Generator_ColumnPropNameInRow="TaxAmt" msprop:Generator_UserColumnName="TaxAmt" msprop:Generator_ColumnVarNameInTable="columnTaxAmt" type="xs:decimal" minOccurs="0" />
               <xs:element name="NetAmt" msprop:Generator_ColumnPropNameInTable="NetAmtColumn" msprop:Generator_ColumnPropNameInRow="NetAmt" msprop:Generator_UserColumnName="NetAmt" msprop:Generator_ColumnVarNameInTable="columnNetAmt" type="xs:decimal" minOccurs="0" />
+              <xs:element name="Unit" msprop:Generator_ColumnPropNameInRow="Unit" msprop:Generator_ColumnPropNameInTable="UnitColumn" msprop:Generator_ColumnVarNameInTable="columnUnit" msprop:Generator_UserColumnName="Unit" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>

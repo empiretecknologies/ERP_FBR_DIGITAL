@@ -35,6 +35,11 @@
         { key: 'E', value: 'Exclude' },
     ],
 
+    REG_TYPE: [
+        { key: 'Registered', value: 'Registered' },
+        { key: 'Unregistered', value: 'Unregistered' },
+    ],
+
     comm_Type: [
         { key: 'W', value: 'Weight' },
         { key: 'B', value: 'Bags' },

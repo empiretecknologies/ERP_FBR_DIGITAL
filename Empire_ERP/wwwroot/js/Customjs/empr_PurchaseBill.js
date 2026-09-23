@@ -80,6 +80,8 @@ var empr_PurchaseBill = {
                 if (code == null || code == 0) {
                     empr_helper.notify('Create Entry first', 2);
                 } else {
+                    $("#Loader").show();
+                    $("#Loader").css('display', 'flex');
                     empr_PurchaseBill.GetAndPostDataToApi(code);
                 }
             });
@@ -704,82 +706,7 @@ var empr_PurchaseBill = {
                 dataField: 'acT_CODE',
                 visible: false
             },
-            //{
-            //    dataField: 'warehouse',
-            //    caption: 'Warehouse',
-            //    width: 200,
-            //    alignment: 'center',
-            //    lookup: {
-            //        dataSource: {
-            //            store: Warehouse,
-            //            paginate: true,
-            //            pageSize: 50
-            //        },
-            //        allowClearing: true,
-            //        displayExpr: 'value',
-            //        valueExpr: 'key',
-            //        searchEnabled: true,
-            //        showClearButton: true,
-            //    },
-            //    setCellValue: function (newData, value, currentRowData) {
-            //        newData.warehouse = value;
-            //    }
-            //},
-            //{
-            //    dataField: 'lot',
-            //    caption: 'Lot',
-            //    width: 200,
-            //    alignment: 'center',
-            //    lookup: {
-            //        dataSource: function (options) {
-            //            let warehouse = options.data?.warehouse;
-            //            return Lots.filter(x =>
-            //                !warehouse || x.warehouse === warehouse
-            //            );
-            //        },
-            //        allowClearing: true,
-            //        displayExpr: 'value',
-            //        valueExpr: 'key'
-            //    },
-            //    setCellValue: async function (newData, value, currentRowData) {
-            //        debugger;
-            //        newData.lot = value;
-
-            //        let selectedLotObj = Lots.find(x => x.key === value);
-
-            //        if (selectedLotObj) {
-            //            newData.iteM_CODE = selectedLotObj.item;
-
-            //            const item = Array.isArray(Items) ? Items.find(x => x.key === newData.iteM_CODE) : null;
-            //            if (item) {
-            //                newData.unit = item.unit;
-            //            }
-
-            //            var warehouse = parseFloat(currentRowData.warehouse) || 0;
-            //            var lot = newData.lot;
-            //            if (warehouse > 0 && lot > 0) {
-
-            //                let stockRecord = empr_PurchaseBill.CurrentStock.filter(x =>
-            //                    x.itemId === String(selectedLotObj.item) &&
-            //                    x.warehouse === String(warehouse) &&
-            //                    x.lot === String(lot)
-            //                );
-
-            //                if (stockRecord && stockRecord.length > 0) {
-            //                    newData.currentStock = stockRecord ? stockRecord[0].balance : 0;
-            //                } else {
-            //                    newData.currentStock = 0;
-            //                }
-            //            }
-
-
-            //        } else {
-            //            newData.iteM_CODE = null;
-            //            newData.unit = null;
-            //            newData.currentStock = 0;
-            //        }
-            //    }
-            //},
+            
             {
                 dataField: 'iteM_CODE',
                 caption: 'Item',
@@ -807,36 +734,6 @@ var empr_PurchaseBill = {
                         newData.hS_CODE = item.hscode;
                     }
 
-                    //var warehouse = parseFloat(currentRowData.warehouse) || 0;
-                    //var lot = parseFloat(currentRowData.lot) || 0;
-                    //if (warehouse > 0 && lot > 0) {
-
-                    //    let stockRecord = empr_PurchaseBill.CurrentStock.filter(x =>
-                    //        String(x.itemId) === String(value) &&
-                    //        String(x.warehouse) === String(warehouse) &&
-                    //        String(x.lot) === String(lot)
-                    //    );
-
-                    //    debugger;
-
-                    //    if (stockRecord && stockRecord.length > 0) {
-                    //        var obj = stockRecord[0];
-                    //        newData.currentStock = parseFloat(obj.balance) || 0;
-                    //    } else {
-                    //        newData.currentStock = 0;
-                    //    }
-                    //}
-                    //this.defaultSetCellValue(rowData, newValue);
-
-                    //const selected = Items.find(x => x.key === newValue);
-
-                    //if (selected) {
-                    //    rowData.hS_CODE = selected.hscode;
-                    //    rowData.unit = selected.unit;
-                    //} else {
-                    //    rowData.hS_CODE = "";
-                    //    rowData.unit = 0;
-                    //}
                 },
             },
             {
@@ -844,24 +741,6 @@ var empr_PurchaseBill = {
                 caption: 'HS Code',
                 allowEditing: false
             },
-            //{
-            //    dataField: 'currentStock',
-            //    caption: 'Current Stock',
-            //    allowEditing: false,
-            //    alignment: 'right',
-            //    dataType: 'number',
-            //    format: { type: 'fixedPoint', precision: 0 },
-            //    cellTemplate: function (container, options) {
-            //        var value = options.value;
-            //        var color = value < 0 ? 'red' : 'black';
-
-            //        $('<span>')
-            //            .text(value)
-            //            .css('color', color)
-            //            .css('font-weight', value < 0 ? 'bold' : 'normal')
-            //            .appendTo(container);
-            //    },
-            //},
             {
                 dataField: 'qty',
                 caption: 'Qty',
@@ -874,15 +753,9 @@ var empr_PurchaseBill = {
                     newData.amt = calc.amt;
                     newData.taX_AMT = calc.taX_AMT;
                     newData.neT_AMT = calc.neT_AMT;
+                    newData.w_AMT = ((parseFloat(value) || 0) * (parseFloat(currentRowData.w_RATE) || 0)).toFixed(2);
                 }
             },
-            //{
-            //    dataField: 'bags',
-            //    caption: 'Bags',
-            //    width: 100,
-            //    dataType: 'number',
-            //    format: { type: 'fixedPoint', precision: 0 }
-            //},
             {
                 dataField: 'unit',
                 caption: 'Unit',
@@ -919,6 +792,25 @@ var empr_PurchaseBill = {
             {
                 dataField: 'amt',
                 caption: 'Amount',
+                width: 100,
+                allowEditing: false,
+                dataType: 'number',
+                format: { type: 'fixedPoint', precision: 2 }
+            },
+            {
+                dataField: 'w_RATE',
+                caption: 'W.Rate',
+                width: 80,
+                dataType: 'number',
+                format: { type: 'fixedPoint', precision: 2 },
+                setCellValue: function (newData, value, currentRowData) {
+                    newData.w_RATE = value;
+                    newData.w_AMT = ((parseFloat(currentRowData.qty) || 0) * (parseFloat(value) || 0)).toFixed(2);
+                }
+            },
+            {
+                dataField: 'w_AMT',
+                caption: 'W.Amt',
                 width: 100,
                 allowEditing: false,
                 dataType: 'number',
@@ -1116,7 +1008,7 @@ var empr_PurchaseBill = {
             //},
             {
                 dataField: 'fbR_TYPE',
-                caption: "FBR Type",
+                caption: "Sale Type",
                 allowSorting: false,
                 width: 200,
                 lookup: {
@@ -1658,12 +1550,10 @@ var empr_PurchaseBill = {
                         return item.partyCode === response.partY_CODE && item.accountCode === response.acT_CODE;
                     });
                     var fbrNo = response.fbR_NO || "";
-
+                    debugger;
                     $('#FBR_RES').val(fbrNo);
 
-                    var isValidFbrNo =
-                        fbrNo !== "" &&
-                        /^[A-Z0-9]{21}$/.test(fbrNo);
+                    var isValidFbrNo = fbrNo !== "" && /^\S+$/.test(fbrNo);
 
                     if (isValidFbrNo) {
 
@@ -2327,11 +2217,13 @@ var empr_PurchaseBill = {
             console.log("Detail Match:", detailMatch);
 
             if (!masterMatch || !detailMatch) {
+                $("#Loader").hide();
                 empr_helper.notify("Please Save First", 2);
                 return;
             }
         }
         else {
+            $("#Loader").hide();
             empr_helper.notify("Please Save First", 2);
             return;
         }
@@ -2411,67 +2303,78 @@ var empr_PurchaseBill = {
             return stableStringify(a) === stableStringify(b);
         }
 
-        ajaxHelper.ajaxGetJson('/PurchaseBill/GetDataForApi?code=' + code, function (data) {
+        $("#Loader").show();
+        $("#Loader").css('display', 'flex');
+
+        var xhr = ajaxHelper.ajaxGetJson('/PurchaseBill/GetDataForApi?code=' + code, function (data) {
             debugger;
             console.log("fbr_respone", data);
-            if (data.msgType === 1) {
+            try {
+                if (data.msgType === 1) {
 
-                console.log('GetDataForApi Response', data.response);
+                    console.log('GetDataForApi Response', data.response);
 
-                var response = data.response;
+                    var response = data.response;
 
-                // Remove trailing comma before } or ]
-                response = response.replace(/,\s*}/g, '}');
-                response = response.replace(/,\s*]/g, ']');
+                    // Remove trailing comma before } or ]
+                    response = response.replace(/,\s*}/g, '}');
+                    response = response.replace(/,\s*]/g, ']');
 
-                var fbrData;
+                    var fbrData;
 
-                try {
-                    fbrData = JSON.parse(response);
-                } catch (e) {
-                    console.error("JSON Parse Error:", e);
-                    console.log("Response:", response);
-                    return;
+                    try {
+                        fbrData = JSON.parse(response);
+                    } catch (e) {
+                        console.error("JSON Parse Error:", e);
+                        console.log("Response:", response);
+                        return;
+                    }
+
+                    var displayText =
+                        fbrData.invoiceNumber ||
+                        fbrData.validationResponse?.error ||
+                        fbrData.validationResponse?.invoiceStatuses
+                            ?.map(function (item) {
+                                return item.errorCode + ": " + item.error;
+                            })
+                            .filter(Boolean)
+                            .join("<br>") ||
+                        "Unknown response";
+
+                    var statusUpdateRes =
+                        empr_PurchaseBill.ApiStatus_Update(code, displayText);
+
+                    $('#FBR_RES').val(displayText);
+
+                    // Invoice Number valid hai to black, warna red
+                    if (fbrData.invoiceNumber) {
+                        $('#FBR_RES').css('color', 'black');
+                    } else {
+                        $('#FBR_RES').css('color', 'red');
+                    }
+
+                    if (data.qrCode) {
+                        $("#qrImg").attr(
+                            "src",
+                            "data:image/png;base64," + data.qrCode
+                        );
+                        $('#BtnfBRpOST').hide();
+                        $("#verifiedText").show();
+                    }
                 }
-
-                var displayText =
-                    fbrData.invoiceNumber ||
-                    fbrData.validationResponse?.error ||
-                    fbrData.validationResponse?.invoiceStatuses
-                        ?.map(function (item) {
-                            return item.errorCode + ": " + item.error;
-                        })
-                        .filter(Boolean)
-                        .join("<br>") ||
-                    "Unknown response";
-
-                var statusUpdateRes =
-                    empr_PurchaseBill.ApiStatus_Update(code, displayText);
-
-                $('#FBR_RES').val(displayText);
-
-                // Invoice Number valid hai to black, warna red
-                if (fbrData.invoiceNumber) {
-                    $('#FBR_RES').css('color', 'black');
-                } else {
-                    $('#FBR_RES').css('color', 'red');
+                else {
+                    empr_helper.notify("No data found / FBR error", 2);
                 }
-
-                if (data.qrCode) {
-                    $("#qrImg").attr(
-                        "src",
-                        "data:image/png;base64," + data.qrCode
-                    );
-                    $('#BtnfBRpOST').hide();
-                    $("#verifiedText").show();
-                }
+            } finally {
+                $("#Loader").hide();
             }
-            else {
-                empr_helper.notify("No data found / FBR error", 2);
-            }
-
-            $("#Loader").hide();
         }, false, true);
+
+        if (xhr && xhr.fail) {
+            xhr.fail(function () {
+                $("#Loader").hide();
+            });
+        }
 
     },
     ApiStatus_Update(code, apiResponce) {

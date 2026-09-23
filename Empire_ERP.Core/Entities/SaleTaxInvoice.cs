@@ -13,6 +13,7 @@ namespace Empire_ERP.Core.Entities
         public string? ASTATUS { get; set; }
         public string? TOKEN { get; set; }
         public string? FBR_URL { get; set; }
+        public string? REG_TYPE { get; set; }
         public DateTime? V_DATE { get; set; }
         public string? V_DATE_STRING { get; set; }
         public string? VOUCHER_NO { get; set; }
@@ -104,7 +105,7 @@ namespace Empire_ERP.Core.Entities
         public double? DISC { get; set; }
         public double? DISC_AMT { get; set; }
         public double? TAX { get; set; }
-        public double? TAX_AMT { get; set; }
+        public decimal? TAX_AMT { get; set; }
         public double? NET_AMT { get; set; }
         public string? DT_DESC { get; set; }
 
@@ -117,6 +118,7 @@ namespace Empire_ERP.Core.Entities
         public string? S_NAME { get; set; }
         public double? TOTAL_VALUES { get; set; }
         public double? VALUE_SALES_EXCLUDING { get; set; }
+        public double? W_AMT { get; set; }
         public double? FIXEDVALUE_RETAILPRICE { get; set; }
         public double? ST_APPLICABLE { get; set; }
         public int? FBR_TYPE { get; set; }
