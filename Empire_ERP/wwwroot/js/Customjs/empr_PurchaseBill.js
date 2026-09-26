@@ -192,7 +192,7 @@ var empr_PurchaseBill = {
             });
 
             $('body').on('click', '#BtnChargesSave', function () {
-                
+
                 empr_PurchaseBill.GetAndSaveCharges();
             });
 
@@ -215,9 +215,9 @@ var empr_PurchaseBill = {
             for (var i = 0; i < gridData.length; i++) {
                 var row = gridData[i];
                 if (row.chargeS_CODE === undefined || row.chargeS_CODE === null || String(row.chargeS_CODE).trim() === '') {
-                    var lineNo = i + 1; 
+                    var lineNo = i + 1;
                     empr_helper.notify('Charges Account is required on line ' + lineNo, 2);
-                    return false; 
+                    return false;
                 }
 
                 if (row.sign === undefined || row.sign === null || String(row.sign).trim() === '') {
@@ -226,7 +226,7 @@ var empr_PurchaseBill = {
                     return false;
                 }
             }
-            return true; 
+            return true;
         };
 
         if ($('#ChargesGridContainer').dxDataGrid('instance').hasEditData()) {
@@ -235,7 +235,7 @@ var empr_PurchaseBill = {
                 var data = $('#ChargesGridContainer').dxDataGrid('instance').option("dataSource");
 
                 if (!checkSignValidation(data)) {
-                    return; 
+                    return;
                 }
 
                 var result = empr_PurchaseBill.ValidateMainInfo(data);
@@ -254,7 +254,7 @@ var empr_PurchaseBill = {
             var data = $('#ChargesGridContainer').dxDataGrid('instance').option("dataSource");
 
             if (!checkSignValidation(data)) {
-                return; 
+                return;
             }
 
             var id = $('#Code').val();
@@ -270,7 +270,7 @@ var empr_PurchaseBill = {
 
         console.log('SaveChargesData', dataModel);
         ajaxHelper.ajaxPostJsonData(dataModel, "/PurchaseBill/SaveCharges", function (data) {
-            console.log('charges save',data);
+            console.log('charges save', data);
             empr_helper.notify(data.msg, data.msgType);
             if (data.msgType == 1) {
                 empr_PurchaseBill.GetChargesByCode();
@@ -281,9 +281,9 @@ var empr_PurchaseBill = {
     GetChargesByCode: function () {
         var code = $('#Code').val();
         ajaxHelper.ajaxGetJson('/PurchaseBill/GetChargesByCode?code=' + code, function (data) {
-            console.log('charges save res : ',data);
+            console.log('charges save res : ', data);
             if (data.charges.msgType == 1) {
-                
+
                 debugger;
                 if (data.charges.data.length > 0) {
 
@@ -574,7 +574,7 @@ var empr_PurchaseBill = {
 
                 $('#DetailContainer').dxDataGrid('instance').option('dataSource', updatedData);
 
-                
+
                 //$('#DetailContainer').dxDataGrid('instance').option('dataSource', selectedSodas);
             }
 
@@ -706,7 +706,7 @@ var empr_PurchaseBill = {
                 dataField: 'acT_CODE',
                 visible: false
             },
-            
+
             {
                 dataField: 'iteM_CODE',
                 caption: 'Item',
@@ -1129,7 +1129,7 @@ var empr_PurchaseBill = {
                 caption: 'Code',
                 visible: false
             },
-            
+
         ];
         empr_helper.editableDxGridbindingForTransactionsVouchers('#ChargesGridContainer', col, dataSrc, "ChargesGrid");
         if (dataSrc.length == 0) {
@@ -1350,7 +1350,7 @@ var empr_PurchaseBill = {
             $('#ChargesGridContainer').dxDataGrid('instance').saveEditData().done(function () {
                 const gridInstance = $('#ChargesGridContainer').dxDataGrid('instance');
                 const dataSource = gridInstance.option("dataSource");
-                
+
 
 
                 const newRow = {
@@ -1426,7 +1426,7 @@ var empr_PurchaseBill = {
                 empr_helper.notify("You are not allowed to delete the last row.", 2);
             }
         }
-    }, 
+    },
 
     InitQuickSearchGrid: function () {
         empr_PurchaseBill.GetPurchaseBill();
@@ -1470,7 +1470,7 @@ var empr_PurchaseBill = {
             },
             { dataField: 'id', caption: 'Code', width: 80, alignment: "center" },
             { dataField: 'v_DATE', caption: 'Voucher Date', dataType: 'date', format: 'dd-MM-yyy' },
-            { dataField: 'voucheR_NO', caption: 'Voucher No',alignment: 'center', },
+            { dataField: 'voucheR_NO', caption: 'Voucher No', alignment: 'center', },
             {
                 dataField: 'pvoucheR_NO', caption: 'Pick Tran#',
                 allowEditing: false,
@@ -1593,7 +1593,9 @@ var empr_PurchaseBill = {
                     if (Permissions != "Admin") {
                         if ($('#FBR_RES').val().trim() === "") {
                             if (Permissions.r_DLT) {
-                                $('#BtnDelete').show();
+                                if (isValidFbrNo) {
+                                    $('#BtnDelete').show();
+                                }
                             }
                             if (Permissions.r_EDIT) {
                                 $('#BtnSave').show();
@@ -1615,12 +1617,14 @@ var empr_PurchaseBill = {
                         }
                         $('#BtnSave').show();
                     }
-                    $('#BtnDelete').show();
+                    if (isValidFbrNo) {
+                        $('#BtnDelete').show();
+                    }
                 }
                 //$('#charges-tab-li').removeClass('d-none');
 
-                
-                
+
+
                 if (data.detail.msgType == 1) {
                     var updatedDetailData = data.detail.data.map(item => {
                         let stockRecord = empr_PurchaseBill.CurrentStock.find(s =>
@@ -1856,7 +1860,7 @@ var empr_PurchaseBill = {
 
     ResetForm: function () {
         $('.detailInfo a').tab('show');
-        empr_PurchaseBill.CreateGrid([{ __KEY__: empr_PurchaseBill.GenerateKey(36), dT_CODE: 0,}]);
+        empr_PurchaseBill.CreateGrid([{ __KEY__: empr_PurchaseBill.GenerateKey(36), dT_CODE: 0, }]);
         empr_PurchaseBill.CreateChargesGrid(DefaultCharges);
 
         $('#Code').val('');
@@ -2094,9 +2098,9 @@ var empr_PurchaseBill = {
             BALANCE: balance,
         }
         ajaxHelper.ajaxPostJsonData(dataModel, "/PurchaseBill/GetPrintReport", function (data) {
-            console.log('report',data);
+            console.log('report', data);
             if (data.msgType == 1) {
-                
+
                 $('#ModalBody').empty();
                 setTimeout(function () {
                     $('#ReportType').dxSelectBox('instance').option('value', MD_ID);

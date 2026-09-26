@@ -1801,20 +1801,20 @@ namespace Empire_ERP.Infrastructure.Repositories
                             {
                                 HS_CODE = SafeString(reader["HS_CODE"]),
                                 ITEM_NAME = SafeString(reader["ITEM_NAME"]),
-                                RATE = Math.Round(SafeDouble(reader["RATE"])),
+                                RATE = Math.Round(SafeDouble(reader["RATE"]), 2),
                                 UOM = SafeString(reader["UOM"]),
                                 QTY = SafeDecimal(reader["QTY"]),
-                                TOTAL_VALUES = Math.Round(SafeDouble(reader["TOTAL_VALUES"])),
-                                NET_AMT = Math.Round(SafeDouble(reader["NET_AMT"])),
-                                VALUE_SALES_EXCLUDING = Math.Round(SafeDouble(reader["VALUE_SALES_EXCLUDING"])),
-                                W_AMT = Math.Round(SafeDouble(reader["W_AMT"])),
-                                FIXEDVALUE_RETAILPRICE = Math.Round(SafeDouble(reader["FIXEDVALUE_RETAILPRICE"])),
+                                TOTAL_VALUES = Math.Round(SafeDouble(reader["TOTAL_VALUES"]), 2),
+                                NET_AMT = Math.Round(SafeDouble(reader["NET_AMT"]), 2),
+                                VALUE_SALES_EXCLUDING = Math.Round(SafeDouble(reader["VALUE_SALES_EXCLUDING"]), 2),
+                                W_AMT = Math.Round(SafeDouble(reader["W_AMT"]), 2),
+                                FIXEDVALUE_RETAILPRICE = Math.Round(SafeDouble(reader["FIXEDVALUE_RETAILPRICE"]), 2),
                                 ST_APPLICABLE = Math.Round(SafeDouble(reader["ST_APPLICABLE"]), 2),
                                 SRO_SCH_NO = SafeString(reader["SRO_SCH_NO"]),
                                 S_NAME = SafeString(reader["S_NAME"]),
                                 SERIAL_NO = SafeInt(reader["SERIAL_NO"]),
-                                TAX = Math.Round(SafeDouble(reader["TAX"])),
-                                TAX_AMT = SafeDecimal(reader["TAX_AMT"]),
+                                TAX = Math.Round(SafeDouble(reader["TAX"]), 2),
+                                TAX_AMT = Math.Round(SafeDecimal(reader["TAX_AMT"]), 2),
 
                             };
 
