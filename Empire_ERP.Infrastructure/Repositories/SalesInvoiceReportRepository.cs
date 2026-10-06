@@ -94,9 +94,11 @@ namespace Empire_ERP.Infrastructure.Repositories
                 }
                 List<CustomSalesInvoiceReport> jsonDataResult = new List<CustomSalesInvoiceReport>();
                 List<dynamic> jsonDetailDataResult = new List<dynamic>();
+                List<string> dynamicColumns = new List<string>();
+                List<Dictionary<string, object?>> dynamicRows = new List<Dictionary<string, object?>>();
                 using (SqlConnection connection = new SqlConnection(new SQLService().getconnstring()))
                 {
-                    if (report.ReportID == 154 || report.ReportID == 155 || report.ReportID == 157 || report.ReportID == 158)
+                    if (report.ReportID == 154 || report.ReportID == 155 || report.ReportID == 157 || report.ReportID == 158 || report.ReportID == 159)
                     {
                         string query = $"EXEC FBR_SB '{report.ReportID}','{report.FromDate.Value.ToString("yyyy-MM-dd")}','{report.ToDate.Value.ToString("yyyy-MM-dd")}','{common.Branch}','{common.Period}','{report.Item}','{report.PartyCode}','{report.ActCode}'";
                         SqlCommand command = new SqlCommand(query, connection);
@@ -158,6 +160,36 @@ namespace Empire_ERP.Infrastructure.Repositories
                                 jsonDataResult.Add(row);
                             }
                         }
+                        else if (report.ReportID == 159)
+                        {
+                            // PARTY_NAME is always first, remaining columns keep the order/names returned by the procedure.
+                            List<int> ordinals = new List<int>();
+                            for (int i = 0; i < reader.FieldCount; i++)
+                            {
+                                if (string.Equals(reader.GetName(i), "PARTY_NAME", StringComparison.OrdinalIgnoreCase))
+                                {
+                                    ordinals.Insert(0, i);
+                                }
+                                else
+                                {
+                                    ordinals.Add(i);
+                                }
+                            }
+                            foreach (int ordinal in ordinals)
+                            {
+                                dynamicColumns.Add(reader.GetName(ordinal));
+                            }
+                            while (reader.Read())
+                            {
+                                var row = new Dictionary<string, object?>();
+                                for (int i = 0; i < ordinals.Count; i++)
+                                {
+                                    object value = reader.GetValue(ordinals[i]);
+                                    row["c" + i] = value == DBNull.Value ? null : value;
+                                }
+                                dynamicRows.Add(row);
+                            }
+                        }
                         
                         reader.Close();
                     }
@@ -166,7 +198,14 @@ namespace Empire_ERP.Infrastructure.Repositories
 
                 CalculateBalanceAmount(jsonDataResult, report.ReportID);
 
-                response.data = jsonDataResult;
+                if (report.ReportID == 159)
+                {
+                    response.data = new { columns = dynamicColumns, rows = dynamicRows };
+                }
+                else
+                {
+                    response.data = jsonDataResult;
+                }
                 response.msg = "";
                 response.msgType = 1;
             }

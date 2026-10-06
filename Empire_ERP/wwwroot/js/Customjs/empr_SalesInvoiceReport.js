@@ -414,8 +414,8 @@
                     }
                 },
                 { dataField: 'partyName', caption: 'Party Name', groupIndex: 0 },
-                { dataField: 'amt', caption: 'Amount', dataType: 'number', width: 100 },
-                { dataField: 'taxAmt', caption: 'Sales Tax', width: 100 },
+                { dataField: 'amt', caption: 'Amount', dataType: 'number', format: '#,##0.##', width: 100 },
+                { dataField: 'taxAmt', caption: 'Sales Tax', dataType: 'number', format: '#,##0.##', width: 100 },
                 { dataField: 'fbR_NO', caption: 'FBR Invoice#', },
                 { dataField: 'fbR_TYPE', caption: 'Scenario',  },
                 { dataField: 'pusH_DATE', caption: 'Push Date', dataType: 'date', format: 'dd/MM/yyyy', width: 100 },
@@ -427,12 +427,12 @@
         if (reportId == 155) {
             col = [
                 { dataField: 'month', caption: 'Month' },
-                { dataField: 'qty', caption: 'Invoices', dataType: 'number', width: 100 },
-                { dataField: 'amt', caption: 'Taxable Sales', dataType: 'number' },
-                { dataField: 'taxAmt', caption: 'Sales Tax' },
+                { dataField: 'qty', caption: 'Invoices', dataType: 'number', format: '#,##0', width: 100 },
+                { dataField: 'amt', caption: 'Taxable Sales', dataType: 'number', format: '#,##0.##' },
+                { dataField: 'taxAmt', caption: 'Sales Tax', dataType: 'number', format: '#,##0.##' },
                 { dataField: 'ftaX_AMT', caption: 'Further Tax', dataType: 'number', format: '#,##0.##' },
                 { dataField: 'taX_AMT', caption: 'Total Tax', dataType: 'number', format: '#,##0.##' },
-                { dataField: 'totalSales', caption: 'Total Sales' },
+                { dataField: 'totalSales', caption: 'Total Sales', dataType: 'number', format: '#,##0.##' },
             ];
         }
 
@@ -451,8 +451,8 @@
                     }
                 },
                 { dataField: 'partyName', caption: 'Party Name', groupIndex: 0 },
-                { dataField: 'amt', caption: 'Amount', dataType: 'number', width: 100 },
-                { dataField: 'taxAmt', caption: 'Sales Tax', width: 100 },
+                { dataField: 'amt', caption: 'Amount', dataType: 'number', format: '#,##0.##', width: 100 },
+                { dataField: 'taxAmt', caption: 'Sales Tax', dataType: 'number', format: '#,##0.##', width: 100 },
                 { dataField: 'fbR_RESPONSE', caption: 'FBR Response', },
                 { dataField: 'fbR_TYPE', caption: 'Scenario', },
                 { dataField: 'pusH_DATE', caption: 'Push Date', dataType: 'date', format: 'dd/MM/yyyy', width: 100 },
@@ -463,12 +463,26 @@
         if (reportId == 158) {
             col = [
                 { dataField: 'partyName', caption: 'Party Name / NTN' },
-                { dataField: 'qty', caption: 'Invoice Count', dataType: 'number', width: 100 },
-                { dataField: 'amt', caption: 'Taxable Sales', dataType: 'number' },
-                { dataField: 'taxAmt', caption: 'Sales Tax' },
+                { dataField: 'qty', caption: 'Invoice Count', dataType: 'number', format: '#,##0', width: 100 },
+                { dataField: 'amt', caption: 'Taxable Sales', dataType: 'number', format: '#,##0.##' },
+                { dataField: 'taxAmt', caption: 'Sales Tax', dataType: 'number', format: '#,##0.##' },
                 { dataField: 'taX_AMT', caption: 'Total Tax', dataType: 'number', format: '#,##0.##' },
-                { dataField: 'totalSales', caption: 'Total Sales' },
+                { dataField: 'totalSales', caption: 'Total Sales', dataType: 'number', format: '#,##0.##' },
             ];
+        }
+
+        var dynamicNumericFields = [];
+        if (reportId == 159) {
+            // columns are built dynamically from the columns returned by the DB (PARTY_NAME is always first)
+            var dynamicColumns = dataSrc.columns || [];
+            dataSrc = dataSrc.rows || [];
+            col = dynamicColumns.map(function (name, index) {
+                if (index == 0 && String(name).toUpperCase() == 'PARTY_NAME') {
+                    return { dataField: 'c0', caption: 'Party Name' };
+                }
+                dynamicNumericFields.push('c' + index);
+                return { dataField: 'c' + index, caption: name, dataType: 'number', format: '#,##0.##' };
+            });
         }
 
         //debugger;
@@ -476,8 +490,11 @@
             $('#ReportGridContainer').data('dxDataGrid').dispose();
         }
         ////landscape
-        if (reportId == 154 || reportId == 155 || reportId == 157 || reportId == 158) {
-            empr_helper.DxGridBindingForReportsWithSetting_Aging('#ReportGridContainer', col, dataSrc, empr_helper.reportName, true);
+        if (reportId == 154 || reportId == 155 || reportId == 157 || reportId == 158 || reportId == 159) {
+            empr_helper.DxGridBindingForReportsWithSetting_Aging('#ReportGridContainer', col, dataSrc, empr_helper.reportName, false, true);
+            if (reportId == 159) {
+                empr_SalesInvoiceReport.ApplyDynamicSummary(dynamicNumericFields);
+            }
         }
         ////potrait
         if (reportId == 99999) {
@@ -486,8 +503,11 @@
 
         setTimeout(function () {
             ////landscape
-            if (reportId == 154 || reportId == 155 || reportId == 157 || reportId == 158) {
-                empr_helper.DxGridBindingForReportsWithSetting_Aging('#ReportGridContainer', col, dataSrc, empr_helper.reportName, true);
+            if (reportId == 154 || reportId == 155 || reportId == 157 || reportId == 158 || reportId == 159) {
+                empr_helper.DxGridBindingForReportsWithSetting_Aging('#ReportGridContainer', col, dataSrc, empr_helper.reportName, false, true);
+                if (reportId == 159) {
+                    empr_SalesInvoiceReport.ApplyDynamicSummary(dynamicNumericFields);
+                }
             }
             ////potrait
             if (reportId == 99999) {
@@ -509,6 +529,30 @@
             $('#ViewTab').addClass('active')
             $('#ViewTabContent').addClass('active');
         }, 500);
+    },
+
+    ApplyDynamicSummary(numericFields) {
+        var grid = $('#ReportGridContainer').data('dxDataGrid');
+        if (grid == undefined) {
+            return;
+        }
+        var groupItems = [], totalItems = [];
+        numericFields.forEach(function (field) {
+            groupItems.push({
+                column: field,
+                summaryType: 'sum',
+                displayFormat: '{0}',
+                showInGroupFooter: true,
+                valueFormat: '#,##0.##'
+            });
+            totalItems.push({
+                column: field,
+                summaryType: 'sum',
+                displayFormat: '{0}',
+                valueFormat: '#,##0.##'
+            });
+        });
+        grid.option('summary', { recalculateWhileEditing: true, groupItems: groupItems, totalItems: totalItems });
     },
 
     ValidateInfo() {
@@ -552,6 +596,16 @@
 
             if (usertoDateObj > periodToDateObj || usertoDateObj < periodFromDateObj) {
                 empr_helper.notify("Selected dates are outside the active period.", 2);
+                valid = false;
+            }
+        }
+
+        if (data.REPORTID == 159 && data.FROMDATE && data.TODATE) {
+            var fromParts = data.FROMDATE.split('-');
+            var toParts = data.TODATE.split('-');
+            var monthsCount = ((parseInt(toParts[0]) - parseInt(fromParts[0])) * 12) + (parseInt(toParts[1]) - parseInt(fromParts[1])) + 1;
+            if (monthsCount > 12) {
+                empr_helper.notify("Selected date range must not exceed 12 months.", 2);
                 valid = false;
             }
         }
