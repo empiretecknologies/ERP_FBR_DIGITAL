@@ -320,24 +320,24 @@ namespace Empire_ERP.Controllers
             }
         }
 
-        [HttpPost]
-        public JsonResult UpdateSodeBookFeedingReport(SodePartyReport modelrecord)
-        {
-            try
-            {
-                var data = _salesInvoiceReportService.UpdateSodeBookFeedingReport(modelrecord, CommonHelper.GetValues(HttpContext));
-                return Json(data);
-            }
-            catch (Exception ex)
-            {
-                string _catchMessage = ex.Message;
-                if (ex.InnerException != null)
-                {
-                    _catchMessage += "<br/>" + ex.InnerException.Message;
-                }
-                return Json(new { data = _catchMessage, msgType = 2 });
-            }
-        }
+        //[HttpPost]
+        //public JsonResult UpdateSodeBookFeedingReport(SodePartyReport modelrecord)
+        //{
+        //    try
+        //    {
+        //        var data = _salesInvoiceReportService.UpdateSodeBookFeedingReport(modelrecord, CommonHelper.GetValues(HttpContext));
+        //        return Json(data);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        string _catchMessage = ex.Message;
+        //        if (ex.InnerException != null)
+        //        {
+        //            _catchMessage += "<br/>" + ex.InnerException.Message;
+        //        }
+        //        return Json(new { data = _catchMessage, msgType = 2 });
+        //    }
+        //}
 
         [HttpGet]
         public JsonResult GetReportTypes()

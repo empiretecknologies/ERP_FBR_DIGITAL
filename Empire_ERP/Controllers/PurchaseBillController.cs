@@ -1199,6 +1199,8 @@ namespace Empire_ERP.Controllers
                             ReportParameter parameter24 = new ReportParameter("FBRLogo", new Uri(Path.Combine(_hostingEnvironment.WebRootPath, @$"Client\Company\FBRLogo.png")).AbsoluteUri);
                             ReportParameter parameter25 = new ReportParameter("BWeb", reportData.Master?.B_WEBSITE);
                             ReportParameter parameter26 = new ReportParameter("BEmail", reportData.Master?.EMAIL);
+                            ReportParameter parameter28 = new ReportParameter("PT_CNIC", reportData.Master?.PT_CNIC);
+                            ReportParameter parameter29 = new ReportParameter("Ref", reportData.Master?.REF);
 
                             string fbrNo = reportData.Master?.FBR_NO ?? string.Empty;
 
@@ -1208,7 +1210,7 @@ namespace Empire_ERP.Controllers
 
                             report.SetParameters(new ReportParameter[] { parameter1, parameter2, parameter3, parameter4, parameter5, parameter6, parameter7, parameter8, parameter9,
                             parameter10, parameter11, parameter12, parameter13, parameter14, parameter15, parameter16, parameter17, parameter18, parameter19, parameter20, parameter21,
-                                parameter22, parameter23, parameter24, parameter25, parameter26, parameter27 });
+                                parameter22, parameter23, parameter24, parameter25, parameter26, parameter27, parameter28, parameter29 });
                         }
 
                         report.Refresh();

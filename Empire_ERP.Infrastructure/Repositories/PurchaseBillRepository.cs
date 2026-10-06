@@ -1551,6 +1551,8 @@ namespace Empire_ERP.Infrastructure.Repositories
                         masterData.B_ADDRESS = reader["B_ADDRESS"] == DBNull.Value ? "" : Convert.ToString(reader["B_ADDRESS"]);
                         masterData.B_TEL = reader["B_TEL"] == DBNull.Value ? "" : Convert.ToString(reader["B_TEL"]);
                         masterData.FBR_NO = reader["FBR_NO"] == DBNull.Value ? "" : Convert.ToString(reader["FBR_NO"]);
+                        masterData.PT_CNIC = reader["PT_CNIC"] == DBNull.Value ? "" : Convert.ToString(reader["PT_CNIC"]);
+                        masterData.REF = reader["REF"] == DBNull.Value ? "" : Convert.ToString(reader["REF"]);
                     }
                     reader.Close();
                 }

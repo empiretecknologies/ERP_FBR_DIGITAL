@@ -86,6 +86,7 @@ namespace Empire_ERP.Core.Entities
         public string? B_ADDRESS { get; set; }
         public string? B_TEL { get; set; }
         public string? FBR_NO { get; set; }
+        public string? PT_CNIC { get; set; }
         public string? B_NAME { get; set; }
         public string? B_TERMS { get; set; }
         public string? B_WEBSITE { get; set; }
