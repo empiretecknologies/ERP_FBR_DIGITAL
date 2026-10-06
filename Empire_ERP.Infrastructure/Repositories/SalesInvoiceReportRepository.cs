@@ -96,13 +96,13 @@ namespace Empire_ERP.Infrastructure.Repositories
                 List<dynamic> jsonDetailDataResult = new List<dynamic>();
                 using (SqlConnection connection = new SqlConnection(new SQLService().getconnstring()))
                 {
-                    if (report.ReportID == 154)
+                    if (report.ReportID == 154 || report.ReportID == 155 || report.ReportID == 157 || report.ReportID == 158)
                     {
                         string query = $"EXEC FBR_SB '{report.ReportID}','{report.FromDate.Value.ToString("yyyy-MM-dd")}','{report.ToDate.Value.ToString("yyyy-MM-dd")}','{common.Branch}','{common.Period}','{report.Item}','{report.PartyCode}','{report.ActCode}'";
                         SqlCommand command = new SqlCommand(query, connection);
                         connection.Open();
                         SqlDataReader reader = command.ExecuteReader();
-                        if (report.ReportID == 154)
+                        if (report.ReportID == 154 || report.ReportID == 157)
                         {
                             while (reader.Read())
                             {
@@ -121,6 +121,39 @@ namespace Empire_ERP.Infrastructure.Repositories
                                     LINK = "/" + Convert.ToString(reader["MENU_PAGE"]) + "?MOID=" + Convert.ToString(reader["MENU_PARENT_CODE"]) + "&Code=" + Convert.ToString(reader["MENU_ID"]),
                                     TRAN_ID = Convert.ToInt32(reader["TRAN_ID"]),
 
+                                };
+                                jsonDataResult.Add(row);
+                            }
+                        }
+                        else if (report.ReportID == 155)
+                        {
+                            while (reader.Read())
+                            {
+                                var row = new CustomSalesInvoiceReport
+                                {
+                                    MONTH = reader["MONTH_YEAR"] == DBNull.Value ? "" : Convert.ToString(reader["MONTH_YEAR"]),
+                                    Qty = reader["INVOICE_COUNT"] == DBNull.Value ? 0 : Convert.ToDecimal(reader["INVOICE_COUNT"]),
+                                    Amt = reader["TAXABLE_AMOUNT"] == DBNull.Value ? 0 : Convert.ToDecimal(reader["TAXABLE_AMOUNT"]),
+                                    TaxAmt = reader["SALES_TAX"] == DBNull.Value ? 0 : Convert.ToDecimal(reader["SALES_TAX"]),
+                                    FTAX_AMT = (reader["TOTAL_TAX"] == DBNull.Value ? 0 : Convert.ToDecimal(reader["TOTAL_TAX"])) - (reader["SALES_TAX"] == DBNull.Value ? 0 : Convert.ToDecimal(reader["SALES_TAX"])),
+                                    TAX_AMT = reader["TOTAL_TAX"] == DBNull.Value ? 0 : Convert.ToDecimal(reader["TOTAL_TAX"]),
+                                    totalSales = reader["INVOICE_AMOUNT"] == DBNull.Value ? 0 : Convert.ToDecimal(reader["INVOICE_AMOUNT"]),
+                                };
+                                jsonDataResult.Add(row);
+                            }
+                        }
+                        else if (report.ReportID == 158)
+                        {
+                            while (reader.Read())
+                            {
+                                var row = new CustomSalesInvoiceReport
+                                {
+                                    PartyName = reader["PARTY_NAME"] == DBNull.Value ? "" : Convert.ToString(reader["PARTY_NAME"]),
+                                    Qty = reader["INVOICES"] == DBNull.Value ? 0 : Convert.ToDecimal(reader["INVOICES"]),
+                                    Amt = reader["TAXABLE_SALES"] == DBNull.Value ? 0 : Convert.ToDecimal(reader["TAXABLE_SALES"]),
+                                    TaxAmt = reader["SALES_TAX"] == DBNull.Value ? 0 : Convert.ToDecimal(reader["SALES_TAX"]),
+                                    TAX_AMT = reader["TOTAL_TAX"] == DBNull.Value ? 0 : Convert.ToDecimal(reader["TOTAL_TAX"]),
+                                    totalSales = reader["TOTAL_SALES"] == DBNull.Value ? 0 : Convert.ToDecimal(reader["TOTAL_SALES"]),
                                 };
                                 jsonDataResult.Add(row);
                             }

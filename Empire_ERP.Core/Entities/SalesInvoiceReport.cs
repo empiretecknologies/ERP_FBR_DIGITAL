@@ -101,6 +101,8 @@
         public decimal? BankTax { get; set; }
         public decimal? PartyTax { get; set; }
         public decimal? TaxAmt { get; set; }
+        public decimal? TAX_AMT { get; set; }
+        public decimal? FTAX_AMT { get; set; }
         public decimal? ADV_TAX { get; set; }
         public decimal? ADV_TAX_AMT { get; set; }
         public decimal? totalSales { get; set; }

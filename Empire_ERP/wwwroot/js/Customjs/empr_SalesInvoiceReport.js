@@ -424,12 +424,59 @@
             ];
         }
 
+        if (reportId == 155) {
+            col = [
+                { dataField: 'month', caption: 'Month' },
+                { dataField: 'qty', caption: 'Invoices', dataType: 'number', width: 100 },
+                { dataField: 'amt', caption: 'Taxable Sales', dataType: 'number' },
+                { dataField: 'taxAmt', caption: 'Sales Tax' },
+                { dataField: 'ftaX_AMT', caption: 'Further Tax', dataType: 'number', format: '#,##0.##' },
+                { dataField: 'taX_AMT', caption: 'Total Tax', dataType: 'number', format: '#,##0.##' },
+                { dataField: 'totalSales', caption: 'Total Sales' },
+            ];
+        }
+
+        if (reportId == 157) {
+            col = [
+                { dataField: 'vDate', caption: 'Date', dataType: 'date', format: 'dd/MM/yyyy', width: 100 },
+                {
+                    dataField: 'voucherNo', caption: 'Transaction',
+                    cellTemplate: function (container, options) {
+                        $('<a>')
+                            .addClass('dx-link')
+                            .text(options.value)
+                            .attr('href', '#')
+                            .attr('onclick', 'empr_SalesInvoiceReport.openVoucherPage(' + JSON.stringify(options.data.link) + ', ' + JSON.stringify(options.data.traN_ID) + ')')
+                            .appendTo(container);
+                    }
+                },
+                { dataField: 'partyName', caption: 'Party Name', groupIndex: 0 },
+                { dataField: 'amt', caption: 'Amount', dataType: 'number', width: 100 },
+                { dataField: 'taxAmt', caption: 'Sales Tax', width: 100 },
+                { dataField: 'fbR_RESPONSE', caption: 'FBR Response', },
+                { dataField: 'fbR_TYPE', caption: 'Scenario', },
+                { dataField: 'pusH_DATE', caption: 'Push Date', dataType: 'date', format: 'dd/MM/yyyy', width: 100 },
+                { dataField: 'pusH_TIME', caption: 'Push Time', width: 100 },
+            ];
+        }
+
+        if (reportId == 158) {
+            col = [
+                { dataField: 'partyName', caption: 'Party Name / NTN' },
+                { dataField: 'qty', caption: 'Invoice Count', dataType: 'number', width: 100 },
+                { dataField: 'amt', caption: 'Taxable Sales', dataType: 'number' },
+                { dataField: 'taxAmt', caption: 'Sales Tax' },
+                { dataField: 'taX_AMT', caption: 'Total Tax', dataType: 'number', format: '#,##0.##' },
+                { dataField: 'totalSales', caption: 'Total Sales' },
+            ];
+        }
+
         //debugger;
         if ($('#ReportGridContainer').data('dxDataGrid') != undefined) {
             $('#ReportGridContainer').data('dxDataGrid').dispose();
         }
         ////landscape
-        if (reportId == 154) {
+        if (reportId == 154 || reportId == 155 || reportId == 157 || reportId == 158) {
             empr_helper.DxGridBindingForReportsWithSetting_Aging('#ReportGridContainer', col, dataSrc, empr_helper.reportName, true);
         }
         ////potrait
@@ -439,7 +486,7 @@
 
         setTimeout(function () {
             ////landscape
-            if (reportId == 154) {
+            if (reportId == 154 || reportId == 155 || reportId == 157 || reportId == 158) {
                 empr_helper.DxGridBindingForReportsWithSetting_Aging('#ReportGridContainer', col, dataSrc, empr_helper.reportName, true);
             }
             ////potrait
