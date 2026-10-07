@@ -175,6 +175,21 @@
     </div>
 </div>
 
+<div class="modal fade" id="FbrQrModal" style="display:none" tabindex="-1" role="dialog" aria-labelledby="FbrQrModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="FbrQrModalLabel">FBR QR Code</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img id="FbrQrImage" src="" alt="QR Code" style="width: 100%; max-width: 250px;" />
+                <div class="mt-2" id="FbrQrInvoiceNo"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section LinkScriptSection {
     <script src="~/js/customjs/empr_SalesInvoiceReport.js" asp-append-version="true"></script>
     <script type="text/javascript">

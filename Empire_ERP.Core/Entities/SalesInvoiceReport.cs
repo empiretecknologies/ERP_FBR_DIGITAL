@@ -146,6 +146,8 @@
         public string? FBR_NO { get; set; }
         public string? FBR_TYPE { get; set; }
         public string? FBR_RESPONSE { get; set; }
+        public string? FBR_STATUS { get; set; }
+        public string? NTN { get; set; }
         public string? BTransfer { get; set; }
         public string? BName { get; set; }
         public string? ActName { get; set; }

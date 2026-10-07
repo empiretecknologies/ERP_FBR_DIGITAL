@@ -27,7 +27,7 @@ namespace Empire_ERP.Core.Services
             MyHttpResponseMessage response = new MyHttpResponseMessage();
             try
             {
-                if (report.ReportID == 154 || report.ReportID == 155 || report.ReportID == 157 || report.ReportID == 158 || report.ReportID == 159)
+                if (report.ReportID == 154 || report.ReportID == 155 || report.ReportID == 157 || report.ReportID == 158 || report.ReportID == 159 || report.ReportID == 160)
                 {
                     response = _salesInvoiceReportRepository.GetReportData(report, common);
                 }
