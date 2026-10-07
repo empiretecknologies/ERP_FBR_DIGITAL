@@ -475,12 +475,18 @@
         if (reportId == 160) {
             col = [
                 {
-                    dataField: 'qrInfo', caption: ' ', width: 45, fixed: true, fixedPosition: 'left',
+                    dataField: 'qrInfo', caption: 'QR', width: 45, fixed: true, fixedPosition: 'left', alignment: 'center',
                     allowSorting: false, allowFiltering: false, allowHeaderFiltering: false, allowGrouping: false, allowSearch: false, allowExporting: false,
                     cellTemplate: function (container, options) {
-                        $('<button type="button" class="btn btn-info btn-sm" title="FBR QR Code">')
-                            .html('<i class="fa fa-info"></i>')
-                            .on('click', function () {
+                        $('<a>')
+                            .attr('href', 'javascript:;')
+                            .addClass('grid-action-icon')
+                            .attr('title', 'Info')
+                            .css({ 'cursor': 'pointer' })
+                            .html('<i class="fa fa-info-circle"></i>')
+                            .on('click', function (e) {
+                                e.preventDefault();
+                                e.stopPropagation();
                                 empr_SalesInvoiceReport.ShowFbrQrCode(options.data.fbR_NO);
                             })
                             .appendTo(container);
@@ -517,6 +523,59 @@
             dynamicNumericFields = ['qty', 'amt', 'taxAmt', 'totalSales'];
         }
 
+        if (reportId == 161) {
+            col = [
+                { dataField: 'vDate', caption: 'Date', dataType: 'date', format: 'dd/MM/yyyy', width: 100 },
+                {
+                    dataField: 'voucherNo', caption: 'Transaction #',
+                    cellTemplate: function (container, options) {
+                        $('<a>')
+                            .addClass('dx-link')
+                            .text(options.value)
+                            .attr('href', '#')
+                            .attr('onclick', 'empr_SalesInvoiceReport.openVoucherPage(' + JSON.stringify(options.data.link) + ', ' + JSON.stringify(options.data.traN_ID) + ')')
+                            .appendTo(container);
+                    }
+                },
+                { dataField: 'partyName', caption: 'Party Name', groupIndex: 0 },
+                { dataField: 'itemName', caption: 'Item Description' },
+                { dataField: 'qty', caption: 'Quantity', dataType: 'number', format: '#,##0.##' },
+                { dataField: 'unit', caption: 'UOM', width: 80 },
+                { dataField: 'rate', caption: 'Unit Rate', dataType: 'number', format: '#,##0.##' },
+                { dataField: 'amt', caption: 'Taxable Value', dataType: 'number', format: '#,##0.##' },
+                { dataField: 'tax', caption: 'Tax Rate (%)', dataType: 'number', format: '#,##0.##' },
+                { dataField: 'taxAmt', caption: 'Sales Tax', dataType: 'number', format: '#,##0.##' },
+                { dataField: 'totalSales', caption: 'Invoice Total', dataType: 'number', format: '#,##0.##' },
+                { dataField: 'fbR_NO', caption: 'FBR Invoice No.' },
+                { dataField: 'fbR_TYPE', caption: 'FBR Invoice Type' },
+                { dataField: 'fbR_STATUS', caption: 'FBR Status' },
+                { dataField: 'pusH_DATE', caption: 'Last Updated Date', dataType: 'date', format: 'dd/MM/yyyy', width: 100 },
+                { dataField: 'pusH_TIME', caption: 'Last Updated Time', width: 100 },
+            ];
+            dynamicNumericFields = ['qty', 'amt', 'taxAmt', 'totalSales'];
+        }
+
+        if (reportId == 162) {
+            col = [
+                { dataField: 'pusH_DATE', caption: 'Submission Date', dataType: 'date', format: 'dd/MM/yyyy', width: 100 },
+                { dataField: 'pusH_TIME', caption: 'Submission Time', width: 100 },
+                {
+                    dataField: 'voucherNo', caption: 'Invoice No.',
+                    cellTemplate: function (container, options) {
+                        $('<a>')
+                            .addClass('dx-link')
+                            .text(options.value)
+                            .attr('href', '#')
+                            .attr('onclick', 'empr_SalesInvoiceReport.openVoucherPage(' + JSON.stringify(options.data.link) + ', ' + JSON.stringify(options.data.traN_ID) + ')')
+                            .appendTo(container);
+                    }
+                },
+                { dataField: 'partyName', caption: 'Customer / Party' },
+                { dataField: 'fbR_NO', caption: 'FBR Invoice No.' },
+                { dataField: 'fbR_RESPONSE', caption: 'FBR Response' },
+            ];
+        }
+
         if (reportId == 159) {
             // columns are built dynamically from the columns returned by the DB (PARTY_NAME is always first)
             var dynamicColumns = dataSrc.columns || [];
@@ -535,9 +594,9 @@
             $('#ReportGridContainer').data('dxDataGrid').dispose();
         }
         ////landscape
-        if (reportId == 154 || reportId == 155 || reportId == 157 || reportId == 158 || reportId == 159 || reportId == 160) {
+        if (reportId == 154 || reportId == 155 || reportId == 157 || reportId == 158 || reportId == 159 || reportId == 160 || reportId == 161 || reportId == 162) {
             empr_helper.DxGridBindingForReportsWithSetting_Aging('#ReportGridContainer', col, dataSrc, empr_helper.reportName, false, true);
-            if (reportId == 159 || reportId == 160) {
+            if (reportId == 159 || reportId == 160 || reportId == 161) {
                 empr_SalesInvoiceReport.ApplyDynamicSummary(dynamicNumericFields);
             }
         }
@@ -548,9 +607,9 @@
 
         setTimeout(function () {
             ////landscape
-            if (reportId == 154 || reportId == 155 || reportId == 157 || reportId == 158 || reportId == 159 || reportId == 160) {
+            if (reportId == 154 || reportId == 155 || reportId == 157 || reportId == 158 || reportId == 159 || reportId == 160 || reportId == 161 || reportId == 162) {
                 empr_helper.DxGridBindingForReportsWithSetting_Aging('#ReportGridContainer', col, dataSrc, empr_helper.reportName, false, true);
-                if (reportId == 159 || reportId == 160) {
+                if (reportId == 159 || reportId == 160 || reportId == 161) {
                     empr_SalesInvoiceReport.ApplyDynamicSummary(dynamicNumericFields);
                 }
             }
@@ -782,9 +841,24 @@
             empr_helper.notify("FBR Invoice No. is not available for this invoice.", 2);
             return;
         }
-        $('#FbrQrImage').attr('src', '/POSTransactions/GenerateQRCode?invoiceNumber=' + encodeURIComponent(String(fbrInvoiceNo).trim()));
-        $('#FbrQrInvoiceNo').text(String(fbrInvoiceNo).trim());
-        $('#FbrQrModal').modal('show');
+        var invoiceNo = String(fbrInvoiceNo).trim();
+        var qrUrl = '/POSTransactions/GenerateQRCode?invoiceNumber=' + encodeURIComponent(invoiceNo);
+
+        // load the QR image first, open the modal only when it is ready (no empty modal / delayed QR)
+        $("#Loader").show();
+        $("#Loader").css('display', 'flex');
+        var qrImage = new Image();
+        qrImage.onload = function () {
+            $('#FbrQrImage').attr('src', qrUrl);
+            $('#FbrQrInvoiceNo').text(invoiceNo);
+            $("#Loader").hide();
+            $('#FbrQrModal').modal('show');
+        };
+        qrImage.onerror = function () {
+            $("#Loader").hide();
+            empr_helper.notify("Unable to generate QR code.", 2);
+        };
+        qrImage.src = qrUrl;
     },
 
     openVoucherPage(link, tran_Id) {

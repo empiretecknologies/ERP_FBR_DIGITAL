@@ -98,7 +98,7 @@ namespace Empire_ERP.Infrastructure.Repositories
                 List<Dictionary<string, object?>> dynamicRows = new List<Dictionary<string, object?>>();
                 using (SqlConnection connection = new SqlConnection(new SQLService().getconnstring()))
                 {
-                    if (report.ReportID == 154 || report.ReportID == 155 || report.ReportID == 157 || report.ReportID == 158 || report.ReportID == 159 || report.ReportID == 160)
+                    if (report.ReportID == 154 || report.ReportID == 155 || report.ReportID == 157 || report.ReportID == 158 || report.ReportID == 159 || report.ReportID == 160 || report.ReportID == 161 || report.ReportID == 162)
                     {
                         string query = $"EXEC FBR_SB '{report.ReportID}','{report.FromDate.Value.ToString("yyyy-MM-dd")}','{report.ToDate.Value.ToString("yyyy-MM-dd")}','{common.Branch}','{common.Period}','{report.Item}','{report.PartyCode}','{report.ActCode}'";
                         SqlCommand command = new SqlCommand(query, connection);
@@ -193,6 +193,52 @@ namespace Empire_ERP.Infrastructure.Repositories
                                     PUSH_DATE = reader["PUSH_DATE"] == DBNull.Value ? "" : Convert.ToDateTime(reader["PUSH_DATE"]).ToString("yyyy-MM-dd"),
                                     PUSH_TIME = reader["PUSH_TIME"] == DBNull.Value ? "" : Convert.ToString(reader["PUSH_TIME"]),
                                     LINK = "/" + Convert.ToString(reader["MENU_PAGE"]) + "?MOID=" + Convert.ToString(reader["MENU_PARENT_CODE"]) + "&Code=" + Convert.ToString(reader["MENU_ID"]),
+                                    TRAN_ID = Convert.ToInt32(reader["TRAN_ID"]),
+                                };
+                                jsonDataResult.Add(row);
+                            }
+                        }
+                        else if (report.ReportID == 161)
+                        {
+                            while (reader.Read())
+                            {
+                                var row = new CustomSalesInvoiceReport
+                                {
+                                    vDate = reader["INVOICE_DATE"] == DBNull.Value ? "" : Convert.ToDateTime(reader["INVOICE_DATE"]).ToString("yyyy-MM-dd"),
+                                    VoucherNo = reader["INVOICE_NO"] == DBNull.Value ? "" : Convert.ToString(reader["INVOICE_NO"]),
+                                    PartyName = reader["PARTY_NAME"] == DBNull.Value ? "" : Convert.ToString(reader["PARTY_NAME"]),
+                                    ItemName = reader["ITEM_NAME"] == DBNull.Value ? "" : Convert.ToString(reader["ITEM_NAME"]),
+                                    Qty = reader["QTY"] == DBNull.Value ? 0 : Convert.ToDecimal(reader["QTY"]),
+                                    Unit = reader["UNIT"] == DBNull.Value ? "" : Convert.ToString(reader["UNIT"]),
+                                    Rate = reader["RATE"] == DBNull.Value ? 0 : Convert.ToDecimal(reader["RATE"]),
+                                    Amt = reader["TAXABLE_AMOUNT"] == DBNull.Value ? 0 : Convert.ToDecimal(reader["TAXABLE_AMOUNT"]),
+                                    Tax = reader["TAX_RATE"] == DBNull.Value ? 0 : Convert.ToDecimal(reader["TAX_RATE"]),
+                                    TaxAmt = reader["SALES_TAX_AMOUNT"] == DBNull.Value ? 0 : Convert.ToDecimal(reader["SALES_TAX_AMOUNT"]),
+                                    totalSales = reader["INVOICE_AMOUNT"] == DBNull.Value ? 0 : Convert.ToDecimal(reader["INVOICE_AMOUNT"]),
+                                    FBR_NO = reader["FBR_INVOICE_NO"] == DBNull.Value ? "" : Convert.ToString(reader["FBR_INVOICE_NO"]),
+                                    FBR_TYPE = reader["FBR_TYPE"] == DBNull.Value ? "" : Convert.ToString(reader["FBR_TYPE"]),
+                                    FBR_STATUS = reader["FBR_STATUS"] == DBNull.Value ? "" : Convert.ToString(reader["FBR_STATUS"]),
+                                    PUSH_DATE = reader["PUSH_DATE"] == DBNull.Value ? "" : Convert.ToDateTime(reader["PUSH_DATE"]).ToString("yyyy-MM-dd"),
+                                    PUSH_TIME = reader["PUSH_TIME"] == DBNull.Value ? "" : Convert.ToString(reader["PUSH_TIME"]),
+                                    LINK = "/" + Convert.ToString(reader["MENU_PAGE"]) + "?MOID=" + Convert.ToString(reader["MENU_PARENT_CODE"]) + "&Code=" + Convert.ToString(reader["MENU_ID"]),
+                                    TRAN_ID = Convert.ToInt32(reader["TRAN_ID"]),
+                                };
+                                jsonDataResult.Add(row);
+                            }
+                        }
+                        else if (report.ReportID == 162)
+                        {
+                            while (reader.Read())
+                            {
+                                var row = new CustomSalesInvoiceReport
+                                {
+                                    PUSH_DATE = reader["SUBMISSION_DATE"] == DBNull.Value ? "" : Convert.ToDateTime(reader["SUBMISSION_DATE"]).ToString("yyyy-MM-dd"),
+                                    PUSH_TIME = reader["SUBMISSION_TIME"] == DBNull.Value ? "" : Convert.ToString(reader["SUBMISSION_TIME"]),
+                                    VoucherNo = reader["INVOICE_NO"] == DBNull.Value ? "" : Convert.ToString(reader["INVOICE_NO"]),
+                                    PartyName = reader["PARTY_NAME"] == DBNull.Value ? "" : Convert.ToString(reader["PARTY_NAME"]),
+                                    FBR_NO = reader["FBR_INVOICE_NO"] == DBNull.Value ? "" : Convert.ToString(reader["FBR_INVOICE_NO"]),
+                                    FBR_RESPONSE = reader["FBR_RESPONSE"] == DBNull.Value ? "" : Convert.ToString(reader["FBR_RESPONSE"]),
+                                    LINK = "/" + Convert.ToString(reader["SOURCE_PAGE"]) + "?MOID=" + Convert.ToString(reader["SOURCE_MENU"]) + "&Code=" + Convert.ToString(reader["MENU_ID"]),
                                     TRAN_ID = Convert.ToInt32(reader["TRAN_ID"]),
                                 };
                                 jsonDataResult.Add(row);
