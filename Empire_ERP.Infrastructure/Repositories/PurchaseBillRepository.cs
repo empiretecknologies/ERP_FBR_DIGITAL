@@ -407,7 +407,7 @@ namespace Empire_ERP.Infrastructure.Repositories
                     using (SqlConnection connection = new SqlConnection(new SQLService().getconnstring()))
                     {
 
-                        string query = $@"SELECT D.TRAN_ID, D.DT_CODE, D.ITEM_CODE, D.QTY, D.BAGS, D.UNIT, D.RATE, D.AMT, D.W_RATE, D.W_AMT, D.TAX, D.TAX_AMT, D.NET_AMT, D.DT_DESC, D.VEHICLE, D.DEL_DATE, D.HS_CODE,
+                        string query = $@"SELECT D.TRAN_ID, D.DT_CODE, D.ITEM_CODE, D.QTY, D.BAGS, D.UNIT, D.RATE, D.AMT, D.W_RATE, D.W_AMT, D.TAX, D.TAX_AMT, D.F_TAX, D.F_TAX_AMT, D.NET_AMT, D.DT_DESC, D.VEHICLE, D.DEL_DATE, D.HS_CODE,
                                             D.PAY_TERM, D.DUE_DATE, D.INC_EXC, D.PARTY_CODE, D.ACT_CODE, D.COMM_TYPE, D.COMM_VAL, D.WAREHOUSE, D.LOT_REG, D.PICK_ID, D.PICK_ID_D,
                                             PM.VOUCHER_NO, PM.TRAN_ID AS PTRAN_ID,  PM.MENU_ID AS PMENU_ID, MB.MENU_PAGE AS MENU_PAGE, MB.MENU_PARENT_CODE,D.FBR_TYPE,D.SCHEDULE_NO,D.SERIAL_NO,D.ITEM_SNO
                                             FROM {tableDetail} D
@@ -444,6 +444,8 @@ namespace Empire_ERP.Infrastructure.Repositories
                                 W_AMT = reader["W_AMT"] == DBNull.Value ? "" : Convert.ToString(reader["W_AMT"]),
                                 TAX = reader["TAX"] == DBNull.Value ? "" : Convert.ToString(reader["TAX"]),
                                 TAX_AMT = reader["TAX_AMT"] == DBNull.Value ? "" : Convert.ToString(reader["TAX_AMT"]),
+                                F_TAX = reader["F_TAX"] == DBNull.Value ? "" : Convert.ToString(reader["F_TAX"]),
+                                F_TAX_AMT = reader["F_TAX_AMT"] == DBNull.Value ? "" : Convert.ToString(reader["F_TAX_AMT"]),
                                 NET_AMT = reader["NET_AMT"] == DBNull.Value ? "" : Convert.ToString(reader["NET_AMT"]),
 
                                 DT_DESC = reader["DT_DESC"] == DBNull.Value ? "" : Convert.ToString(reader["DT_DESC"]),
@@ -831,12 +833,12 @@ namespace Empire_ERP.Infrastructure.Repositories
 
                                             insertQueryBuilder.AppendLine(
                                                 $"INSERT INTO {detailTable} (TRAN_ID, DT_CODE, ITEM_CODE, PARTY_CODE, ACT_CODE, QTY, COMP, VEHICLE," +
-                                                $"UNIT, BAGS, RATE, AMT, W_RATE, W_AMT, TAX, TAX_AMT, NET_AMT, DT_DESC, DEL_DATE, PAY_TERM, DUE_DATE, INC_EXC, COMM_TYPE, COMM_VAL, WAREHOUSE, LOT_REG, HS_CODE, BCODE, PERIOD_ID, ADD_USER_ID, " +
+                                                $"UNIT, BAGS, RATE, AMT, W_RATE, W_AMT, TAX, TAX_AMT, F_TAX, F_TAX_AMT, NET_AMT, DT_DESC, DEL_DATE, PAY_TERM, DUE_DATE, INC_EXC, COMM_TYPE, COMM_VAL, WAREHOUSE, LOT_REG, HS_CODE, BCODE, PERIOD_ID, ADD_USER_ID, " +
                                                 $"ADD_DATE, ADD_COMPUTER_NAME, ADD_IP_ADDRESS, EDIT_USER_ID, " +
                                                 $"EDIT_DATE, EDIT_COMPUTER_NAME, EDIT_IP_ADDRESS, " +
                                                 $"ADD_POSTALCODE, EDIT_POSTALCODE, MENU_ID, DLT, PICK_ID, PICK_ID_D,FBR_TYPE,SCHEDULE_NO,SERIAL_NO,ITEM_SNO) VALUES " +
                                                 $"('{modelRecord.Master.TRAN_ID}', '{detailCode}', '{item.ITEM_CODE}', '{item.BPARTY_CODE}', '{item.BACT_CODE}','{item.QTY}', '0', '{item.VEHICLE}'," +
-                                                $"'{item.UNIT}', '{item.BAGS}', '{item.RATE}', '{item.AMT}', '{item.W_RATE}', '{item.W_AMT}', '{item.TAX ?? 0}', '{item.TAX_AMT ?? 0}', '{item.NET_AMT ?? item.AMT}', '{item.DT_DESC}', " +
+                                                $"'{item.UNIT}', '{item.BAGS}', '{item.RATE}', '{item.AMT}', '{item.W_RATE}', '{item.W_AMT}', '{item.TAX ?? 0}', '{item.TAX_AMT ?? 0}', '{item.F_TAX ?? 0}', '{item.F_TAX_AMT ?? 0}', '{item.NET_AMT ?? item.AMT}', '{item.DT_DESC}', " +
                                                 $"'{item.DEL_DATE}', '{item.PAY_TERM}', '{item.DUE_DATE}','{item.INC_EXC}', '{item.COMM_TYPE}', '{item.COMM_VALUE}', '{item.WAREHOUSE}', '{item.LOT}', '{item.HS_CODE}', '{branch}', '{period}', '{username}', " +
                                                 $"'{CommonService.GetDateTime("Pakistan Standard Time")}', '{Computer}', '{Ip}', '{username}', " +
                                                 $"'{CommonService.GetDateTime("Pakistan Standard Time")}', '{Computer}', '{Ip}', " +
@@ -869,6 +871,8 @@ namespace Empire_ERP.Infrastructure.Repositories
                                             $"W_AMT = '{item.W_AMT}', " +
                                             $"TAX = '{item.TAX ?? 0}', " +
                                             $"TAX_AMT = '{item.TAX_AMT ?? 0}', " +
+                                            $"F_TAX = '{item.F_TAX ?? 0}', " +
+                                            $"F_TAX_AMT = '{item.F_TAX_AMT ?? 0}', " +
                                             $"NET_AMT = '{item.NET_AMT ?? item.AMT}', " +
                                             $"DT_DESC = '{item.DT_DESC}', " +
                                             $"DEL_DATE = '{item.DEL_DATE}', " +
@@ -1206,6 +1210,8 @@ namespace Empire_ERP.Infrastructure.Repositories
                             DISC_AMT = Convert.ToDouble(detail_Reader["DISC_AMT"]),
                             TAX = Convert.ToDouble(detail_Reader["TAX"]),
                             TAX_AMT = Convert.ToDouble(detail_Reader["TAX_AMT"]),
+                            F_TAX = detail_Reader["F_TAX"] == DBNull.Value ? 0 : Convert.ToDouble(detail_Reader["F_TAX"]),
+                            F_TAX_AMT = detail_Reader["F_TAX_AMT"] == DBNull.Value ? 0 : Convert.ToDouble(detail_Reader["F_TAX_AMT"]),
                             NET_AMT = Convert.ToDouble(detail_Reader["NET_AMT"]),
                             DT_DESC = Convert.ToString(detail_Reader["DT_DESC"]),
                             COLOR = Convert.ToInt32(detail_Reader["COLOR"]),
@@ -1786,7 +1792,8 @@ namespace Empire_ERP.Infrastructure.Repositories
                                             FBR.S_NAME,
                                             D.SERIAL_NO,
                                             D.TAX,
-                                            D.TAX_AMT
+                                            D.TAX_AMT,
+                                            D.F_TAX_AMT
                                             FROM {detailTable} AS D 
                                             LEFT OUTER JOIN TBL_ITEMSMASTER I ON I.ITEM_CODE = D.ITEM_CODE
                                             LEFT OUTER JOIN TBL_UNIT U ON U.GROUP_CODE = D.UNIT
@@ -1817,6 +1824,7 @@ namespace Empire_ERP.Infrastructure.Repositories
                                 SERIAL_NO = SafeInt(reader["SERIAL_NO"]),
                                 TAX = Math.Round(SafeDouble(reader["TAX"]), 2),
                                 TAX_AMT = Math.Round(SafeDecimal(reader["TAX_AMT"]), 2),
+                                F_TAX_AMT = Math.Round(SafeDecimal(reader["F_TAX_AMT"]), 2),
 
                             };
 

@@ -654,7 +654,7 @@ namespace Empire_ERP.Controllers
                     detail.salesTaxApplicable = d.TAX_AMT;
                     detail.salesTaxWithheldAtSource = 0;
                     detail.extraTax = "";
-                    detail.furtherTax = 0;
+                    detail.furtherTax = d.F_TAX_AMT;
                     detail.fedPayable = 0;
                     detail.discount = 0;
                     detail.sroScheduleNo = d.SRO_SCH_NO;
@@ -674,7 +674,7 @@ namespace Empire_ERP.Controllers
                     detail.salesTaxApplicable = d.TAX_AMT;
                     detail.salesTaxWithheldAtSource = 0;
                     detail.extraTax = "";
-                    detail.furtherTax = 0;
+                    detail.furtherTax = d.F_TAX_AMT;
                     detail.fedPayable = 0;
                     detail.discount = 0;
                     detail.sroScheduleNo = d.SRO_SCH_NO;
@@ -694,7 +694,7 @@ namespace Empire_ERP.Controllers
                     detail.salesTaxApplicable = d.TAX_AMT;
                     detail.salesTaxWithheldAtSource = 0;
                     detail.extraTax = "";
-                    detail.furtherTax = 0;
+                    detail.furtherTax = d.F_TAX_AMT;
                     detail.fedPayable = 0;
                     detail.discount = 0;
                     detail.sroScheduleNo = d.SRO_SCH_NO;
@@ -714,7 +714,7 @@ namespace Empire_ERP.Controllers
                     detail.salesTaxApplicable = d.TAX_AMT;
                     detail.salesTaxWithheldAtSource = 0;
                     detail.extraTax = "";
-                    detail.furtherTax = 0;
+                    detail.furtherTax = d.F_TAX_AMT;
                     detail.fedPayable = 0;
                     detail.discount = 0;
                     detail.sroScheduleNo = d.SRO_SCH_NO;
@@ -734,7 +734,7 @@ namespace Empire_ERP.Controllers
                     detail.salesTaxApplicable = d.TAX_AMT;
                     detail.salesTaxWithheldAtSource = 0;
                     detail.extraTax = "";
-                    detail.furtherTax = 0;
+                    detail.furtherTax = d.F_TAX_AMT;
                     detail.fedPayable = 0;
                     detail.discount = 0;
                     detail.sroScheduleNo = d.SRO_SCH_NO;
@@ -754,7 +754,7 @@ namespace Empire_ERP.Controllers
                     detail.salesTaxApplicable = d.TAX_AMT;
                     detail.salesTaxWithheldAtSource = 0;
                     detail.extraTax = "";
-                    detail.furtherTax = 0;
+                    detail.furtherTax = d.F_TAX_AMT;
                     detail.fedPayable = 0;
                     detail.discount = 0;
                     detail.sroScheduleNo = d.SRO_SCH_NO;
@@ -774,7 +774,7 @@ namespace Empire_ERP.Controllers
                     detail.salesTaxApplicable = d.TAX_AMT;
                     detail.salesTaxWithheldAtSource = 0;
                     detail.extraTax = "";
-                    detail.furtherTax = 0;
+                    detail.furtherTax = d.F_TAX_AMT;
                     detail.fedPayable = 0;
                     detail.discount = 0;
                     detail.sroScheduleNo = d.SRO_SCH_NO;
@@ -789,12 +789,12 @@ namespace Empire_ERP.Controllers
                     detail.uoM = d.UOM;
                     detail.quantity = d.QTY;
                     detail.totalValues = 0;
-                    detail.valueSalesExcludingST = d.W_AMT;
+                    detail.valueSalesExcludingST = d.TOTAL_VALUES;
                     detail.fixedNotifiedValueOrRetailPrice = d.TOTAL_VALUES;
                     detail.salesTaxApplicable = d.TAX_AMT;
                     detail.salesTaxWithheldAtSource = 0;
                     detail.extraTax = "";
-                    detail.furtherTax = 0;
+                    detail.furtherTax = d.F_TAX_AMT;
                     detail.fedPayable = 0;
                     detail.discount = 0;
                     detail.sroScheduleNo = d.SRO_SCH_NO;
@@ -814,7 +814,7 @@ namespace Empire_ERP.Controllers
                     detail.salesTaxApplicable = d.TAX_AMT;
                     detail.salesTaxWithheldAtSource = 0;
                     detail.extraTax = "";
-                    detail.furtherTax = 0;
+                    detail.furtherTax = d.F_TAX_AMT;
                     detail.fedPayable = 0;
                     detail.discount = 0;
                     detail.sroScheduleNo = d.SRO_SCH_NO;
@@ -834,7 +834,7 @@ namespace Empire_ERP.Controllers
                     detail.salesTaxApplicable = d.TAX_AMT;
                     detail.salesTaxWithheldAtSource = 0;
                     detail.extraTax = "";
-                    detail.furtherTax = 0;
+                    detail.furtherTax = d.F_TAX_AMT;
                     detail.fedPayable = 0;
                     detail.discount = 0;
                     detail.sroScheduleNo = d.SRO_SCH_NO;
@@ -854,7 +854,7 @@ namespace Empire_ERP.Controllers
                     detail.salesTaxApplicable = d.TAX_AMT;
                     detail.salesTaxWithheldAtSource = 0;
                     detail.extraTax = "";
-                    detail.furtherTax = 0;
+                    detail.furtherTax = d.F_TAX_AMT;
                     detail.fedPayable = 0;
                     detail.discount = 0;
                     detail.sroScheduleNo = d.SRO_SCH_NO;
@@ -874,7 +874,7 @@ namespace Empire_ERP.Controllers
                     detail.salesTaxApplicable = d.TAX_AMT;
                     detail.salesTaxWithheldAtSource = 0;
                     detail.extraTax = "";
-                    detail.furtherTax = 0;
+                    detail.furtherTax = d.F_TAX_AMT;
                     detail.fedPayable = 0;
                     detail.discount = 0;
                     detail.sroScheduleNo = d.SRO_SCH_NO;
@@ -894,7 +894,7 @@ namespace Empire_ERP.Controllers
                     detail.salesTaxApplicable = d.TAX_AMT;
                     detail.salesTaxWithheldAtSource = 0;
                     detail.extraTax = "";
-                    detail.furtherTax = 0;
+                    detail.furtherTax = d.F_TAX_AMT;
                     detail.fedPayable = 0;
                     detail.discount = 0;
                     detail.sroScheduleNo = d.SRO_SCH_NO;
@@ -914,7 +914,7 @@ namespace Empire_ERP.Controllers
                     detail.salesTaxApplicable = d.TAX_AMT;
                     detail.salesTaxWithheldAtSource = 0;
                     detail.extraTax = "";
-                    detail.furtherTax = 0;
+                    detail.furtherTax = d.F_TAX_AMT;
                     detail.fedPayable = 0;
                     detail.discount = 0;
                     detail.sroScheduleNo = d.SRO_SCH_NO;
@@ -934,7 +934,7 @@ namespace Empire_ERP.Controllers
                     detail.salesTaxApplicable = d.TAX_AMT;
                     detail.salesTaxWithheldAtSource = 0;
                     detail.extraTax = "";
-                    detail.furtherTax = 0;
+                    detail.furtherTax = d.F_TAX_AMT;
                     detail.fedPayable = 0;
                     detail.discount = 0;
                     detail.sroScheduleNo = d.SRO_SCH_NO;
@@ -954,7 +954,7 @@ namespace Empire_ERP.Controllers
                     detail.salesTaxApplicable = d.TAX_AMT;
                     detail.salesTaxWithheldAtSource = 0;
                     detail.extraTax = "";
-                    detail.furtherTax = 0;
+                    detail.furtherTax = d.F_TAX_AMT;
                     detail.fedPayable = 0;
                     detail.discount = 0;
                     detail.sroScheduleNo = d.SRO_SCH_NO;
@@ -974,7 +974,7 @@ namespace Empire_ERP.Controllers
                     detail.salesTaxApplicable = d.TAX_AMT;
                     detail.salesTaxWithheldAtSource = 0;
                     detail.extraTax = "";
-                    detail.furtherTax = 0;
+                    detail.furtherTax = d.F_TAX_AMT;
                     detail.fedPayable = 0;
                     detail.discount = 0;
                     detail.sroScheduleNo = d.SRO_SCH_NO;
@@ -994,7 +994,7 @@ namespace Empire_ERP.Controllers
                     detail.salesTaxApplicable = d.TAX_AMT;
                     detail.salesTaxWithheldAtSource = 0;
                     detail.extraTax = "";
-                    detail.furtherTax = 0;
+                    detail.furtherTax = d.F_TAX_AMT;
                     detail.fedPayable = 0;
                     detail.discount = 0;
                     detail.sroScheduleNo = d.SRO_SCH_NO;

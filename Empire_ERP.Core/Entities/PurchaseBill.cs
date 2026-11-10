@@ -162,6 +162,8 @@ namespace Empire_ERP.Core.Entities
         public double? DISC_AMT { get; set; }
         public double? TAX { get; set; }
         public double? TAX_AMT { get; set; }
+        public double? F_TAX { get; set; }
+        public double? F_TAX_AMT { get; set; }
         public double? ADV { get; set; }
         public double? LAST_RATE { get; set; }
         public double? ADV_AMT { get; set; }

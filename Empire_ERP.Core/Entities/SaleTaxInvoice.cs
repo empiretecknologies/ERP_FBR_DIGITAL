@@ -106,6 +106,7 @@ namespace Empire_ERP.Core.Entities
         public double? DISC_AMT { get; set; }
         public double? TAX { get; set; }
         public decimal? TAX_AMT { get; set; }
+        public decimal? F_TAX_AMT { get; set; }
         public double? NET_AMT { get; set; }
         public string? DT_DESC { get; set; }
 

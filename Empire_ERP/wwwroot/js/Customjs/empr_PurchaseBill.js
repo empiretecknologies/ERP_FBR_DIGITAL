@@ -600,16 +600,19 @@ var empr_PurchaseBill = {
         }, false, true);
     },
 
-    CalculateDetailAmounts: function (qty, rate, tax) {
+    CalculateDetailAmounts: function (qty, rate, tax, furtherTax) {
         var q = parseFloat(qty) || 0;
         var r = parseFloat(rate) || 0;
         var t = parseFloat(tax) || 0;
+        var ft = parseFloat(furtherTax) || 0;
         var amt = q * r;
         var taxAmt = amt * t / 100;
-        var netAmt = amt + taxAmt;
+        var furtherTaxAmt = amt * ft / 100;
+        var netAmt = amt + taxAmt + furtherTaxAmt;
         return {
             amt: amt.toFixed(2),
             taX_AMT: taxAmt.toFixed(2),
+            f_TAX_AMT: furtherTaxAmt.toFixed(2),
             neT_AMT: netAmt.toFixed(2)
         };
     },
@@ -749,9 +752,10 @@ var empr_PurchaseBill = {
                 format: { type: 'fixedPoint', precision: 2 },
                 setCellValue: function (newData, value, currentRowData) {
                     newData.qty = value;
-                    var calc = empr_PurchaseBill.CalculateDetailAmounts(newData.qty, currentRowData.rate, currentRowData.tax);
+                    var calc = empr_PurchaseBill.CalculateDetailAmounts(newData.qty, currentRowData.rate, currentRowData.tax, currentRowData.f_TAX);
                     newData.amt = calc.amt;
                     newData.taX_AMT = calc.taX_AMT;
+                    newData.f_TAX_AMT = calc.f_TAX_AMT;
                     newData.neT_AMT = calc.neT_AMT;
                     newData.w_AMT = ((parseFloat(value) || 0) * (parseFloat(currentRowData.w_RATE) || 0)).toFixed(2);
                 }
@@ -783,9 +787,10 @@ var empr_PurchaseBill = {
                 format: { type: 'fixedPoint', precision: 2 },
                 setCellValue: function (newData, value, currentRowData) {
                     newData.rate = value;
-                    var calc = empr_PurchaseBill.CalculateDetailAmounts(currentRowData.qty, newData.rate, currentRowData.tax);
+                    var calc = empr_PurchaseBill.CalculateDetailAmounts(currentRowData.qty, newData.rate, currentRowData.tax, currentRowData.f_TAX);
                     newData.amt = calc.amt;
                     newData.taX_AMT = calc.taX_AMT;
+                    newData.f_TAX_AMT = calc.f_TAX_AMT;
                     newData.neT_AMT = calc.neT_AMT;
                 }
             },
@@ -824,15 +829,39 @@ var empr_PurchaseBill = {
                 format: { type: 'fixedPoint', precision: 2 },
                 setCellValue: function (newData, value, currentRowData) {
                     newData.tax = value;
-                    var calc = empr_PurchaseBill.CalculateDetailAmounts(currentRowData.qty, currentRowData.rate, newData.tax);
+                    var calc = empr_PurchaseBill.CalculateDetailAmounts(currentRowData.qty, currentRowData.rate, newData.tax, currentRowData.f_TAX);
                     newData.amt = calc.amt;
                     newData.taX_AMT = calc.taX_AMT;
+                    newData.f_TAX_AMT = calc.f_TAX_AMT;
                     newData.neT_AMT = calc.neT_AMT;
                 }
             },
             {
                 dataField: 'taX_AMT',
                 caption: 'Tax Amount',
+                width: 110,
+                allowEditing: false,
+                dataType: 'number',
+                format: { type: 'fixedPoint', precision: 2 }
+            },
+            {
+                dataField: 'f_TAX',
+                caption: 'Futher Tax',
+                width: 80,
+                dataType: 'number',
+                format: { type: 'fixedPoint', precision: 2 },
+                setCellValue: function (newData, value, currentRowData) {
+                    newData.f_TAX = value;
+                    var calc = empr_PurchaseBill.CalculateDetailAmounts(currentRowData.qty, currentRowData.rate, currentRowData.tax, newData.f_TAX);
+                    newData.amt = calc.amt;
+                    newData.taX_AMT = calc.taX_AMT;
+                    newData.f_TAX_AMT = calc.f_TAX_AMT;
+                    newData.neT_AMT = calc.neT_AMT;
+                }
+            },
+            {
+                dataField: 'f_TAX_AMT',
+                caption: 'Futher Tax Amt',
                 width: 110,
                 allowEditing: false,
                 dataType: 'number',
@@ -1040,9 +1069,10 @@ var empr_PurchaseBill = {
                     }
 
                     rowData.tax = taxRate;
-                    var calc = empr_PurchaseBill.CalculateDetailAmounts(currentRowData.qty, currentRowData.rate, taxRate);
+                    var calc = empr_PurchaseBill.CalculateDetailAmounts(currentRowData.qty, currentRowData.rate, taxRate, currentRowData.f_TAX);
                     rowData.amt = calc.amt;
                     rowData.taX_AMT = calc.taX_AMT;
+                    rowData.f_TAX_AMT = calc.f_TAX_AMT;
                     rowData.neT_AMT = calc.neT_AMT;
                 }
             },
