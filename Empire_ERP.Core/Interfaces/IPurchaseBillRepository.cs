@@ -21,5 +21,10 @@ namespace Empire_ERP.Core.Interfaces
         MyHttpResponseMessage GetPickDataByParty(int partyCode, int actCode, Common common);
         MyHttpResponseMessage GetDataForReport(PurchaseBillRDLCReport modelRecord, DataTable details, CustomMenuDetail menuDetails, Company currentCompany, Common common);
         MyHttpResponseMessage GetDashboardData(Common common);
+        MyHttpResponseMessage InvoiceBulkCheckParties(List<InvoiceBulkPartyRow> parties, Common common);
+        MyHttpResponseMessage InvoiceBulkAddParties(List<InvoiceBulkPartyRow> parties, Common common);
+        MyHttpResponseMessage InvoiceBulkCheckItems(List<InvoiceBulkItemRow> items, Common common);
+        MyHttpResponseMessage InvoiceBulkAddItems(List<InvoiceBulkItemRow> items, Common common);
+        MyHttpResponseMessage InvoiceBulkUploadInvoices(List<InvoiceBulkDetailRow> rows, Common common);
     }
 }

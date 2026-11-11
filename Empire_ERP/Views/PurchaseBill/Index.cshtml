@@ -70,6 +70,140 @@
             flex-wrap: wrap;
         }
     }
+
+    #InvoiceBulkUploadModal .modal-dialog {
+        max-width: 95vw;
+        width: 95vw;
+    }
+
+    #InvoiceBulkUploadModal .modal-content {
+        min-height: 620px;
+    }
+
+    #InvoiceBulkUploadModal .modal-body {
+        min-height: 480px;
+    }
+
+    .ibu-stepper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0;
+        margin: 6px 0 22px;
+        flex-wrap: wrap;
+    }
+
+    .ibu-step {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #8a97a6;
+        font-size: 13px;
+        font-weight: 500;
+    }
+
+    .ibu-step .ibu-step-num {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        border: 2px solid #c5ced8;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        font-weight: 700;
+        background: #fff;
+        color: #8a97a6;
+    }
+
+    .ibu-step.active {
+        color: #055a87;
+        font-weight: 700;
+    }
+
+    .ibu-step.active .ibu-step-num {
+        background: #055a87;
+        border-color: #055a87;
+        color: #fff;
+    }
+
+    .ibu-step.done .ibu-step-num {
+        background: #055a87;
+        border-color: #055a87;
+        color: #fff;
+    }
+
+    .ibu-step-line {
+        width: 56px;
+        height: 2px;
+        background: #d5dde5;
+        margin: 0 10px;
+    }
+
+    #BtnDownloadInvoiceBulkTemplate {
+        border: 1px solid #cfd6de;
+        background: #fff;
+        color: #334155;
+    }
+
+    #BtnDownloadInvoiceBulkTemplate:hover {
+        background: #f8fafc;
+        border-color: #b7c0cb;
+        color: #055a87;
+    }
+
+    #ibuDropZone {
+        border: 2px dashed #1f2a37 !important;
+        border-radius: 8px;
+        min-height: 260px;
+        cursor: pointer;
+        background: #fff;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 28px 16px;
+    }
+
+    #ibuDropZone .ibu-excel-icon {
+        color: #055a87;
+        font-size: 42px;
+        margin-bottom: 10px;
+    }
+
+    #ibuDropZone strong {
+        color: #1f2a37;
+    }
+
+    #InvoiceBulkUploadModal .modal-footer .btn-ibu-close {
+        border: 1px solid #cfd6de;
+        background: #fff;
+        color: #334155;
+    }
+
+    .ibu-msg {
+        border-radius: 6px;
+        padding: 10px 12px;
+        margin-bottom: 12px;
+        font-size: 13px;
+    }
+
+    .ibu-msg-info {
+        background: #e8f3f8;
+        border: 1px solid #055a87;
+        color: #055a87;
+    }
+
+    .ibu-msg-error {
+        background: #fdecec;
+        border: 1px solid #b42318;
+        color: #7a1c14;
+    }
+
+    .ibu-msg-error ul {
+        margin: 8px 0 0;
+        padding-left: 18px;
+    }
 </style>
 <div class="card pb-form">
     <div class="card-header">
@@ -79,6 +213,9 @@
         </button>
         <button type="button" class="btn btn-primary btn-new waves-effect waves-light float-end" id="BtnNew">
             <i class="fa fa-plus"></i> Add New
+        </button>
+        <button type="button" class="btn btn-light waves-effect waves-light float-end me-2" id="BtnInvoiceBulkUpload">
+            <i class="fa fa-upload"></i> Invoice Bulk Upload
         </button>
     </div>
     <div class="card-body Record">
@@ -354,6 +491,86 @@
     <input type="hidden" id="department_hidden" />
     <input type="hidden" id="displayExpr_department" />
 
+    <div class="modal fade" id="InvoiceBulkUploadModal" tabindex="-1" aria-labelledby="InvoiceBulkUploadModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="InvoiceBulkUploadModalLabel">Invoice Bulk Upload</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="ibu-stepper" id="invoiceBulkSteps">
+                        <div class="ibu-step active" data-step="1" id="ibuStep1Tab">
+                            <span class="ibu-step-num">1</span>
+                            <span>Upload File</span>
+                        </div>
+                        <div class="ibu-step-line"></div>
+                        <div class="ibu-step" data-step="2" id="ibuStep2Tab">
+                            <span class="ibu-step-num">2</span>
+                            <span>Add Parties</span>
+                        </div>
+                        <div class="ibu-step-line"></div>
+                        <div class="ibu-step" data-step="3" id="ibuStep3Tab">
+                            <span class="ibu-step-num">3</span>
+                            <span>Add Items</span>
+                        </div>
+                        <div class="ibu-step-line"></div>
+                        <div class="ibu-step" data-step="4" id="ibuStep4Tab">
+                            <span class="ibu-step-num">4</span>
+                            <span>Upload Invoices</span>
+                        </div>
+                    </div>
+
+                    <div id="ibuStep1">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <label class="form-label mb-0">Select Excel file</label>
+                            <button type="button" class="btn btn-sm" id="BtnDownloadInvoiceBulkTemplate">
+                                <i class="fa fa-download"></i> Download Excel Template
+                            </button>
+                        </div>
+                        <div id="ibuDropZone">
+                            <i class="fa fa-file-excel ibu-excel-icon"></i>
+                            <div><strong>Drop Excel file here</strong></div>
+                            <div class="text-muted small mt-1">or click Upload. Columns: Party, Item, Qty, Rate, Sale Type...</div>
+                            <button type="button" class="btn btn-primary mt-3" id="BtnInvoiceBulkSelectFile" style="background:#055a87;border-color:#055a87;">
+                                <i class="fa fa-cloud-upload-alt"></i> Upload
+                            </button>
+                            <div id="ibuSelectedFileName" class="mt-2 text-muted small"></div>
+                        </div>
+                        <input type="file" id="InvoiceBulkFileInput" accept=".xlsx,.xls" class="d-none" />
+                    </div>
+
+                    <div id="ibuStep2" class="d-none">
+                        <div id="ibuPartyErrorBox" class="ibu-msg ibu-msg-error d-none"></div>
+                        <div id="ibuPartyGrid"></div>
+                        <div class="text-end mt-3">
+                            <button type="button" class="btn btn-primary" id="BtnInvoiceBulkAddParties" style="background:#055a87;border-color:#055a87;"><i class="fa fa-plus"></i> Add Party</button>
+                        </div>
+                    </div>
+
+                    <div id="ibuStep3" class="d-none">
+                        <div id="ibuItemErrorBox" class="ibu-msg ibu-msg-error d-none"></div>
+                        <div id="ibuItemGrid"></div>
+                        <div class="text-end mt-3">
+                            <button type="button" class="btn btn-primary" id="BtnInvoiceBulkAddItems" style="background:#055a87;border-color:#055a87;"><i class="fa fa-plus"></i> Add Items</button>
+                        </div>
+                    </div>
+
+                    <div id="ibuStep4" class="d-none">
+                        <div id="ibuInvoiceSummary" class="mb-2"></div>
+                        <div id="ibuInvoiceGrid"></div>
+                        <div class="text-end mt-3">
+                            <button type="button" class="btn btn-primary" id="BtnInvoiceBulkUploadInvoices" style="background:#055a87;border-color:#055a87;"><i class="fa fa-upload"></i> Upload Invoices</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-ibu-close" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 @section LinkScriptSection {
         <script type="text/javascript">
             // var ItemIds = @Html.Raw(Json.Serialize(ViewBag.ItemIds));
@@ -383,9 +600,11 @@
             var DefaultCharges = @Html.Raw(Json.Serialize(ViewBag.DefaultCharges));
         </script>
         <script src="~/js/customjs/empr_PurchaseBill.js" asp-append-version="true"></script>
+        <script src="~/js/customjs/empr_PurchaseBill_InvoiceBulkUpload.js" asp-append-version="true"></script>
         <script type="text/javascript">
             $(function () {
                 empr_PurchaseBill.InitEvents();
+                empr_PurchaseBill_InvoiceBulkUpload.InitEvents();
                   empr_helper.EnableShortCutKeys('#BtnSave', '#BtnNew', '#BtnDelete', '#BtnQuickSearch', '#Code', '#DetailContainer', 0, 'custoM_ACT_CODE');
             });
         </script>

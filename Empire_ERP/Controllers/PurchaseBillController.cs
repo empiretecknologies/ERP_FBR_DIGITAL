@@ -154,6 +154,35 @@ namespace Empire_ERP.Controllers
         }
 
         [HttpGet]
+        public JsonResult GetItems()
+        {
+            try
+            {
+                var common = CommonHelper.GetValues(HttpContext);
+                string? itemType = string.Empty;
+                string? dcType = string.Empty;
+                var Menu = _menuService.GetMenu(common.MenuID);
+                if (Menu.data != null)
+                {
+                    var menu = (Menu)Menu.data;
+                    itemType = menu.ITEM_TYPE;
+                    dcType = menu.DCTYPE;
+                }
+                var data = DropdownService.ItemMasterDropdownWithPrice(common.RoleID, common.RoleType, dcType, itemType);
+                return Json(new { data = data, msgType = 1 });
+            }
+            catch (Exception ex)
+            {
+                string _catchMessage = ex.Message;
+                if (ex.InnerException != null)
+                {
+                    _catchMessage += "<br/>" + ex.InnerException.Message;
+                }
+                return Json(new { data = _catchMessage, msgType = 2 });
+            }
+        }
+
+        [HttpGet]
         public JsonResult GetUnits()
         {
             try
@@ -374,6 +403,101 @@ namespace Empire_ERP.Controllers
                     _catchMessage += "<br/>" + ex.InnerException.Message;
                 }
                 return Json(_catchMessage);
+            }
+        }
+
+        [HttpPost]
+        public JsonResult InvoiceBulkCheckParties([FromBody] InvoiceBulkPartyRequest model)
+        {
+            try
+            {
+                var data = _purchaseBillService.InvoiceBulkCheckParties(model?.Parties ?? new List<InvoiceBulkPartyRow>(), CommonHelper.GetValues(HttpContext));
+                return Json(data);
+            }
+            catch (Exception ex)
+            {
+                string _catchMessage = ex.Message;
+                if (ex.InnerException != null)
+                {
+                    _catchMessage += "<br/>" + ex.InnerException.Message;
+                }
+                return Json(new MyHttpResponseMessage { msgType = 2, msg = _catchMessage });
+            }
+        }
+
+        [HttpPost]
+        public JsonResult InvoiceBulkAddParties([FromBody] InvoiceBulkPartyRequest model)
+        {
+            try
+            {
+                var data = _purchaseBillService.InvoiceBulkAddParties(model?.Parties ?? new List<InvoiceBulkPartyRow>(), CommonHelper.GetValues(HttpContext));
+                return Json(data);
+            }
+            catch (Exception ex)
+            {
+                string _catchMessage = ex.Message;
+                if (ex.InnerException != null)
+                {
+                    _catchMessage += "<br/>" + ex.InnerException.Message;
+                }
+                return Json(new MyHttpResponseMessage { msgType = 2, msg = _catchMessage });
+            }
+        }
+
+        [HttpPost]
+        public JsonResult InvoiceBulkCheckItems([FromBody] InvoiceBulkItemRequest model)
+        {
+            try
+            {
+                var data = _purchaseBillService.InvoiceBulkCheckItems(model?.Items ?? new List<InvoiceBulkItemRow>(), CommonHelper.GetValues(HttpContext));
+                return Json(data);
+            }
+            catch (Exception ex)
+            {
+                string _catchMessage = ex.Message;
+                if (ex.InnerException != null)
+                {
+                    _catchMessage += "<br/>" + ex.InnerException.Message;
+                }
+                return Json(new MyHttpResponseMessage { msgType = 2, msg = _catchMessage });
+            }
+        }
+
+        [HttpPost]
+        public JsonResult InvoiceBulkAddItems([FromBody] InvoiceBulkItemRequest model)
+        {
+            try
+            {
+                var data = _purchaseBillService.InvoiceBulkAddItems(model?.Items ?? new List<InvoiceBulkItemRow>(), CommonHelper.GetValues(HttpContext));
+                return Json(data);
+            }
+            catch (Exception ex)
+            {
+                string _catchMessage = ex.Message;
+                if (ex.InnerException != null)
+                {
+                    _catchMessage += "<br/>" + ex.InnerException.Message;
+                }
+                return Json(new MyHttpResponseMessage { msgType = 2, msg = _catchMessage });
+            }
+        }
+
+        [HttpPost]
+        public JsonResult InvoiceBulkUploadInvoices([FromBody] InvoiceBulkInvoiceRequest model)
+        {
+            try
+            {
+                var data = _purchaseBillService.InvoiceBulkUploadInvoices(model?.Rows ?? new List<InvoiceBulkDetailRow>(), CommonHelper.GetValues(HttpContext));
+                return Json(data);
+            }
+            catch (Exception ex)
+            {
+                string _catchMessage = ex.Message;
+                if (ex.InnerException != null)
+                {
+                    _catchMessage += "<br/>" + ex.InnerException.Message;
+                }
+                return Json(new MyHttpResponseMessage { msgType = 2, msg = _catchMessage });
             }
         }
 

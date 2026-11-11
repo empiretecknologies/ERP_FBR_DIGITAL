@@ -187,5 +187,30 @@ namespace Empire_ERP.Core.Services
         {
             return _PurchaseBillRepository.GetDashboardData(common);
         }
+
+        public MyHttpResponseMessage InvoiceBulkCheckParties(List<InvoiceBulkPartyRow> parties, Common common)
+        {
+            return _PurchaseBillRepository.InvoiceBulkCheckParties(parties, common);
+        }
+
+        public MyHttpResponseMessage InvoiceBulkAddParties(List<InvoiceBulkPartyRow> parties, Common common)
+        {
+            return _PurchaseBillRepository.InvoiceBulkAddParties(parties, common);
+        }
+
+        public MyHttpResponseMessage InvoiceBulkCheckItems(List<InvoiceBulkItemRow> items, Common common)
+        {
+            return _PurchaseBillRepository.InvoiceBulkCheckItems(items, common);
+        }
+
+        public MyHttpResponseMessage InvoiceBulkAddItems(List<InvoiceBulkItemRow> items, Common common)
+        {
+            return _PurchaseBillRepository.InvoiceBulkAddItems(items, common);
+        }
+
+        public MyHttpResponseMessage InvoiceBulkUploadInvoices(List<InvoiceBulkDetailRow> rows, Common common)
+        {
+            return _PurchaseBillRepository.InvoiceBulkUploadInvoices(rows, common);
+        }
     }
 }

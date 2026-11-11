@@ -2019,5 +2019,663 @@ namespace Empire_ERP.Infrastructure.Repositories
             return Convert.ToDateTime(value).ToString("yyyy-MM-dd");
         }
 
+        private string InvoiceBulkSqlEscape(string value)
+        {
+            return (value ?? string.Empty).Replace("'", "''").Trim();
+        }
+
+        private int InvoiceBulkGetPartyTypeCode(Common common)
+        {
+            var Menu = _menuRepository.GetMenu(common.MenuID);
+            if (Menu.data != null)
+            {
+                var menu = (Menu)Menu.data;
+                return menu.PTYPE ?? 0;
+            }
+            return 0;
+        }
+
+        public MyHttpResponseMessage InvoiceBulkCheckParties(List<InvoiceBulkPartyRow> parties, Common common)
+        {
+            MyHttpResponseMessage response = new MyHttpResponseMessage();
+            response.msgType = 2;
+            response.msg = "No party data found";
+            try
+            {
+                if (parties == null || parties.Count == 0)
+                {
+                    response.msg = "Party list is empty";
+                    return response;
+                }
+
+                var actionable = new List<object>();
+                string connectionString = new SQLService().getconnstring();
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    foreach (var party in parties)
+                    {
+                        string ntn = InvoiceBulkSqlEscape(party.PartyNtn);
+                        if (string.IsNullOrWhiteSpace(ntn))
+                            continue;
+
+                        string query = $"SELECT TOP 1 PARTY_CODE, PARTY_NAME FROM TBL_PARTY_TYPES WHERE DLT = 'T' AND NTN = '{ntn}'";
+                        SqlCommand command = new SqlCommand(query, connection);
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            if (!reader.Read())
+                            {
+                                actionable.Add(new
+                                {
+                                    partyName = party.PartyName,
+                                    partyAddress = party.PartyAddress,
+                                    partyRegion = party.PartyRegion,
+                                    partyRegType = party.PartyRegType,
+                                    partyNtn = party.PartyNtn,
+                                    partyStReg = party.PartyStReg,
+                                    status = "Not Added",
+                                    actionType = "INSERT",
+                                    existingPartyCode = (int?)null
+                                });
+                            }
+                            else
+                            {
+                                string existingName = SafeString(reader["PARTY_NAME"]);
+                                int existingCode = SafeInt(reader["PARTY_CODE"]);
+                                string newName = (party.PartyName ?? "").Trim();
+                                if (!string.Equals(existingName, newName, StringComparison.OrdinalIgnoreCase))
+                                {
+                                    actionable.Add(new
+                                    {
+                                        partyName = party.PartyName,
+                                        partyAddress = party.PartyAddress,
+                                        partyRegion = party.PartyRegion,
+                                        partyRegType = party.PartyRegType,
+                                        partyNtn = party.PartyNtn,
+                                        partyStReg = party.PartyStReg,
+                                        status = $"NTN exist with party name is {existingName}, it will update to {newName}",
+                                        actionType = "UPDATE",
+                                        existingPartyCode = existingCode
+                                    });
+                                }
+                            }
+                        }
+                    }
+                }
+
+                response.data = actionable;
+                response.msgType = 1;
+                response.msg = actionable.Count == 0 ? "All parties already exist" : "Party check completed";
+            }
+            catch (Exception ex)
+            {
+                response.msg = ex.InnerException != null ? ex.Message + "<br/>" + ex.InnerException.Message : ex.Message;
+                response.msgType = 2;
+            }
+            return response;
+        }
+
+        public MyHttpResponseMessage InvoiceBulkAddParties(List<InvoiceBulkPartyRow> parties, Common common)
+        {
+            MyHttpResponseMessage response = new MyHttpResponseMessage();
+            response.msgType = 2;
+            response.msg = "Unable to add parties";
+            try
+            {
+                if (parties == null || parties.Count == 0)
+                {
+                    response.msg = "No parties selected to add";
+                    return response;
+                }
+
+                int pType = InvoiceBulkGetPartyTypeCode(common);
+                if (pType <= 0)
+                {
+                    response.msg = "Party type not found for this menu";
+                    return response;
+                }
+
+                foreach (var party in parties)
+                {
+                    if (string.IsNullOrWhiteSpace(party.PartyName) ||
+                        string.IsNullOrWhiteSpace(party.PartyAddress) ||
+                        string.IsNullOrWhiteSpace(party.PartyRegion) ||
+                        string.IsNullOrWhiteSpace(party.PartyRegType) ||
+                        string.IsNullOrWhiteSpace(party.PartyNtn) ||
+                        string.IsNullOrWhiteSpace(party.PartyStReg))
+                    {
+                        response.msg = "All 6 party columns are required for Add Party";
+                        return response;
+                    }
+                }
+
+                var Ip = common.IPAddress;
+                var Computer = common.ComputerName;
+                var Postal = common.PostalCode;
+                var username = common.Username;
+                string now = CommonService.GetDateTime("Pakistan Standard Time");
+                string connectionString = new SQLService().getconnstring();
+
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    SqlTransaction transaction = connection.BeginTransaction();
+                    SqlCommand command = connection.CreateCommand();
+                    command.Transaction = transaction;
+                    try
+                    {
+                        foreach (var party in parties)
+                        {
+                            string name = InvoiceBulkSqlEscape(party.PartyName);
+                            string address = InvoiceBulkSqlEscape(party.PartyAddress);
+                            string region = InvoiceBulkSqlEscape(party.PartyRegion);
+                            string regType = InvoiceBulkSqlEscape(party.PartyRegType);
+                            string ntn = InvoiceBulkSqlEscape(party.PartyNtn);
+                            string stReg = InvoiceBulkSqlEscape(party.PartyStReg);
+
+                            if (string.Equals(party.ActionType, "UPDATE", StringComparison.OrdinalIgnoreCase) && party.ExistingPartyCode.HasValue)
+                            {
+                                string updateQuery = $@"UPDATE TBL_PARTY_TYPES SET
+                                    PARTY_NAME = '{name}',
+                                    PADDRESS = '{address}',
+                                    REMARKS = '{region}',
+                                    PARTY_TYPE = '{regType}',
+                                    CNIC = '{stReg}',
+                                    ACT_CODE = '115',
+                                    EDIT_USER_ID = '{username}',
+                                    EDIT_DATE = '{now}',
+                                    EDIT_COMPUTER_NAME = '{Computer}',
+                                    EDIT_IP_ADDRESS = '{Ip}',
+                                    EDIT_POSTALCODE = '{Postal}'
+                                    WHERE PARTY_CODE = '{party.ExistingPartyCode.Value}' AND DLT = 'T'";
+                                command.CommandText = updateQuery;
+                                command.ExecuteNonQuery();
+                            }
+                            else
+                            {
+                                command.CommandText = $"SELECT ISNULL(MAX(PARTY_CODE), 0) + 1 FROM TBL_PARTY_TYPES WHERE PARTY_TYPE_CODE = '{pType}'";
+                                int partyCode = Convert.ToInt32(command.ExecuteScalar());
+
+                                string insertQuery = $@"INSERT INTO TBL_PARTY_TYPES
+                                    (PARTY_CODE,PARTY_TYPE_CODE,PARTY_NAME,PARTY_SHORT_NAME,
+                                    ACT_CODE,CAT_CODE,PADDRESS,NTN,CNIC,CONTACT_PERSON,
+                                    CELL,WB,TELL,EMAIL,WEBSITE,CNIC_EXP,REMARKS,
+                                    PAYMENT_TERMS,CREDIT_LIMIT,S_CODE,SACT_CODE,GST,
+                                    SERVICE_TAX,F_CODE,ENTITY,ASTATUS,ACCOUNT_NUM,TAX,
+                                    BANK_NAME,BRANCH_NAME,BANK_ADDRESS,DOC_PIC,CNIC_PIC,
+                                    TERMS_CONDITION,ADD_DATE,ADD_COMPUTER_NAME,ADD_IP_ADDRESS,
+                                    EDIT_USER_ID,EDIT_DATE,EDIT_COMPUTER_NAME,EDIT_IP_ADDRESS,
+                                    ADD_POSTALCODE,EDIT_POSTALCODE,MENU_ID,REGION,PARTY_TYPE,
+                                    ADD_USER_ID,COMM,DISC,DLT,T_CAT,WHT,EXEMPT_DATE)
+                                    VALUES
+                                    ('{partyCode}','{pType}','{name}','',
+                                    '115','0','{address}','{ntn}','{stReg}','',
+                                    '','','','','',NULL,'{region}',
+                                    '0','0','0','0','0',
+                                    '0','0','0','Y','','0',
+                                    '','','','','',
+                                    '','{now}','{Computer}','{Ip}',
+                                    '{username}','{now}','{Computer}','{Ip}',
+                                    '{Postal}','{Postal}','{common.MenuID}','0','{regType}',
+                                    '{username}','0','0','T','','0',NULL)";
+                                command.CommandText = insertQuery;
+                                command.ExecuteNonQuery();
+                            }
+                        }
+
+                        transaction.Commit();
+                        response.msgType = 1;
+                        response.msg = "Parties added successfully";
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        response.msg = ex.InnerException != null ? ex.Message + "<br/>" + ex.InnerException.Message : ex.Message;
+                        response.msgType = 2;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                response.msg = ex.InnerException != null ? ex.Message + "<br/>" + ex.InnerException.Message : ex.Message;
+                response.msgType = 2;
+            }
+            return response;
+        }
+
+        public MyHttpResponseMessage InvoiceBulkCheckItems(List<InvoiceBulkItemRow> items, Common common)
+        {
+            MyHttpResponseMessage response = new MyHttpResponseMessage();
+            response.msgType = 2;
+            response.msg = "No item data found";
+            try
+            {
+                if (items == null || items.Count == 0)
+                {
+                    response.msg = "Item list is empty";
+                    return response;
+                }
+
+                var actionable = new List<object>();
+                var hsCounts = items
+                    .Where(x => !string.IsNullOrWhiteSpace(x.HsCode))
+                    .GroupBy(x => x.HsCode.Trim(), StringComparer.OrdinalIgnoreCase)
+                    .ToDictionary(g => g.Key, g => g.Count(), StringComparer.OrdinalIgnoreCase);
+
+                string connectionString = new SQLService().getconnstring();
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    foreach (var item in items)
+                    {
+                        string itemName = InvoiceBulkSqlEscape(item.ItemName);
+                        string hsCode = InvoiceBulkSqlEscape(item.HsCode);
+                        if (string.IsNullOrWhiteSpace(itemName) && string.IsNullOrWhiteSpace(hsCode))
+                            continue;
+
+                        // Exact same item already exists -> skip
+                        string exactQuery = $@"SELECT TOP 1 ITEM_CODE FROM TBL_ITEMSMASTER
+                            WHERE DLT = 'T'
+                            AND {(string.IsNullOrWhiteSpace(itemName) ? "1=0" : $"ITEM_NAME = '{itemName}'")}
+                            AND {(string.IsNullOrWhiteSpace(hsCode) ? "1=0" : $"HS_CODE = '{hsCode}'")}";
+                        SqlCommand exactCmd = new SqlCommand(exactQuery, connection);
+                        object exactResult = exactCmd.ExecuteScalar();
+                        if (exactResult != null && exactResult != DBNull.Value)
+                            continue;
+
+                        string status = "Not Added";
+                        string existingNameByHs = "";
+                        if (!string.IsNullOrWhiteSpace(hsCode))
+                        {
+                            string hsQuery = $"SELECT TOP 1 ITEM_NAME FROM TBL_ITEMSMASTER WHERE DLT = 'T' AND HS_CODE = '{hsCode}'";
+                            SqlCommand hsCmd = new SqlCommand(hsQuery, connection);
+                            object hsResult = hsCmd.ExecuteScalar();
+                            if (hsResult != null && hsResult != DBNull.Value)
+                            {
+                                existingNameByHs = SafeString(hsResult);
+                                status = $"Same HS Code already exists (item: {existingNameByHs}), new item will be inserted";
+                            }
+                            else if (hsCounts.TryGetValue(item.HsCode.Trim(), out int hsCount) && hsCount > 1)
+                            {
+                                status = "Same HS Code appears multiple times in file, item will be inserted";
+                            }
+                        }
+
+                        actionable.Add(new
+                        {
+                            itemName = item.ItemName,
+                            itemUnit = item.ItemUnit,
+                            hsCode = item.HsCode,
+                            status = status,
+                            actionType = "INSERT",
+                            existingItemCode = (int?)null
+                        });
+                    }
+                }
+
+                response.data = actionable;
+                response.msgType = 1;
+                response.msg = actionable.Count == 0 ? "All items already exist" : "Item check completed";
+            }
+            catch (Exception ex)
+            {
+                response.msg = ex.InnerException != null ? ex.Message + "<br/>" + ex.InnerException.Message : ex.Message;
+                response.msgType = 2;
+            }
+            return response;
+        }
+
+        public MyHttpResponseMessage InvoiceBulkAddItems(List<InvoiceBulkItemRow> items, Common common)
+        {
+            MyHttpResponseMessage response = new MyHttpResponseMessage();
+            response.msgType = 2;
+            response.msg = "Unable to add items";
+            try
+            {
+                if (items == null || items.Count == 0)
+                {
+                    response.msg = "No items selected to add";
+                    return response;
+                }
+
+                foreach (var item in items)
+                {
+                    if (string.IsNullOrWhiteSpace(item.ItemName) ||
+                        string.IsNullOrWhiteSpace(item.ItemUnit) ||
+                        string.IsNullOrWhiteSpace(item.HsCode))
+                    {
+                        response.msg = "Item Name, Item Unit and HS Code are required";
+                        return response;
+                    }
+                }
+
+                var Ip = common.IPAddress;
+                var Computer = common.ComputerName;
+                var Postal = common.PostalCode;
+                var username = common.Username;
+                string now = CommonService.GetDateTime("Pakistan Standard Time");
+                string connectionString = new SQLService().getconnstring();
+
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    SqlTransaction transaction = connection.BeginTransaction();
+                    SqlCommand command = connection.CreateCommand();
+                    command.Transaction = transaction;
+                    try
+                    {
+                        foreach (var item in items)
+                        {
+                            string itemName = InvoiceBulkSqlEscape(item.ItemName);
+                            string unitName = InvoiceBulkSqlEscape(item.ItemUnit);
+                            string hsCode = InvoiceBulkSqlEscape(item.HsCode);
+
+                            command.CommandText = $"SELECT TOP 1 GROUP_CODE FROM TBL_UNIT WHERE DLT = 'T' AND GROUP_NAME = '{unitName}'";
+                            object unitResult = command.ExecuteScalar();
+                            if (unitResult == null || unitResult == DBNull.Value)
+                            {
+                                throw new Exception($"Unit not found: {item.ItemUnit}");
+                            }
+                            int unitCode = Convert.ToInt32(unitResult);
+
+                            // Always insert (same HS Code allowed for multiple items)
+                            command.CommandText = "SELECT ISNULL(MAX(ITEM_CODE), 0) + 1 FROM TBL_ITEMSMASTER";
+                            int itemCode = Convert.ToInt32(command.ExecuteScalar());
+
+                            string insertQuery = $@"INSERT INTO TBL_ITEMSMASTER
+                                (ITEM_CODE,ITEM_ID,COLOR,SIZE,ITEM_NAME,ITEM_SHORT_NAME,WEIGHT,WASTAGE,
+                                REMARKS,GROUP_CODE,IUNIT_CODE,PACK,PUNIT_CODE,SALE_RATE,
+                                PURCHASE_RATE,SALESTAX,ITAX_STATUS,ITEM_MAX,ITEM_MINI,IPIC,
+                                ASTATUS,ADD_DATE,ADD_COMPUTER_NAME,ADD_IP_ADDRESS,
+                                EDIT_USER_ID,EDIT_DATE,EDIT_COMPUTER_NAME,EDIT_IP_ADDRESS,
+                                ADD_POSTALCODE,EDIT_POSTALCODE,MENU_ID,
+                                ADD_USER_ID,DLT,GRADE,ITEM_TYPE, CAT_CODE, SUB_CAT_CODE,HS_CODE)
+                                VALUES
+                                ('{itemCode}','','0','0','{itemName}','','0','0',
+                                '','0','{unitCode}','','0','0',
+                                '0','0','0','0','0','',
+                                'Y','{now}','{Computer}','{Ip}',
+                                '{username}','{now}','{Computer}','{Ip}',
+                                '{Postal}','{Postal}','{common.MenuID}',
+                                '{username}','T','0','','0','0','{hsCode}')";
+                            command.CommandText = insertQuery;
+                            command.ExecuteNonQuery();
+                        }
+
+                        transaction.Commit();
+                        response.msgType = 1;
+                        response.msg = "Items added successfully";
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        response.msg = ex.InnerException != null ? ex.Message + "<br/>" + ex.InnerException.Message : ex.Message;
+                        response.msgType = 2;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                response.msg = ex.InnerException != null ? ex.Message + "<br/>" + ex.InnerException.Message : ex.Message;
+                response.msgType = 2;
+            }
+            return response;
+        }
+
+        public MyHttpResponseMessage InvoiceBulkUploadInvoices(List<InvoiceBulkDetailRow> rows, Common common)
+        {
+            MyHttpResponseMessage response = new MyHttpResponseMessage();
+            response.msgType = 2;
+            response.msg = "Unable to upload invoices";
+            try
+            {
+                if (rows == null || rows.Count == 0)
+                {
+                    response.msg = "No invoice rows found";
+                    return response;
+                }
+
+                var Menu = _menuRepository.GetMenu(common.MenuID);
+                string? table = string.Empty;
+                string? detailTable = string.Empty;
+                if (Menu.data != null)
+                {
+                    var menu = (Menu)Menu.data;
+                    table = menu.TABLE1;
+                    detailTable = menu.TABLE2;
+                }
+
+                if (string.IsNullOrWhiteSpace(table) || string.IsNullOrWhiteSpace(detailTable))
+                {
+                    response.msg = "Menu tables not found";
+                    return response;
+                }
+
+                foreach (var row in rows)
+                {
+                    if (string.IsNullOrWhiteSpace(row.PartyNtn) ||
+                        string.IsNullOrWhiteSpace(row.ItemName) ||
+                        string.IsNullOrWhiteSpace(row.ItemUnit) ||
+                        string.IsNullOrWhiteSpace(row.HsCode) ||
+                        string.IsNullOrWhiteSpace(row.SaleType) ||
+                        row.InvoiceQty <= 0)
+                    {
+                        response.msg = "Invoice upload aborted. One or more required fields are empty.";
+                        return response;
+                    }
+
+                    decimal expectedAmount = Math.Round(row.InvoiceQty * row.Rate, 2);
+                    decimal expectedWAmt = Math.Round(expectedAmount * row.WRate / 100m, 2);
+                    decimal expectedTaxAmt = Math.Round(expectedAmount * row.Tax / 100m, 2);
+                    decimal expectedNet = Math.Round(expectedAmount + expectedWAmt + expectedTaxAmt, 2);
+
+                    if (Math.Abs(expectedAmount - Math.Round(row.Amount, 2)) > 0.01m ||
+                        Math.Abs(expectedWAmt - Math.Round(row.WAmt, 2)) > 0.01m ||
+                        Math.Abs(expectedTaxAmt - Math.Round(row.TaxAmt, 2)) > 0.01m ||
+                        Math.Abs(expectedNet - Math.Round(row.NetAmount, 2)) > 0.01m)
+                    {
+                        response.msg = "Invoice upload aborted. Amount / W.Amt / Tax Amt / Net Amount calculation mismatch.";
+                        return response;
+                    }
+                }
+
+                var Ip = common.IPAddress;
+                var Computer = common.ComputerName;
+                var Postal = common.PostalCode;
+                var username = common.Username;
+                var branch = common.Branch;
+                var period = common.Period;
+                var menuID = common.MenuID;
+                string now = CommonService.GetDateTime("Pakistan Standard Time");
+                string vDate = Convert.ToDateTime(now).ToString("yyyy-MM-dd");
+                string connectionString = new SQLService().getconnstring();
+
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    SqlTransaction transaction = connection.BeginTransaction();
+                    SqlCommand command = connection.CreateCommand();
+                    command.Transaction = transaction;
+                    try
+                    {
+                        int uploadedCount = 0;
+                        foreach (var item in rows)
+                        {
+                            string ntn = InvoiceBulkSqlEscape(item.PartyNtn);
+
+                            command.CommandText = $"SELECT TOP 1 PARTY_CODE, ACT_CODE FROM TBL_PARTY_TYPES WHERE DLT = 'T' AND NTN = '{ntn}'";
+                            int partyCode = 0;
+                            int actCode = 115;
+                            using (SqlDataReader reader = command.ExecuteReader())
+                            {
+                                if (!reader.Read())
+                                {
+                                    throw new Exception($"Party not found for NTN: {item.PartyNtn}");
+                                }
+                                partyCode = SafeInt(reader["PARTY_CODE"]);
+                                actCode = SafeInt(reader["ACT_CODE"]);
+                                if (actCode == 0) actCode = 115;
+                            }
+
+                            int tranId = InvoiceBulkGenerateNextId(common, command, table);
+                            if (tranId <= 0)
+                                throw new Exception("Unable to generate TRAN_ID");
+
+                            string voucherNo = InvoiceBulkGenerateVoucherNo(common, tranId, vDate);
+                            if (string.IsNullOrWhiteSpace(voucherNo))
+                                throw new Exception("Unable to generate VOUCHER_NO");
+
+                            string masterInsert = $@"INSERT INTO {table}
+                                (TRAN_ID, V_DATE, VOUCHER_NO, PARTY_CODE, ACT_CODE, BTYPE, REF, ORDER_TYPE, REMARKS, BCODE, PERIOD_ID,
+                                ADD_USER_ID, ADD_DATE, ADD_COMPUTER_NAME, ADD_IP_ADDRESS, EDIT_USER_ID, EDIT_DATE,
+                                EDIT_COMPUTER_NAME, EDIT_IP_ADDRESS, ADD_POSTALCODE, EDIT_POSTALCODE, ASTATUS, MENU_ID, DLT, DOC)
+                                VALUES
+                                ('{tranId}','{vDate}','{voucherNo}','{partyCode}','{actCode}',
+                                'CR','','','Invoice Bulk Upload','{branch}','{period}',
+                                '{username}','{now}','{Computer}','{Ip}','{username}','{now}',
+                                '{Computer}','{Ip}','{Postal}','{Postal}','Y','{menuID}','T','')";
+                            command.CommandText = masterInsert;
+                            command.ExecuteNonQuery();
+
+                            int detailCode = InvoiceBulkGenerateNextDetailId(common, command, detailTable) + 1;
+
+                            string itemName = InvoiceBulkSqlEscape(item.ItemName);
+                            string hsCode = InvoiceBulkSqlEscape(item.HsCode);
+                            string unitName = InvoiceBulkSqlEscape(item.ItemUnit);
+                            string saleType = InvoiceBulkSqlEscape(item.SaleType);
+
+                            // Prefer exact Name + HS Code (same HS can have multiple items)
+                            command.CommandText = $@"SELECT TOP 1 ITEM_CODE FROM TBL_ITEMSMASTER
+                                WHERE DLT = 'T' AND ITEM_NAME = '{itemName}' AND HS_CODE = '{hsCode}'
+                                ORDER BY ITEM_CODE DESC";
+                            object itemCodeObj = command.ExecuteScalar();
+                            if (itemCodeObj == null || itemCodeObj == DBNull.Value)
+                            {
+                                command.CommandText = $@"SELECT TOP 1 ITEM_CODE FROM TBL_ITEMSMASTER
+                                    WHERE DLT = 'T' AND ITEM_NAME = '{itemName}'
+                                    ORDER BY ITEM_CODE DESC";
+                                itemCodeObj = command.ExecuteScalar();
+                            }
+                            if (itemCodeObj == null || itemCodeObj == DBNull.Value)
+                                throw new Exception($"Item not found: {item.ItemName}");
+                            int itemCode = Convert.ToInt32(itemCodeObj);
+
+                            command.CommandText = $"SELECT TOP 1 GROUP_CODE FROM TBL_UNIT WHERE DLT = 'T' AND GROUP_NAME = '{unitName}'";
+                            object unitObj = command.ExecuteScalar();
+                            if (unitObj == null || unitObj == DBNull.Value)
+                                throw new Exception($"Unit not found: {item.ItemUnit}");
+                            int unitCode = Convert.ToInt32(unitObj);
+
+                            command.CommandText = $@"SELECT TOP 1 CODE, ITEM_SNO, SCHEDULE_NO, SERIAL_NO
+                                FROM TBL_FBR_TYPE WHERE DLT = 'T' AND ASTATUS = 'Y'
+                                AND (S_NAME = '{saleType}' OR CAST(CODE AS NVARCHAR(50)) = '{saleType}')";
+                            int fbrType = 0;
+                            string itemSno = "";
+                            string scheduleNo = "";
+                            string serialNo = "";
+                            using (SqlDataReader reader = command.ExecuteReader())
+                            {
+                                if (!reader.Read())
+                                    throw new Exception($"Sale Type not found: {item.SaleType}");
+                                fbrType = SafeInt(reader["CODE"]);
+                                itemSno = SafeString(reader["ITEM_SNO"]);
+                                scheduleNo = SafeString(reader["SCHEDULE_NO"]);
+                                serialNo = SafeString(reader["SERIAL_NO"]);
+                            }
+
+                            decimal amount = Math.Round(item.InvoiceQty * item.Rate, 2);
+                            decimal wAmt = Math.Round(amount * item.WRate / 100m, 2);
+                            decimal taxAmt = Math.Round(amount * item.Tax / 100m, 2);
+                            decimal netAmt = Math.Round(amount + wAmt + taxAmt, 2);
+
+                            string detailInsert = $@"INSERT INTO {detailTable}
+                                (TRAN_ID, DT_CODE, ITEM_CODE, PARTY_CODE, ACT_CODE, QTY, COMP, VEHICLE,
+                                UNIT, BAGS, RATE, AMT, W_RATE, W_AMT, TAX, TAX_AMT, F_TAX, F_TAX_AMT, NET_AMT, DT_DESC, DEL_DATE, PAY_TERM, DUE_DATE, INC_EXC, COMM_TYPE, COMM_VAL, WAREHOUSE, LOT_REG, HS_CODE, BCODE, PERIOD_ID, ADD_USER_ID,
+                                ADD_DATE, ADD_COMPUTER_NAME, ADD_IP_ADDRESS, EDIT_USER_ID,
+                                EDIT_DATE, EDIT_COMPUTER_NAME, EDIT_IP_ADDRESS,
+                                ADD_POSTALCODE, EDIT_POSTALCODE, MENU_ID, DLT, PICK_ID, PICK_ID_D,FBR_TYPE,SCHEDULE_NO,SERIAL_NO,ITEM_SNO)
+                                VALUES
+                                ('{tranId}', '{detailCode}', '{itemCode}', '0', '0','{item.InvoiceQty}', '0', '',
+                                '{unitCode}', '0', '{item.Rate}', '{amount}', '{item.WRate}', '{wAmt}', '{item.Tax}', '{taxAmt}', '0', '0', '{netAmt}', '',
+                                NULL, NULL, NULL,'','', '0', '', '', '{hsCode}', '{branch}', '{period}', '{username}',
+                                '{now}', '{Computer}', '{Ip}', '{username}',
+                                '{now}', '{Computer}', '{Ip}',
+                                '{Postal}', '{Postal}', '{menuID}', 'T', '0', '0','{fbrType}','{scheduleNo}','{serialNo}','{itemSno}')";
+                            command.CommandText = detailInsert;
+                            command.ExecuteNonQuery();
+
+                            uploadedCount++;
+                        }
+
+                        transaction.Commit();
+                        response.msgType = 1;
+                        response.msg = $"{uploadedCount} invoice(s) uploaded successfully";
+                        response.data = uploadedCount;
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        response.msg = "Invoice upload aborted. " + (ex.InnerException != null ? ex.Message + "<br/>" + ex.InnerException.Message : ex.Message);
+                        response.msgType = 2;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                response.msg = "Invoice upload aborted. " + (ex.InnerException != null ? ex.Message + "<br/>" + ex.InnerException.Message : ex.Message);
+                response.msgType = 2;
+            }
+            return response;
+        }
+
+        private int InvoiceBulkGenerateNextId(Common common, SqlCommand command, string table)
+        {
+            string maxIdQuery = $"SELECT ISNULL(MAX(TRAN_ID), 0) + 1 FROM {table} WHERE BCODE = '{common.Branch}' AND PERIOD_ID = '{common.Period}'";
+            command.CommandText = maxIdQuery;
+            object result = command.ExecuteScalar();
+            return Convert.ToInt32(result);
+        }
+
+        private string InvoiceBulkGenerateVoucherNo(Common common, int code, string vDate)
+        {
+            try
+            {
+                var Menu = _menuRepository.GetMenu(common.MenuID);
+                string? prefix = string.Empty, shortName = string.Empty;
+                int voucherLength = 0;
+                if (Menu.data != null)
+                {
+                    var menu = (Menu)Menu.data;
+                    voucherLength = Convert.ToInt32(menu.VOUCHER_LEN);
+                    prefix = menu.PERFIX;
+                }
+
+                var branchData = _branchRepository.GetBranchByCode(common.Branch);
+                if (branchData.data != null)
+                {
+                    var branch = (Branch)branchData.data;
+                    shortName = branch.B_SHORT_NAME;
+                }
+
+                if (!string.IsNullOrWhiteSpace(shortName) && !string.IsNullOrWhiteSpace(prefix) && voucherLength > 0 && code > 0)
+                {
+                    string paddedVoucherValue = code.ToString().PadLeft(voucherLength, '0');
+                    return $"{shortName}/{prefix}/{Convert.ToDateTime(vDate).ToString("yy-MM")}/{paddedVoucherValue}";
+                }
+            }
+            catch
+            {
+            }
+            return string.Empty;
+        }
+
+        private int InvoiceBulkGenerateNextDetailId(Common common, SqlCommand command, string detailTable)
+        {
+            string maxIdQuery = $"SELECT ISNULL(MAX(DT_CODE), 0) FROM {detailTable}";
+            command.CommandText = maxIdQuery;
+            object result = command.ExecuteScalar();
+            return Convert.ToInt32(result);
+        }
+
     }
 }
