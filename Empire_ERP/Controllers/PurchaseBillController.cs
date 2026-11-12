@@ -867,15 +867,15 @@ namespace Empire_ERP.Controllers
                     break;
 
                 case "SN006":
-                    detail.rate = $"{tax}%";
+                    detail.rate = $"Exempt";
                     detail.hsCode = d.HS_CODE;
                     detail.productDescription = d.ITEM_NAME;
                     detail.uoM = d.UOM;
                     detail.quantity = d.QTY;
-                    detail.totalValues = d.TOTAL_VALUES;
+                    detail.totalValues = 0.00;
                     detail.valueSalesExcludingST = d.TOTAL_VALUES;
                     detail.fixedNotifiedValueOrRetailPrice = d.TOTAL_VALUES;
-                    detail.salesTaxApplicable = d.TAX_AMT;
+                    detail.salesTaxApplicable = 0;
                     detail.salesTaxWithheldAtSource = 0;
                     detail.extraTax = "";
                     detail.furtherTax = d.F_TAX_AMT;
@@ -1116,6 +1116,26 @@ namespace Empire_ERP.Controllers
                     detail.valueSalesExcludingST = d.TOTAL_VALUES;
                     detail.fixedNotifiedValueOrRetailPrice = d.TOTAL_VALUES;
                     detail.salesTaxApplicable = d.TAX_AMT;
+                    detail.salesTaxWithheldAtSource = 0;
+                    detail.extraTax = "";
+                    detail.furtherTax = d.F_TAX_AMT;
+                    detail.fedPayable = 0;
+                    detail.discount = 0;
+                    detail.sroScheduleNo = d.SRO_SCH_NO;
+                    detail.saleType = d.S_NAME;
+                    detail.sroItemSerialNo = d.SERIAL_NO?.ToString();
+                    break;
+
+                case "SN025":
+                    detail.rate = $"0%";
+                    detail.hsCode = d.HS_CODE;
+                    detail.productDescription = d.ITEM_NAME;
+                    detail.uoM = d.UOM;
+                    detail.quantity = d.QTY;
+                    detail.totalValues = 0;
+                    detail.valueSalesExcludingST = d.TOTAL_VALUES;
+                    detail.fixedNotifiedValueOrRetailPrice = 0;
+                    detail.salesTaxApplicable = 0;
                     detail.salesTaxWithheldAtSource = 0;
                     detail.extraTax = "";
                     detail.furtherTax = d.F_TAX_AMT;

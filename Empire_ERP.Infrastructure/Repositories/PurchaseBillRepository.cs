@@ -2499,9 +2499,13 @@ namespace Empire_ERP.Infrastructure.Repositories
                     try
                     {
                         int uploadedCount = 0;
-                        foreach (var item in rows)
+                        var groupedRows = rows.GroupBy(r =>
+                            ((r.PartyName ?? "").Trim() + "|" + (r.PartyNtn ?? "").Trim()).ToLowerInvariant());
+
+                        foreach (var group in groupedRows)
                         {
-                            string ntn = InvoiceBulkSqlEscape(item.PartyNtn);
+                            var first = group.First();
+                            string ntn = InvoiceBulkSqlEscape(first.PartyNtn);
 
                             command.CommandText = $"SELECT TOP 1 PARTY_CODE, ACT_CODE FROM TBL_PARTY_TYPES WHERE DLT = 'T' AND NTN = '{ntn}'";
                             int partyCode = 0;
@@ -2510,18 +2514,29 @@ namespace Empire_ERP.Infrastructure.Repositories
                             {
                                 if (!reader.Read())
                                 {
-                                    throw new Exception($"Party not found for NTN: {item.PartyNtn}");
+                                    throw new Exception($"Party not found for NTN: {first.PartyNtn}");
                                 }
                                 partyCode = SafeInt(reader["PARTY_CODE"]);
                                 actCode = SafeInt(reader["ACT_CODE"]);
                                 if (actCode == 0) actCode = 115;
                             }
 
+                            string invoiceDate = vDate;
+                            foreach (var dateRow in group)
+                            {
+                                string resolvedDate = InvoiceBulkResolveVDate(dateRow.VDate);
+                                if (!string.IsNullOrWhiteSpace(resolvedDate))
+                                {
+                                    invoiceDate = resolvedDate;
+                                    break;
+                                }
+                            }
+
                             int tranId = InvoiceBulkGenerateNextId(common, command, table);
                             if (tranId <= 0)
                                 throw new Exception("Unable to generate TRAN_ID");
 
-                            string voucherNo = InvoiceBulkGenerateVoucherNo(common, tranId, vDate);
+                            string voucherNo = InvoiceBulkGenerateVoucherNo(common, tranId, invoiceDate);
                             if (string.IsNullOrWhiteSpace(voucherNo))
                                 throw new Exception("Unable to generate VOUCHER_NO");
 
@@ -2530,14 +2545,18 @@ namespace Empire_ERP.Infrastructure.Repositories
                                 ADD_USER_ID, ADD_DATE, ADD_COMPUTER_NAME, ADD_IP_ADDRESS, EDIT_USER_ID, EDIT_DATE,
                                 EDIT_COMPUTER_NAME, EDIT_IP_ADDRESS, ADD_POSTALCODE, EDIT_POSTALCODE, ASTATUS, MENU_ID, DLT, DOC)
                                 VALUES
-                                ('{tranId}','{vDate}','{voucherNo}','{partyCode}','{actCode}',
+                                ('{tranId}','{invoiceDate}','{voucherNo}','{partyCode}','{actCode}',
                                 'CR','','','Invoice Bulk Upload','{branch}','{period}',
                                 '{username}','{now}','{Computer}','{Ip}','{username}','{now}',
                                 '{Computer}','{Ip}','{Postal}','{Postal}','Y','{menuID}','T','')";
                             command.CommandText = masterInsert;
                             command.ExecuteNonQuery();
 
-                            int detailCode = InvoiceBulkGenerateNextDetailId(common, command, detailTable) + 1;
+                            int detailCode = InvoiceBulkGenerateNextDetailId(common, command, detailTable);
+
+                            foreach (var item in group)
+                            {
+                            detailCode++;
 
                             string itemName = InvoiceBulkSqlEscape(item.ItemName);
                             string hsCode = InvoiceBulkSqlEscape(item.HsCode);
@@ -2566,9 +2585,47 @@ namespace Empire_ERP.Infrastructure.Repositories
                                 throw new Exception($"Unit not found: {item.ItemUnit}");
                             int unitCode = Convert.ToInt32(unitObj);
 
-                            command.CommandText = $@"SELECT TOP 1 CODE, ITEM_SNO, SCHEDULE_NO, SERIAL_NO
-                                FROM TBL_FBR_TYPE WHERE DLT = 'T' AND ASTATUS = 'Y'
-                                AND (S_NAME = '{saleType}' OR CAST(CODE AS NVARCHAR(50)) = '{saleType}')";
+                            // Resolve Sale Type: ITEM_SNO first (handles duplicate S_NAME), then CODE, then S_NAME
+                            string saleTypeRaw = item.SaleType ?? "";
+                            string saleTypeName = saleTypeRaw;
+                            string saleTypeSnoFromDisplay = "";
+                            int pipeIdx = saleTypeRaw.IndexOf('|');
+                            if (pipeIdx >= 0)
+                            {
+                                saleTypeName = saleTypeRaw.Substring(0, pipeIdx).Trim();
+                                saleTypeSnoFromDisplay = saleTypeRaw.Substring(pipeIdx + 1).Trim();
+                            }
+
+                            string resolveSno = InvoiceBulkSqlEscape(
+                                !string.IsNullOrWhiteSpace(item.ItemSno) ? item.ItemSno :
+                                (!string.IsNullOrWhiteSpace(saleTypeSnoFromDisplay) ? saleTypeSnoFromDisplay : "")
+                            );
+                            string resolveName = InvoiceBulkSqlEscape(
+                                !string.IsNullOrWhiteSpace(saleTypeName) ? saleTypeName : saleTypeRaw
+                            );
+                            string resolveCode = InvoiceBulkSqlEscape(saleTypeRaw);
+
+                            string fbrQuery;
+                            if (!string.IsNullOrWhiteSpace(resolveSno))
+                            {
+                                fbrQuery = $@"SELECT TOP 1 CODE, ITEM_SNO, SCHEDULE_NO, SERIAL_NO
+                                    FROM TBL_FBR_TYPE WHERE DLT = 'T' AND ASTATUS = 'Y'
+                                    AND ITEM_SNO = '{resolveSno}'";
+                            }
+                            else if (!string.IsNullOrWhiteSpace(resolveCode) && int.TryParse(resolveCode, out _))
+                            {
+                                fbrQuery = $@"SELECT TOP 1 CODE, ITEM_SNO, SCHEDULE_NO, SERIAL_NO
+                                    FROM TBL_FBR_TYPE WHERE DLT = 'T' AND ASTATUS = 'Y'
+                                    AND CODE = '{resolveCode}'";
+                            }
+                            else
+                            {
+                                fbrQuery = $@"SELECT TOP 1 CODE, ITEM_SNO, SCHEDULE_NO, SERIAL_NO
+                                    FROM TBL_FBR_TYPE WHERE DLT = 'T' AND ASTATUS = 'Y'
+                                    AND (S_NAME = '{resolveName}' OR CAST(CODE AS NVARCHAR(50)) = '{resolveCode}')";
+                            }
+
+                            command.CommandText = fbrQuery;
                             int fbrType = 0;
                             string itemSno = "";
                             string scheduleNo = "";
@@ -2603,6 +2660,7 @@ namespace Empire_ERP.Infrastructure.Repositories
                                 '{Postal}', '{Postal}', '{menuID}', 'T', '0', '0','{fbrType}','{scheduleNo}','{serialNo}','{itemSno}')";
                             command.CommandText = detailInsert;
                             command.ExecuteNonQuery();
+                            }
 
                             uploadedCount++;
                         }
@@ -2626,6 +2684,19 @@ namespace Empire_ERP.Infrastructure.Repositories
                 response.msgType = 2;
             }
             return response;
+        }
+
+        private string InvoiceBulkResolveVDate(string vDate)
+        {
+            if (string.IsNullOrWhiteSpace(vDate))
+                return "";
+
+            string[] formats = { "yyyy-MM-dd", "dd-MM-yyyy", "dd/MM/yyyy", "MM/dd/yyyy", "yyyy/MM/dd", "d-M-yyyy", "d/M/yyyy" };
+            if (DateTime.TryParseExact(vDate.Trim(), formats, System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out DateTime dt))
+                return dt.ToString("yyyy-MM-dd");
+            if (DateTime.TryParse(vDate.Trim(), out dt))
+                return dt.ToString("yyyy-MM-dd");
+            return "";
         }
 
         private int InvoiceBulkGenerateNextId(Common common, SqlCommand command, string table)

@@ -26,6 +26,7 @@ namespace Empire_ERP.Core.Entities
 
     public class InvoiceBulkDetailRow
     {
+        public string VDate { get; set; }
         public string PartyName { get; set; }
         public string PartyAddress { get; set; }
         public string PartyRegion { get; set; }

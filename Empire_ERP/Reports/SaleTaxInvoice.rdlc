@@ -1876,7 +1876,7 @@
                           </Style>
                         </TextRun>
                         <TextRun>
-                          <Value>=Parameters!BNTN.Value</Value>
+                          <Value>=Parameters!STRN.Value</Value>
                           <Style>
                             <FontFamily>Tw Cen MT</FontFamily>
                             <FontSize>9pt</FontSize>
@@ -1963,7 +1963,14 @@
                           </Style>
                         </TextRun>
                         <TextRun>
-                          <Value>=Parameters!STRN.Value</Value>
+                          <Value>=Parameters!BNTN.Value</Value>
+                          <Style>
+                            <FontFamily>Tw Cen MT</FontFamily>
+                            <FontSize>9pt</FontSize>
+                          </Style>
+                        </TextRun>
+                        <TextRun>
+                          <Value xml:space="preserve"> </Value>
                           <Style>
                             <FontFamily>Tw Cen MT</FontFamily>
                             <FontSize>9pt</FontSize>
