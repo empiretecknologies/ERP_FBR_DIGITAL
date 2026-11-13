@@ -83,21 +83,12 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>Rupees :</Value>
+                    <Value>Rupees : </Value>
                     <Style>
                       <FontFamily>Tw Cen MT</FontFamily>
                       <FontSize>9pt</FontSize>
-                      <TextDecoration>None</TextDecoration>
+                      <FontWeight>Bold</FontWeight>
                       <Color>#055a87</Color>
-                    </Style>
-                  </TextRun>
-                  <TextRun>
-                    <Value xml:space="preserve"> </Value>
-                    <Style>
-                      <FontFamily>Tw Cen MT</FontFamily>
-                      <FontSize>9pt</FontSize>
-                      <TextDecoration>None</TextDecoration>
-                      <Color>#2a4899</Color>
                     </Style>
                   </TextRun>
                   <TextRun>
@@ -105,15 +96,17 @@
                     <Style>
                       <FontFamily>Tw Cen MT</FontFamily>
                       <FontSize>9pt</FontSize>
-                      <TextDecoration>Underline</TextDecoration>
+                      <FontWeight>Bold</FontWeight>
+                      <Color>#055a87</Color>
                     </Style>
                   </TextRun>
                   <TextRun>
-                    <Value> Only</Value>
+                    <Value> Rupees Only</Value>
                     <Style>
                       <FontFamily>Tw Cen MT</FontFamily>
                       <FontSize>9pt</FontSize>
-                      <TextDecoration>Underline</TextDecoration>
+                      <FontWeight>Bold</FontWeight>
+                      <Color>#055a87</Color>
                     </Style>
                   </TextRun>
                 </TextRuns>
@@ -139,28 +132,31 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>2.26963in</Width>
+                  <Width>0.5in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.74167in</Width>
+                  <Width>0.52in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.59985in</Width>
+                  <Width>1.9in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.64394in</Width>
+                  <Width>0.64in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.20534in</Width>
+                  <Width>1.1in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.75833in</Width>
+                  <Width>0.58in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.86417in</Width>
+                  <Width>0.82in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.94006in</Width>
+                  <Width>0.72in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>1.24299in</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -176,7 +172,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>HSCODE - Description</Value>
+                                  <Value>Qty</Value>
                                   <Style>
                                     <FontFamily>Tw Cen MT</FontFamily>
                                     <FontSize>9pt</FontSize>
@@ -254,7 +250,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Qty</Value>
+                                  <Value>HSCODE - Description</Value>
                                   <Style>
                                     <FontFamily>Tw Cen MT</FontFamily>
                                     <FontSize>9pt</FontSize>
@@ -506,6 +502,61 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
+                        <Textbox Name="TextboxFurtherTaxHdr">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Further</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>9pt</FontSize>
+                                    <FontWeight>SemiBold</FontWeight>
+                                    <Color>White</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Tax</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>9pt</FontSize>
+                                    <FontWeight>SemiBold</FontWeight>
+                                    <Color>White</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>TextboxFurtherTaxHdr</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>None</Style>
+                            </Border>
+                            <BackgroundColor>#055a87</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
                         <Textbox Name="Textbox21">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
@@ -513,7 +564,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Value Inc.</Value>
+                                  <Value>Value inc</Value>
                                   <Style>
                                     <FontFamily>Tw Cen MT</FontFamily>
                                     <FontSize>9pt</FontSize>
@@ -573,29 +624,16 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!HSCode.Value</Value>
+                                  <Value>=Fields!Qty.Value</Value>
                                   <Style>
                                     <FontFamily>Tw Cen MT</FontFamily>
                                     <FontSize>9pt</FontSize>
-                                  </Style>
-                                </TextRun>
-                                <TextRun>
-                                  <Value> - </Value>
-                                  <Style>
-                                    <FontFamily>Tw Cen MT</FontFamily>
-                                    <FontSize>9pt</FontSize>
-                                  </Style>
-                                </TextRun>
-                                <TextRun>
-                                  <Value>=Fields!ItemName.Value</Value>
-                                  <Style>
-                                    <FontFamily>Tw Cen MT</FontFamily>
-                                    <FontSize>9pt</FontSize>
+                                    <Format>#,0.###;(#,0.###)</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Left</TextAlign>
+                                <TextAlign>Center</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -683,7 +721,21 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!Qty.Value</Value>
+                                  <Value>=Fields!HSCode.Value</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>9pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                                <TextRun>
+                                  <Value> - </Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>9pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                                <TextRun>
+                                  <Value>=Fields!ItemName.Value</Value>
                                   <Style>
                                     <FontFamily>Tw Cen MT</FontFamily>
                                     <FontSize>9pt</FontSize>
@@ -691,7 +743,7 @@
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Right</TextAlign>
+                                <TextAlign>Left</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -784,7 +836,7 @@
                                   <Style>
                                     <FontFamily>Tw Cen MT</FontFamily>
                                     <FontSize>9pt</FontSize>
-                                    <Format>#,0;(#,0)</Format>
+                                    <Format>#,0.00;(#,0.00)</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -888,6 +940,7 @@
                                   <Style>
                                     <FontFamily>Tw Cen MT</FontFamily>
                                     <FontSize>9pt</FontSize>
+                                    <Format>#,0.00;(#,0.00)</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -897,6 +950,55 @@
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>TaxAmt1</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <TopBorder>
+                              <Style>None</Style>
+                            </TopBorder>
+                            <BottomBorder>
+                              <Width>0.5pt</Width>
+                            </BottomBorder>
+                            <LeftBorder>
+                              <Style>None</Style>
+                            </LeftBorder>
+                            <RightBorder>
+                              <Style>None</Style>
+                            </RightBorder>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="FurtherTax">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=0</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>9pt</FontSize>
+                                    <Format>#,0.00;(#,0.00)</Format>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>FurtherTax</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -986,7 +1088,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Total :</Value>
+                                  <Value xml:space="preserve"> </Value>
                                   <Style>
                                     <FontFamily>Tw Cen MT</FontFamily>
                                     <FontSize>9pt</FontSize>
@@ -1086,12 +1188,11 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(Fields!Qty.Value)</Value>
+                                  <Value>Total :</Value>
                                   <Style>
                                     <FontFamily>Tw Cen MT</FontFamily>
                                     <FontSize>9pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
-                                    <Format>#,0.00;(#,0.00)</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1191,7 +1292,7 @@
                                     <FontFamily>Tw Cen MT</FontFamily>
                                     <FontSize>9pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
-                                    <Format>#,0;(#,0)</Format>
+                                    <Format>#,0.00;(#,0.00)</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1330,6 +1431,57 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
+                        <Textbox Name="FurtherTax1">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=0</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>9pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Format>#,0.00;(#,0.00)</Format>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>FurtherTax1</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <TopBorder>
+                              <Style>None</Style>
+                            </TopBorder>
+                            <BottomBorder>
+                              <Width>0.5pt</Width>
+                            </BottomBorder>
+                            <LeftBorder>
+                              <Style>None</Style>
+                            </LeftBorder>
+                            <RightBorder>
+                              <Style>None</Style>
+                            </RightBorder>
+                            <BackgroundColor>LightGrey</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
                         <Textbox Name="NetAmt1">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
@@ -1342,7 +1494,7 @@
                                     <FontFamily>Tw Cen MT</FontFamily>
                                     <FontSize>9pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
-                                    <Format>#,0;(#,0)</Format>
+                                    <Format>#,0.00;(#,0.00)</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -1393,6 +1545,7 @@
                 <TablixMember />
                 <TablixMember />
                 <TablixMember />
+                <TablixMember />
               </TablixMembers>
             </TablixColumnHierarchy>
             <TablixRowHierarchy>
@@ -1426,11 +1579,11 @@
           <Image Name="Image2">
             <Source>External</Source>
             <Value>=Parameters!InvoiceQR.Value</Value>
-            <Sizing>Fit</Sizing>
-            <Top>1.65079in</Top>
-            <Left>6.77831in</Left>
-            <Height>1.10221in</Height>
-            <Width>1.26657in</Width>
+            <Sizing>FitProportional</Sizing>
+            <Top>1.55in</Top>
+            <Left>6.85in</Left>
+            <Height>1.05in</Height>
+            <Width>1.15in</Width>
             <ZIndex>2</ZIndex>
             <Visibility>
               <Hidden>=Parameters!IsVerified.Value &lt;&gt; "True"</Hidden>
@@ -1444,11 +1597,11 @@
           <Image Name="Image3">
             <Source>External</Source>
             <Value>=Parameters!FBRLogo.Value</Value>
-            <Sizing>Fit</Sizing>
-            <Top>1.61329in</Top>
-            <Left>0.13804in</Left>
-            <Height>1.11888in</Height>
-            <Width>1.66657in</Width>
+            <Sizing>FitProportional</Sizing>
+            <Top>1.52in</Top>
+            <Left>0.11215in</Left>
+            <Height>1.12in</Height>
+            <Width>1.7in</Width>
             <ZIndex>3</ZIndex>
             <Visibility>
               <Hidden>=Parameters!IsVerified.Value &lt;&gt; "True"</Hidden>
@@ -1459,6 +1612,79 @@
               </Border>
             </Style>
           </Image>
+          <Textbox Name="QRCaption">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>Scan for Invoice Verification</Value>
+                    <Style>
+                      <FontFamily>Tw Cen MT</FontFamily>
+                      <FontSize>8pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
+                      <Color>#055a87</Color>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <TextAlign>Center</TextAlign>
+                </Style>
+              </Paragraph>
+            </Paragraphs>
+            <Top>2.62in</Top>
+            <Left>6.55in</Left>
+            <Height>0.22in</Height>
+            <Width>1.75in</Width>
+            <ZIndex>6</ZIndex>
+            <Visibility>
+              <Hidden>=Parameters!IsVerified.Value &lt;&gt; "True"</Hidden>
+            </Visibility>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <VerticalAlign>Middle</VerticalAlign>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+            </Style>
+          </Textbox>
+          <Textbox Name="DescriptionLabel">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>Description:-</Value>
+                    <Style>
+                      <FontFamily>Tw Cen MT</FontFamily>
+                      <FontSize>9pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
+                      <Color>#055a87</Color>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <TextAlign>Left</TextAlign>
+                </Style>
+              </Paragraph>
+            </Paragraphs>
+            <Top>2.85in</Top>
+            <Left>0.11215in</Left>
+            <Height>0.20833in</Height>
+            <Width>6.35in</Width>
+            <ZIndex>7</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <VerticalAlign>Middle</VerticalAlign>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+            </Style>
+          </Textbox>
           <Textbox Name="MenuTerms">
             <CanGrow>true</CanGrow>
             <CanShrink>true</CanShrink>
@@ -1479,14 +1705,11 @@
                 </Style>
               </Paragraph>
             </Paragraphs>
-            <Top>2.95074in</Top>
-            <Left>0.17971in</Left>
-            <Height>0.22986in</Height>
-            <Width>6.39275in</Width>
+            <Top>3.06in</Top>
+            <Left>0.11215in</Left>
+            <Height>0.22in</Height>
+            <Width>6.35in</Width>
             <ZIndex>4</ZIndex>
-            <Visibility>
-              <Hidden>=Parameters!IsVerified.Value &lt;&gt; "True"</Hidden>
-            </Visibility>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -1494,6 +1717,66 @@
               <VerticalAlign>Middle</VerticalAlign>
               <PaddingLeft>2pt</PaddingLeft>
               <PaddingRight>2pt</PaddingRight>
+            </Style>
+          </Textbox>
+          <Textbox Name="InvoiceNote">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>NOTE: </Value>
+                    <Style>
+                      <FontFamily>Tw Cen MT</FontFamily>
+                      <FontSize>8pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
+                      <Color>#055a87</Color>
+                    </Style>
+                  </TextRun>
+                  <TextRun>
+                    <Value>THIS IS COMPUTER GENERATED INVOICE AND DOES NOT REQUIRE ANY SIGNATURE.</Value>
+                    <Style>
+                      <FontFamily>Tw Cen MT</FontFamily>
+                      <FontSize>8pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <TextAlign>Left</TextAlign>
+                </Style>
+              </Paragraph>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>Unit price are displayed up to 4 decimal places only, please calculate further decimals as needed.</Value>
+                    <Style>
+                      <FontFamily>Tw Cen MT</FontFamily>
+                      <FontSize>8pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <TextAlign>Left</TextAlign>
+                </Style>
+              </Paragraph>
+            </Paragraphs>
+            <Top>3.32in</Top>
+            <Left>0.11215in</Left>
+            <Height>0.42in</Height>
+            <Width>6.35in</Width>
+            <ZIndex>8</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <BackgroundColor>#FFF3CD</BackgroundColor>
+              <VerticalAlign>Middle</VerticalAlign>
+              <PaddingLeft>4pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
             </Style>
           </Textbox>
           <Textbox Name="MenuTerms3">
@@ -1544,7 +1827,7 @@
       <Width>8.26847in</Width>
       <Page>
         <PageHeader>
-          <Height>4.33959in</Height>
+          <Height>3.45in</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
@@ -1555,7 +1838,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>Date:</Value>
+                      <Value>Dated:</Value>
                       <Style>
                         <FontFamily>Tw Cen MT</FontFamily>
                         <FontSize>9pt</FontSize>
@@ -1570,8 +1853,8 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox8</rd:DefaultName>
-              <Top>1.96167in</Top>
-              <Left>6.67291in</Left>
+              <Top>1.72222in</Top>
+              <Left>6.53414in</Left>
               <Height>0.20972in</Height>
               <Width>0.61744in</Width>
               <Style>
@@ -1592,11 +1875,11 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Parameters!Header.Value</Value>
+                      <Value>SALES TAX INVOICE</Value>
                       <Style>
                         <FontStyle>Normal</FontStyle>
                         <FontFamily>Tw Cen MT</FontFamily>
-                        <FontSize>18pt</FontSize>
+                        <FontSize>16pt</FontSize>
                         <FontWeight>Bold</FontWeight>
                         <Color>White</Color>
                       </Style>
@@ -1610,7 +1893,7 @@
               <rd:DefaultName>Header</rd:DefaultName>
               <Top>1.23827in</Top>
               <Left>0.12444in</Left>
-              <Height>0.61438in</Height>
+              <Height>0.39583in</Height>
               <Width>8.0107in</Width>
               <ZIndex>1</ZIndex>
               <Style>
@@ -1634,29 +1917,30 @@
                     <Paragraph>
                       <TextRuns>
                         <TextRun>
-                          <Value> Supplier Name &amp; Address</Value>
+                          <Value>Supplier Name &amp; Address</Value>
                           <Style>
                             <FontFamily>Tw Cen MT</FontFamily>
                             <FontSize>9pt</FontSize>
                             <FontWeight>Bold</FontWeight>
-                            <Color>#055a87</Color>
+                            <Color>White</Color>
                           </Style>
                         </TextRun>
                       </TextRuns>
                       <Style>
-                        <TextAlign>Left</TextAlign>
+                        <TextAlign>Center</TextAlign>
                       </Style>
                     </Paragraph>
                   </Paragraphs>
                   <rd:DefaultName>Textbox39</rd:DefaultName>
-                  <Height>0.54806in</Height>
-                  <Width>1.42364in</Width>
+                  <Height>0.22917in</Height>
+                  <Width>3.97026in</Width>
                   <Style>
                     <Border>
-                      <Color>LightGrey</Color>
+                      <Color>#055a87</Color>
                       <Style>Solid</Style>
                     </Border>
-                    <VerticalAlign>Top</VerticalAlign>
+                    <BackgroundColor>#055a87</BackgroundColor>
+                    <VerticalAlign>Middle</VerticalAlign>
                     <PaddingLeft>2pt</PaddingLeft>
                     <PaddingRight>2pt</PaddingRight>
                     <PaddingTop>2pt</PaddingTop>
@@ -1683,6 +1967,8 @@
                           <Style>
                             <FontFamily>Tw Cen MT</FontFamily>
                             <FontSize>9pt</FontSize>
+                            <FontWeight>Bold</FontWeight>
+                            <Color>#055a87</Color>
                           </Style>
                         </TextRun>
                       </TextRuns>
@@ -1709,9 +1995,10 @@
                     </Paragraph>
                   </Paragraphs>
                   <rd:DefaultName>InvoiceNumber</rd:DefaultName>
-                  <Left>1.44586in</Left>
-                  <Height>0.54806in</Height>
-                  <Width>2.5244in</Width>
+                  <Top>0.22917in</Top>
+                  <Left>0in</Left>
+                  <Height>0.34667in</Height>
+                  <Width>3.97026in</Width>
                   <ZIndex>1</ZIndex>
                   <Style>
                     <Border>
@@ -1721,7 +2008,7 @@
                       <Color>LightGrey</Color>
                       <Style>Solid</Style>
                     </BottomBorder>
-                    <PaddingLeft>2pt</PaddingLeft>
+                    <PaddingLeft>4pt</PaddingLeft>
                     <PaddingRight>2pt</PaddingRight>
                     <PaddingTop>2pt</PaddingTop>
                     <PaddingBottom>2pt</PaddingBottom>
@@ -1734,7 +2021,7 @@
                     <Paragraph>
                       <TextRuns>
                         <TextRun>
-                          <Value>  Telephone No</Value>
+                          <Value>  Telephone No.</Value>
                           <Style>
                             <FontFamily>Tw Cen MT</FontFamily>
                             <FontSize>9pt</FontSize>
@@ -1914,7 +2201,7 @@
                     <Paragraph>
                       <TextRuns>
                         <TextRun>
-                          <Value>  N.T.N Reg. No. NIC</Value>
+                          <Value>  N.T.N Reg. No. / NIC</Value>
                           <Style>
                             <FontFamily>Tw Cen MT</FontFamily>
                             <FontSize>9pt</FontSize>
@@ -1998,7 +2285,7 @@
                 </Textbox>
               </ReportItems>
               <KeepTogether>true</KeepTogether>
-              <Top>2.73947in</Top>
+              <Top>2.04167in</Top>
               <Left>0.12444in</Left>
               <Height>1.2779in</Height>
               <Width>3.97026in</Width>
@@ -2018,7 +2305,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value> Invoice # :</Value>
+                          <Value>Invoice No:</Value>
                       <Style>
                         <FontFamily>Tw Cen MT</FontFamily>
                         <FontSize>9pt</FontSize>
@@ -2031,10 +2318,10 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox36</rd:DefaultName>
-              <Top>1.96167in</Top>
+              <Top>1.72222in</Top>
               <Left>0.12444in</Left>
               <Height>0.20833in</Height>
-              <Width>0.72089in</Width>
+              <Width>0.85in</Width>
               <ZIndex>3</ZIndex>
               <Style>
                 <Border>
@@ -2068,10 +2355,10 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>InvoiceNumber</rd:DefaultName>
-              <Top>1.96167in</Top>
-              <Left>0.85922in</Left>
+              <Top>1.72222in</Top>
+              <Left>0.99in</Left>
               <Height>0.20833in</Height>
-              <Width>2.25071in</Width>
+              <Width>1.55in</Width>
               <ZIndex>4</ZIndex>
               <Style>
                 <Border>
@@ -2103,10 +2390,10 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>InvoiceNumber</rd:DefaultName>
-              <Top>1.96167in</Top>
-              <Left>7.30424in</Left>
+              <Top>1.72222in</Top>
+              <Left>7.16414in</Left>
               <Height>0.20833in</Height>
-              <Width>0.82792in</Width>
+              <Width>0.97096in</Width>
               <ZIndex>5</ZIndex>
               <Style>
                 <Border>
@@ -2122,11 +2409,26 @@
               <Source>External</Source>
               <Value>=Parameters!CompanyLogo.Value</Value>
               <Sizing>FitProportional</Sizing>
-              <Top>0.23742in</Top>
-              <Left>0.16341in</Left>
-              <Height>0.8564in</Height>
-              <Width>1.85833in</Width>
+              <Top>0.1698in</Top>
+              <Left>0.12444in</Left>
+              <Height>0.95in</Height>
+              <Width>1.9in</Width>
               <ZIndex>6</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+              </Style>
+            </Image>
+            <Image Name="Image5">
+              <Source>External</Source>
+              <Value>=Parameters!FBRLogo.Value</Value>
+              <Sizing>FitProportional</Sizing>
+              <Top>0.1698in</Top>
+              <Left>6.53414in</Left>
+              <Height>0.95in</Height>
+              <Width>1.6in</Width>
+              <ZIndex>15</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -2142,29 +2444,30 @@
                     <Paragraph>
                       <TextRuns>
                         <TextRun>
-                          <Value> Buyer Name &amp; Address</Value>
+                          <Value>Buyer Name &amp; Address</Value>
                           <Style>
                             <FontFamily>Tw Cen MT</FontFamily>
                             <FontSize>9pt</FontSize>
                             <FontWeight>Bold</FontWeight>
-                            <Color>#055a87</Color>
+                            <Color>White</Color>
                           </Style>
                         </TextRun>
                       </TextRuns>
                       <Style>
-                        <TextAlign>Left</TextAlign>
+                        <TextAlign>Center</TextAlign>
                       </Style>
                     </Paragraph>
                   </Paragraphs>
                   <rd:DefaultName>Textbox39</rd:DefaultName>
-                  <Height>0.54806in</Height>
-                  <Width>1.42364in</Width>
+                  <Height>0.22917in</Height>
+                  <Width>3.97026in</Width>
                   <Style>
                     <Border>
-                      <Color>LightGrey</Color>
+                      <Color>#055a87</Color>
                       <Style>Solid</Style>
                     </Border>
-                    <VerticalAlign>Top</VerticalAlign>
+                    <BackgroundColor>#055a87</BackgroundColor>
+                    <VerticalAlign>Middle</VerticalAlign>
                     <PaddingLeft>2pt</PaddingLeft>
                     <PaddingRight>2pt</PaddingRight>
                     <PaddingTop>2pt</PaddingTop>
@@ -2191,6 +2494,8 @@
                           <Style>
                             <FontFamily>Tw Cen MT</FontFamily>
                             <FontSize>9pt</FontSize>
+                            <FontWeight>Bold</FontWeight>
+                            <Color>#055a87</Color>
                           </Style>
                         </TextRun>
                       </TextRuns>
@@ -2217,9 +2522,10 @@
                     </Paragraph>
                   </Paragraphs>
                   <rd:DefaultName>InvoiceNumber</rd:DefaultName>
-                  <Left>1.44586in</Left>
-                  <Height>0.54806in</Height>
-                  <Width>2.5244in</Width>
+                  <Top>0.22917in</Top>
+                  <Left>0in</Left>
+                  <Height>0.34667in</Height>
+                  <Width>3.97026in</Width>
                   <ZIndex>1</ZIndex>
                   <Style>
                     <Border>
@@ -2229,7 +2535,7 @@
                       <Color>LightGrey</Color>
                       <Style>Solid</Style>
                     </BottomBorder>
-                    <PaddingLeft>2pt</PaddingLeft>
+                    <PaddingLeft>4pt</PaddingLeft>
                     <PaddingRight>2pt</PaddingRight>
                     <PaddingTop>2pt</PaddingTop>
                     <PaddingBottom>2pt</PaddingBottom>
@@ -2242,7 +2548,7 @@
                     <Paragraph>
                       <TextRuns>
                         <TextRun>
-                          <Value>  Telephone No</Value>
+                          <Value>  Telephone No.</Value>
                           <Style>
                             <FontFamily>Tw Cen MT</FontFamily>
                             <FontSize>9pt</FontSize>
@@ -2436,7 +2742,7 @@
                     <Paragraph>
                       <TextRuns>
                         <TextRun>
-                          <Value>  N.T.N Reg. No. NIC</Value>
+                          <Value>  N.T.N Reg. No. / NIC</Value>
                           <Style>
                             <FontFamily>Tw Cen MT</FontFamily>
                             <FontSize>9pt</FontSize>
@@ -2512,7 +2818,7 @@
                 </Textbox>
               </ReportItems>
               <KeepTogether>true</KeepTogether>
-              <Top>2.73947in</Top>
+              <Top>2.04167in</Top>
               <Left>4.16489in</Left>
               <Height>1.2779in</Height>
               <Width>3.97026in</Width>
@@ -2532,7 +2838,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Parameters!CompanyName.Value</Value>
+                      <Value>SALES TAX INVOICE</Value>
                       <Style>
                         <FontFamily>Tw Cen MT</FontFamily>
                         <FontSize>16pt</FontSize>
@@ -2547,10 +2853,10 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>BranchName</rd:DefaultName>
-              <Top>0.42396in</Top>
-              <Left>0.6849in</Left>
-              <Height>0.25in</Height>
-              <Width>7.37747in</Width>
+              <Top>0.2698in</Top>
+              <Left>2.16341in</Left>
+              <Height>0.29167in</Height>
+              <Width>4.05in</Width>
               <ZIndex>8</ZIndex>
               <Style>
                 <Border>
@@ -2597,10 +2903,10 @@
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>0.88091in</Top>
-              <Left>0.68657in</Left>
+              <Top>0.79167in</Top>
+              <Left>2.16341in</Left>
               <Height>0.16666in</Height>
-              <Width>7.3758in</Width>
+              <Width>4.05in</Width>
               <ZIndex>9</ZIndex>
               <Style>
                 <Border>
@@ -2657,10 +2963,10 @@
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>0.69619in</Top>
-              <Left>0.68657in</Left>
+              <Top>0.58333in</Top>
+              <Left>2.16341in</Left>
               <Height>0.16666in</Height>
-              <Width>7.3758in</Width>
+              <Width>4.05in</Width>
               <ZIndex>10</ZIndex>
               <Style>
                 <Border>
@@ -2698,7 +3004,7 @@
               <Width>1.2758in</Width>
               <ZIndex>11</ZIndex>
               <Visibility>
-                <Hidden>=Parameters!IsVerified.Value &lt;&gt; "True"</Hidden>
+                <Hidden>true</Hidden>
               </Visibility>
               <Style>
                 <Border>
@@ -2720,16 +3026,17 @@
                     <Paragraph>
                       <TextRuns>
                         <TextRun>
-                          <Value>FBR Invoice No # </Value>
+                          <Value>FBR Inv#:</Value>
                           <Style>
                             <FontFamily>Tw Cen MT</FontFamily>
+                            <FontSize>9pt</FontSize>
                             <FontWeight>Bold</FontWeight>
                             <Color>#055a87</Color>
                           </Style>
                         </TextRun>
                       </TextRuns>
                       <Style>
-                        <TextAlign>Center</TextAlign>
+                        <TextAlign>Left</TextAlign>
                       </Style>
                     </Paragraph>
                   </Paragraphs>
@@ -2737,7 +3044,7 @@
                   <Top>0.03in</Top>
                   <Left>0.07343in</Left>
                   <Height>0.20833in</Height>
-                  <Width>1.11832in</Width>
+                  <Width>0.85in</Width>
                   <Visibility>
                     <Hidden>=Parameters!IsVerified.Value &lt;&gt; "True"</Hidden>
                   </Visibility>
@@ -2771,9 +3078,9 @@
                   </Paragraphs>
                   <rd:DefaultName>InvoiceNumber</rd:DefaultName>
                   <Top>0.03in</Top>
-                  <Left>1.19175in</Left>
+                  <Left>0.92in</Left>
                   <Height>0.20833in</Height>
-                  <Width>1.78823in</Width>
+                  <Width>2.2in</Width>
                   <ZIndex>1</ZIndex>
                   <Visibility>
                     <Hidden>=Parameters!IsVerified.Value &lt;&gt; "True"</Hidden>
@@ -2792,10 +3099,10 @@
                 </Textbox>
               </ReportItems>
               <KeepTogether>true</KeepTogether>
-              <Top>2.22288in</Top>
-              <Left>5.1274in</Left>
+              <Top>1.72222in</Top>
+              <Left>2.65in</Left>
               <Height>0.275in</Height>
-              <Width>3.01309in</Width>
+              <Width>3.2in</Width>
               <ZIndex>12</ZIndex>
               <Style>
                 <Border>
@@ -2830,6 +3137,9 @@
               <Height>0.20972in</Height>
               <Width>0.72089in</Width>
               <ZIndex>13</ZIndex>
+              <Visibility>
+                <Hidden>true</Hidden>
+              </Visibility>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -2864,6 +3174,9 @@
               <Height>0.20833in</Height>
               <Width>2.25071in</Width>
               <ZIndex>14</ZIndex>
+              <Visibility>
+                <Hidden>true</Hidden>
+              </Visibility>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -2882,20 +3195,73 @@
           </Style>
         </PageHeader>
         <PageFooter>
-          <Height>0.23333in</Height>
+          <Height>0.42in</Height>
+          <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
-            <Textbox Name="MenuTerms2">
+            <Textbox Name="FooterEmail">
               <CanGrow>true</CanGrow>
-              <CanShrink>true</CanShrink>
               <KeepTogether>true</KeepTogether>
               <Paragraphs>
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value> Powered by : Empire Tecknologies - 0334-90-1111-9 - www.empiretecknologies.com</Value>
+                      <Value>E-mail: </Value>
                       <Style>
                         <FontFamily>Tw Cen MT</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                        <Color>White</Color>
+                      </Style>
+                    </TextRun>
+                    <TextRun>
+                      <Value>=Parameters!BEmail.Value</Value>
+                      <Style>
+                        <FontFamily>Tw Cen MT</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <Color>White</Color>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Left</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <Top>0.04in</Top>
+              <Left>0.12in</Left>
+              <Height>0.34in</Height>
+              <Width>2.7in</Width>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <VerticalAlign>Middle</VerticalAlign>
+                <PaddingLeft>4pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+              </Style>
+            </Textbox>
+            <Textbox Name="FooterAddress">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>Address: </Value>
+                      <Style>
+                        <FontFamily>Tw Cen MT</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                        <Color>White</Color>
+                      </Style>
+                    </TextRun>
+                    <TextRun>
+                      <Value>=Parameters!BAddress.Value</Value>
+                      <Style>
+                        <FontFamily>Tw Cen MT</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <Color>White</Color>
                       </Style>
                     </TextRun>
                   </TextRuns>
@@ -2904,17 +3270,53 @@
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Left>0.45505in</Left>
-              <Height>0.23333in</Height>
-              <Width>7.40925in</Width>
+              <Top>0.04in</Top>
+              <Left>2.85in</Left>
+              <Height>0.34in</Height>
+              <Width>3.55in</Width>
+              <ZIndex>1</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
                 </Border>
-                <BackgroundColor>White</BackgroundColor>
                 <VerticalAlign>Middle</VerticalAlign>
                 <PaddingLeft>2pt</PaddingLeft>
                 <PaddingRight>2pt</PaddingRight>
+              </Style>
+            </Textbox>
+            <Textbox Name="FooterPage">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>="Page " &amp; Globals!PageNumber &amp; " of " &amp; Globals!TotalPages</Value>
+                      <Style>
+                        <FontFamily>Tw Cen MT</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                        <Color>White</Color>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <Top>0.04in</Top>
+              <Left>6.45in</Left>
+              <Height>0.34in</Height>
+              <Width>1.68in</Width>
+              <ZIndex>2</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <VerticalAlign>Middle</VerticalAlign>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>6pt</PaddingRight>
               </Style>
             </Textbox>
           </ReportItems>
@@ -2922,6 +3324,7 @@
             <Border>
               <Style>None</Style>
             </Border>
+            <BackgroundColor>#055a87</BackgroundColor>
           </Style>
         </PageFooter>
         <PageHeight>11.69in</PageHeight>

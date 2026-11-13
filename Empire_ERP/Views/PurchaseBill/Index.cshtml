@@ -1,74 +1,769 @@
 ﻿<style>
-    #SodaPickGridContainer .dx-datagrid-rowsview .dx-selection.dx-row:not(.dx-row-focused) > td, .dx-datagrid-rowsview .dx-selection.dx-row:not(.dx-row-focused) > tr > td, .dx-datagrid-rowsview .dx-selection.dx-row:not(.dx-row-focused):hover > td, .dx-datagrid-rowsview .dx-selection.dx-row:not(.dx-row-focused):hover > tr > td {
+    #SodaPickGridContainer .dx-datagrid-rowsview .dx-selection.dx-row:not(.dx-row-focused) > td,
+    .dx-datagrid-rowsview .dx-selection.dx-row:not(.dx-row-focused) > tr > td,
+    .dx-datagrid-rowsview .dx-selection.dx-row:not(.dx-row-focused):hover > td,
+    .dx-datagrid-rowsview .dx-selection.dx-row:not(.dx-row-focused):hover > tr > td {
         background-color: #055a87 !important;
         color: white;
     }
 
-    .pb-form .card-header {
-        padding: 8px 12px;
+    body:has(.pb-form) .rightsidecontent {
+        overflow-y: hidden !important;
     }
 
-    .pb-form .card-body.Record {
-        padding: 8px 12px 10px;
+    .pb-form {
+        --pb-primary: #055a87;
+        --pb-primary-dark: #04486b;
+        --pb-primary-soft: #e7f1f6;
+        --pb-surface: #ffffff;
+        --pb-line: #d5e2ea;
+        --pb-text: #1f3340;
+        --pb-muted: #5b7280;
+        --pb-success: #28a745;
+        --pb-success-soft: #e7f6ec;
+        --pb-danger: #dc3545;
+        border: 0 !important;
+        border-radius: 18px !important;
+        box-shadow: 0 10px 28px rgba(5, 90, 135, 0.12) !important;
+        background: linear-gradient(180deg, #eaf4f9 0%, #f7fbfd 42%, #ffffff 100%) !important;
+        overflow: visible;
+        margin-bottom: 0 !important;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        height: calc(100vh - 168px);
+        max-height: calc(100vh - 168px);
     }
 
-    .pb-form .pb-field {
-        margin-bottom: 6px;
-    }
-
-    .pb-form .image-box {
-        width: 118px;
-        height: 118px;
-        margin: 0 auto;
-        border: 1px solid #ddd;
-        border-radius: 6px;
+    .pb-shell {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        min-height: 0;
         overflow: hidden;
-        background: #055a87;
+        border-radius: 18px;
+        background: inherit;
+    }
+
+    .pb-page-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 8px 14px;
+        flex-wrap: wrap;
+        flex-shrink: 0;
+        border-bottom: 1px solid rgba(5, 90, 135, 0.12);
+        background: linear-gradient(90deg, rgba(255, 255, 255, 0.75) 0%, rgba(231, 241, 246, 0.55) 100%);
+    }
+
+    .pb-title-block {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        min-width: 0;
+    }
+
+    .pb-title-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        background: var(--pb-surface);
+        border: 1px solid var(--pb-line);
+        box-shadow: 0 4px 10px rgba(5, 90, 135, 0.12);
         display: flex;
         align-items: center;
         justify-content: center;
+        color: var(--pb-primary);
+        font-size: 16px;
+        position: relative;
+        flex-shrink: 0;
     }
 
-        .pb-form .image-box img {
-            width: 92%;
-            height: 92%;
-            object-fit: contain;
-        }
+    .pb-title-icon .pb-icon-check {
+        position: absolute;
+        right: -4px;
+        bottom: -4px;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: var(--pb-success);
+        color: #fff;
+        font-size: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid #fff;
+    }
 
-    .pb-form .pb-actions {
-        padding: 4px 0 8px;
+    .pb-title-text h5 {
+        margin: 0;
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--pb-primary);
+        line-height: 1.2;
+    }
+
+    .pb-title-text p {
+        margin: 2px 0 0;
+        font-size: 11px;
+        color: var(--pb-muted);
+        font-weight: 500;
+    }
+
+    .pb-header-actions {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
         gap: 8px;
+        flex-wrap: wrap;
     }
 
-    .pb-form .pb-save-row {
-        padding-top: 8px !important;
-        padding-bottom: 8px !important;
+    .pb-form .pb-header-actions .btn,
+    .pb-form .pb-footer-actions .btn {
+        border-radius: 18px !important;
+        min-height: 30px;
+        padding: 4px 12px !important;
+        font-size: 11px !important;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        box-shadow: 0 2px 6px rgba(5, 90, 135, 0.12);
+        white-space: nowrap;
     }
 
-    .pb-form .nav-tabs {
-        margin-top: 2px;
+    .pb-form .pb-btn-outline {
+        background: #fff !important;
+        color: var(--pb-primary) !important;
+        border: 1px solid var(--pb-primary) !important;
+    }
+
+    .pb-form .pb-btn-outline:hover {
+        background: var(--pb-primary-soft) !important;
+        color: var(--pb-primary-dark) !important;
+    }
+
+    .pb-form .pb-btn-solid,
+    .pb-form .pb-header-actions .btn-primary,
+    .pb-form .pb-header-actions .btn-success {
+        background: var(--pb-primary) !important;
+        border-color: var(--pb-primary) !important;
+        color: #fff !important;
+    }
+
+    .pb-form .pb-btn-solid:hover,
+    .pb-form .pb-header-actions .btn-primary:hover,
+    .pb-form .pb-header-actions .btn-success:hover {
+        background: var(--pb-primary-dark) !important;
+        border-color: var(--pb-primary-dark) !important;
+        color: #fff !important;
+    }
+
+    .pb-form .pb-footer-actions .btn-save,
+    .pb-form .pb-footer-actions .btn-primary {
+        background: var(--pb-primary) !important;
+        border-color: var(--pb-primary) !important;
+        color: #fff !important;
+        min-width: 96px;
+        justify-content: center;
+    }
+
+    .pb-form .pb-footer-actions .btn-delete,
+    .pb-form .pb-footer-actions .btn-danger {
+        background: var(--pb-danger) !important;
+        border-color: var(--pb-danger) !important;
+        color: #fff !important;
+        min-width: 96px;
+        justify-content: center;
+    }
+
+    .pb-body {
+        padding: 8px 12px 6px !important;
+        flex: 1 1 auto;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    .pb-top-row {
+        display: flex;
+        align-items: stretch;
+        gap: 10px;
+        margin-bottom: 8px;
+        flex-shrink: 0;
+    }
+
+    .pb-details-card,
+    .pb-qr-card,
+    .pb-items-card {
+        background: var(--pb-surface);
+        border: 1px solid var(--pb-line);
+        border-radius: 14px;
+        box-shadow: 0 4px 14px rgba(5, 90, 135, 0.06);
+        overflow: hidden;
+    }
+
+    .pb-details-card {
+        flex: 1 1 auto;
+        min-width: 0;
+    }
+
+    .pb-qr-card {
+        width: 168px;
+        flex: 0 0 168px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .pb-section-head {
+        background: var(--pb-primary);
+        color: #fff;
+        font-size: 12px;
+        font-weight: 700;
+        padding: 6px 12px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        letter-spacing: 0.2px;
+    }
+
+    .pb-section-head i {
+        font-size: 13px;
+    }
+
+    .pb-details-body {
+        padding: 8px 10px 8px;
+    }
+
+    .pb-fields-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 6px 10px;
+        align-items: start;
+    }
+
+    .pb-form .pb-field {
+        margin-bottom: 0;
+        min-width: 0;
+    }
+
+    .pb-field-span-2 {
+        grid-column: span 2;
+    }
+
+    .pb-form .pb-field > label.form-label {
+        font-size: 11px;
+        font-weight: 600;
+        color: var(--pb-text);
+        margin-bottom: 2px;
+        display: block;
+    }
+
+    .pb-form .pb-field .form-control,
+    .pb-form .pb-field textarea.form-control {
+        height: 28px !important;
+        min-height: 28px !important;
+        border-radius: 6px !important;
+        border: 1px solid #c5d4de !important;
+        font-size: 11px !important;
+        padding: 3px 8px !important;
+        color: var(--pb-text);
+        background: #fff;
+    }
+
+    .pb-form .pb-field textarea.form-control {
+        height: 28px !important;
+        resize: none;
+        line-height: 20px;
+    }
+
+    .pb-form .pb-field .form-control:focus,
+    .pb-form .pb-field textarea.form-control:focus {
+        border-color: var(--pb-primary) !important;
+        box-shadow: 0 0 0 3px rgba(5, 90, 135, 0.12) !important;
+    }
+
+    .pb-form .pb-field .dx-texteditor {
+        border: 1px solid #c5d4de !important;
+        border-radius: 8px !important;
+        background: #fff !important;
+        min-height: 28px;
+    }
+
+    .pb-form .pb-field .dx-texteditor.dx-state-focused,
+    .pb-form .pb-field .dx-texteditor.dx-state-hover {
+        border-color: var(--pb-primary) !important;
+    }
+
+    .pb-form .pb-field .dx-texteditor-input-container {
+        height: 26px !important;
+    }
+
+    .pb-form .pb-field .dx-texteditor.dx-editor-filled .dx-placeholder::before,
+    .pb-form .pb-field .dx-texteditor.dx-editor-filled .dx-texteditor-input,
+    .pb-form .pb-field .dx-texteditor.dx-editor-outlined .dx-placeholder::before,
+    .pb-form .pb-field .dx-texteditor.dx-editor-outlined .dx-texteditor-input,
+    .pb-form .pb-field .dx-texteditor .dx-texteditor-input {
+        height: 26px !important;
+        min-height: 26px !important;
+        font-size: 11px !important;
+        padding: 3px 8px !important;
+        line-height: 18px !important;
+    }
+
+    .pb-form .pb-field .dx-selectbox .dx-texteditor-buttons-container {
+        height: 26px;
+        align-items: center;
+    }
+
+    .pb-status-field .dx-texteditor {
+        background: var(--pb-success-soft) !important;
+        border-color: #b7e4c7 !important;
+    }
+
+    .pb-status-field .dx-texteditor .dx-texteditor-input {
+        color: var(--pb-success) !important;
+        font-weight: 700 !important;
+    }
+
+    .pb-form .pb-field .input-group.my-doc-input-group {
+        height: 28px !important;
+        border: 1px solid #c5d4de;
+        border-radius: 8px;
+        overflow: hidden;
+        background: #fff;
+        display: flex;
+        align-items: stretch;
+    }
+
+    .pb-form .pb-field .my-doc-input-group .my-doc-text {
+        height: 100% !important;
+        min-height: 0 !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+    }
+
+    .pb-form .pb-field .my-doc-browse {
+        height: 100% !important;
+        margin: 0 !important;
+        line-height: 26px !important;
+        padding: 0 12px !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        background-color: var(--pb-primary) !important;
+        color: #fff !important;
+        font-size: 12px !important;
+        font-weight: 600;
+    }
+
+    .pb-form .pb-field .my-doc-eye {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        color: var(--pb-primary);
+        background: #f4f8fb;
+    }
+
+    .pb-form .pb-field .my-eye-btn {
+        margin: 0 !important;
+        line-height: 1 !important;
+        font-size: 14px;
+    }
+
+    .pb-fbr-wrap {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        min-height: 28px;
+        border-radius: 6px;
+        border: 1px solid #c5d4de;
+        background: #fff;
+        padding: 0 8px;
+        overflow: hidden;
+    }
+
+    .pb-fbr-wrap .pb-fbr-check {
+        color: var(--pb-success);
+        font-size: 15px;
+        flex-shrink: 0;
+        display: none;
+    }
+
+    .pb-fbr-wrap #FBR_RES {
+        border: 0 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        height: 26px !important;
+        min-height: 26px !important;
+        padding: 2px 0 !important;
+        font-weight: 700;
+        font-size: 11px !important;
+    }
+
+    .pb-fbr-wrap:has(#FBR_RES:not(:placeholder-shown)) {
+        background: var(--pb-success-soft);
+    }
+
+    .pb-fbr-wrap:has(#FBR_RES:not(:placeholder-shown)) .pb-fbr-check {
+        display: inline-flex;
+    }
+
+    .pb-qr-body {
+        padding: 8px 8px 8px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        flex: 1;
+        gap: 4px;
+    }
+
+    .pb-form .image-box {
+        width: 92px;
+        height: 92px;
+        margin: 0 auto;
+        border: 1px solid var(--pb-line);
+        border-radius: 10px;
+        overflow: hidden;
+        background: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 2px 8px rgba(5, 90, 135, 0.08);
+    }
+
+    .pb-form .image-box img {
+        width: 92%;
+        height: 92%;
+        object-fit: contain;
     }
 
     .verified-label {
-        color: #28a745;
-        font-size: 14px;
+        color: var(--pb-success);
+        font-size: 11px;
         font-weight: 700;
         padding: 2px 6px;
-        display: inline-block;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
     }
 
-    @@media (max-width: 1199px) {
-        .pb-form .image-box {
-            width: 100px;
-            height: 100px;
-            margin-bottom: 6px;
-        }
+    .pb-items-card {
+        margin-bottom: 0;
+        flex: 1 1 auto;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
     }
 
-    @@media (max-width: 767px) {
-        .pb-form .pb-actions {
-            flex-wrap: wrap;
-        }
+    .pb-items-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        padding: 6px 10px 0;
+        background: #f4f8fb;
+        border-bottom: 1px solid var(--pb-line);
+        flex-wrap: nowrap;
+        flex-shrink: 0;
+    }
+
+    .pb-form .nav.nav-tabs.nav-primary {
+        border-bottom: 0;
+        gap: 8px;
+        display: flex;
+        margin: 0;
+        padding: 0 0 8px;
+    }
+
+    .pb-form .nav-tabs li.nav-item .nav-link {
+        font-size: 12px !important;
+        font-weight: 700;
+        border-radius: 8px !important;
+        padding: 5px 12px !important;
+        color: var(--pb-primary);
+        background: #fff;
+        border: 1px solid var(--pb-primary) !important;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .pb-form .nav.nav-tabs.nav-primary li a.active {
+        background: var(--pb-primary) !important;
+        color: #fff !important;
+        border-color: var(--pb-primary) !important;
+        border-bottom: 1px solid var(--pb-primary) !important;
+    }
+
+    .pb-form .nav.nav-tabs.nav-primary li a.active:before {
+        display: none !important;
+    }
+
+    .pb-form .tab-content {
+        padding: 0;
+        margin-top: 0 !important;
+        flex: 1 1 auto;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    .pb-form .tab-pane {
+        flex: 1 1 auto;
+        min-height: 0;
+        display: none;
+        flex-direction: column;
+        height: 100%;
+    }
+
+    .pb-form .tab-pane.active,
+    .pb-form .tab-pane.show.active {
+        display: flex !important;
+    }
+
+    .pb-form .table-responsive {
+        padding: 0;
+        margin: 0;
+        overflow: hidden;
+        flex: 1 1 auto;
+        min-height: 0;
+        height: auto !important;
+    }
+
+    .pb-form #DetailContainer,
+    .pb-form #ChargesGridContainer {
+        height: 100%;
+        min-height: 0;
+    }
+
+    .pb-form .dx-datagrid-total-footer,
+    .pb-form .dx-datagrid-total-footer .dx-datagrid-content,
+    .pb-form .dx-datagrid-total-footer table,
+    .pb-form #DetailContainer .dx-datagrid-total-footer,
+    .pb-form #DetailContainer .dx-datagrid-total-footer tr,
+    .pb-form #DetailContainer .dx-datagrid-total-footer td,
+    .pb-form #DetailContainer .dx-footer-row,
+    .pb-form #ChargesGridContainer .dx-datagrid-total-footer,
+    .pb-form #ChargesGridContainer .dx-datagrid-total-footer tr,
+    .pb-form #ChargesGridContainer .dx-datagrid-total-footer td,
+    .pb-form #ChargesGridContainer .dx-footer-row {
+        display: none !important;
+        visibility: hidden !important;
+        height: 0 !important;
+        max-height: 0 !important;
+        min-height: 0 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        border: 0 !important;
+        overflow: hidden !important;
+        line-height: 0 !important;
+        font-size: 0 !important;
+    }
+
+    .pb-form #DetailContainer .dx-datagrid-headers,
+    .pb-form #ChargesGridContainer .dx-datagrid-headers {
+        background: var(--pb-primary);
+        color: #fff;
+    }
+
+    .pb-form #DetailContainer .dx-datagrid-headers .dx-header-row > td,
+    .pb-form #ChargesGridContainer .dx-datagrid-headers .dx-header-row > td {
+        background: var(--pb-primary) !important;
+        color: #fff !important;
+        font-weight: 700 !important;
+        font-size: 12px !important;
+        text-align: center;
+        padding-top: 5px !important;
+        padding-bottom: 5px !important;
+        border-color: rgba(255, 255, 255, 0.18) !important;
+        vertical-align: middle;
+    }
+
+    .pb-form #DetailContainer .dx-datagrid-headers .dx-header-filter,
+    .pb-form #ChargesGridContainer .dx-datagrid-headers .dx-header-filter {
+        color: #fff;
+    }
+
+    .pb-form #DetailContainer .dx-datagrid-rowsview .dx-row > td,
+    .pb-form #ChargesGridContainer .dx-datagrid-rowsview .dx-row > td {
+        padding-top: 4px !important;
+        padding-bottom: 4px !important;
+        font-size: 12px;
+        vertical-align: middle;
+        border-color: #e6eef3 !important;
+    }
+
+    .pb-form #DetailContainer .dx-datagrid-rowsview .dx-row-alt > td,
+    .pb-form #ChargesGridContainer .dx-datagrid-rowsview .dx-row-alt > td {
+        background: #f6fafc;
+    }
+
+    .pb-form #DetailContainer .dx-datagrid-search-panel,
+    .pb-form #ChargesGridContainer .dx-datagrid-search-panel {
+        margin: 4px 8px;
+        border-radius: 16px;
+        border: 1px solid var(--pb-line);
+        overflow: hidden;
+    }
+
+    .pb-form #DetailContainer .grid-action-icon,
+    .pb-form #ChargesGridContainer .grid-action-icon {
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--pb-primary) !important;
+        background: var(--pb-primary-soft);
+        margin-left: 4px !important;
+    }
+
+    .pb-form #DetailContainer .grid-action-icon.Delete,
+    .pb-form #ChargesGridContainer .grid-action-icon.Delete {
+        color: var(--pb-danger) !important;
+        background: #fdecec;
+    }
+
+    .pb-summary-bar {
+        display: flex;
+        align-items: stretch;
+        background: var(--pb-primary);
+        color: #fff;
+        font-size: 12px;
+        font-weight: 600;
+        overflow: hidden;
+        flex-shrink: 0;
+    }
+
+    .pb-form #DetailContainer .dx-datagrid-header-panel,
+    .pb-form #ChargesGridContainer .dx-datagrid-header-panel {
+        padding: 2px 6px 0;
+    }
+
+    .pb-form #DetailContainer .dx-toolbar,
+    .pb-form #ChargesGridContainer .dx-toolbar {
+        margin: 0;
+        padding: 2px 4px;
+    }
+
+    .pb-summary-item {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 12px;
+        border-right: 1px solid rgba(255, 255, 255, 0.18);
+        min-width: 0;
+    }
+
+    .pb-summary-item:last-child {
+        border-right: 0;
+        justify-content: flex-end;
+        background: var(--pb-primary-dark);
+        font-size: 12px;
+        font-weight: 800;
+    }
+
+    .pb-summary-item i {
+        opacity: 0.9;
+        width: 16px;
+        text-align: center;
+    }
+
+    .pb-summary-item span b {
+        font-weight: 800;
+        margin-left: 4px;
+    }
+
+    .pb-charges-save {
+        padding: 10px 12px;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .pb-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        padding: 6px 14px 8px;
+        flex-wrap: nowrap;
+        flex-shrink: 0;
+    }
+
+    .pb-fbr-info {
+        display: none;
+        align-items: center;
+        gap: 8px;
+        color: var(--pb-primary);
+        font-size: 12px;
+        font-weight: 600;
+        background: var(--pb-primary-soft);
+        border: 1px solid #b7cfd9;
+        border-radius: 20px;
+        padding: 7px 14px;
+    }
+
+    .pb-form:has(#verifiedText:not([style*="display: none"])) .pb-fbr-info {
+        display: inline-flex;
+    }
+
+    .pb-footer-actions {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 8px;
+        margin-left: auto;
+    }
+
+    .pb-form > .modal {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        z-index: 1055 !important;
+        width: 100% !important;
+        height: 100% !important;
+        overflow-x: hidden !important;
+        overflow-y: auto !important;
+    }
+
+    .pb-form > .modal .modal-dialog {
+        margin: 1.5rem auto;
+        max-width: 90vw;
+    }
+
+    .pb-form > .modal .modal-content {
+        height: auto !important;
+        max-height: calc(100vh - 70px);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    .pb-form > .modal .modal-body {
+        overflow: auto;
+        flex: 1 1 auto;
+    }
+
+    .pb-form > .modal .card {
+        background: #fff;
+        box-shadow: none;
+        border-radius: 8px;
+        margin-bottom: 0;
+        height: auto;
+    }
+
+    #QuickSearchModal .modal-body #gridContainer {
+        min-height: 360px;
     }
 
     #InvoiceBulkUploadModal .modal-dialog {
@@ -204,211 +899,318 @@
         margin: 8px 0 0;
         padding-left: 18px;
     }
+
+    @@media (max-width: 1199px) {
+        .pb-form {
+            height: auto;
+            max-height: none;
+        }
+
+        .pb-shell,
+        .pb-body,
+        .pb-items-card,
+        .pb-form .tab-content,
+        .pb-form .tab-pane.active {
+            overflow: visible;
+            height: auto;
+            max-height: none;
+        }
+
+        .pb-top-row {
+            flex-direction: column;
+        }
+
+        .pb-qr-card {
+            width: 100%;
+            flex: 1 1 auto;
+        }
+
+        .pb-form .image-box {
+            width: 90px;
+            height: 90px;
+        }
+
+        .pb-fields-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
+
+    @@media (max-width: 767px) {
+        .pb-page-header,
+        .pb-footer {
+            align-items: stretch;
+            flex-wrap: wrap;
+        }
+
+        .pb-header-actions,
+        .pb-footer-actions {
+            width: 100%;
+            justify-content: flex-start;
+        }
+
+        .pb-fields-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .pb-field-span-2 {
+            grid-column: span 1;
+        }
+
+        .pb-summary-bar {
+            flex-direction: column;
+        }
+
+        .pb-summary-item,
+        .pb-summary-item:last-child {
+            border-right: 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+            justify-content: flex-start;
+        }
+    }
 </style>
 <div class="card pb-form">
-    <div class="card-header">
-        <button type="button" class="btn btn-light btn-search waves-effect waves-light" data-bs-toggle="modal"
-                data-bs-target=".bs-example-modal-xl" id="BtnQuickSearch">
-            <i class="fa fa-search"></i> Quick Search
-        </button>
-        <button type="button" class="btn btn-primary btn-new waves-effect waves-light float-end" id="BtnNew">
-            <i class="fa fa-plus"></i> Add New
-        </button>
-        <button type="button" class="btn btn-light waves-effect waves-light float-end me-2" id="BtnInvoiceBulkUpload">
-            <i class="fa fa-upload"></i> Invoice Bulk Upload
-        </button>
-    </div>
-    <div class="card-body Record">
-        <div class="row align-items-start">
-            <input id="ID" hidden />
-            <input id="ACT_CODE" hidden />
-            <input id="SACODE" hidden />
-            <input id="partyhidden" hidden />
-            <input id="acthidden" hidden />
-            <input id="salesmanhidden" hidden />
-            <input id="itemIdHidden" hidden />
-            <div class="col-xl-10 col-lg-9 col-md-8">
-                <div class="row">
-                    <div class="col-xl-3 col-lg-3 col-md-6 col-12 pb-field">
-                        <label class="form-label" for="Code">Code:</label>
-                        <input class="form-control" id="Code" readonly type="text" autocomplete="off">
-                    </div>
-                    <div class="col-xl-3 col-lg-3 col-md-6 col-12 pb-field">
-                        <label class="form-label" for="ASTATUS">Status:</label>
-                        <div id="ASTATUS"></div>
-                    </div>
-                    <div class="col-xl-3 col-lg-3 col-md-6 col-12 pb-field">
-                        <label class="form-label" for="V_DATE">Transaction Date:</label>
-                        <input class="form-control" id="V_DATE" type="date" onkeydown="empr_helper.HandleTabFocusToSelectBox(event, '#PARTY_CODE')" value="@DateTime.Now.Date.ToString("yyyy-MM-dd")" autocomplete="off">
-                    </div>
-                    <div class="col-xl-3 col-lg-3 col-md-6 col-12 pb-field vHide">
-                        <label class="form-label" for="VOUCHER_NO">Transaction #:</label>
-                        <input class="form-control" id="VOUCHER_NO" type="text" readonly autocomplete="off">
-                    </div>
-
-                    <div class="col-xl-3 d-none">
-                        <label class="form-label" for="ORDER_TYPE">ORDER_TYPE:</label>
-                        <input class="form-control" id="ORDER_TYPE" type="text" readonly autocomplete="off">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xl-3 col-lg-3 col-md-6 col-12 pb-field" onkeydown="empr_helper.MoveFocusToGrid(event, '#DetailContainer', 0, 'iteM_CODE')">
-                        <label class="form-label" for="PARTY_CODE">Party Name:</label>
-                        <div id="PARTY_CODE"></div>
-                    </div>
-                    <div class="col-xl-3 d-none">
-                        <div class="row">
-                            <div class="col-xl-6 d-none">
-                                <label class="form-label" for="PARTY_BALANCE">Party Balance:</label>
-                                <input class="form-control" id="PARTY_BALANCE" type="text" autocomplete="off">
-                            </div>
-                            <div class="col-xl-6 d-none">
-                                <label class="form-label" for="TERMS">Pay Terms:</label>
-                                <input class="form-control" onkeydown="empr_helper.HandleTabFocus(event, '#REF') id="TERMS" type="text" autocomplete="off">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-xl-3 d-none">
-                        <label class="form-label" for="DISC">Disc %:</label>
-                        <input class="form-control" id="DISC" type="text" autocomplete="off" />
-                    </div>
-
-                    <div class="col-xl-3 col-lg-3 col-md-6 col-12 pb-field">
-                        <label class="form-label" for="BTYPE">Pay Type:</label>
-                        <div id="BTYPE"></div>
-                    </div>
-                    <div class="col-xl-3 d-none">
-                        <label class="form-label" for="Currency">Currency:</label>
-                        <div id="Currency"></div>
-                    </div>
-
-                    <div class="col-xl-3 d-none">
-                        <label class="form-label" for="Rate">Rate:</label>
-                        <input class="form-control" id="Rate" type="text" autocomplete="off" oninput="empr_helper.EnhancedDecimalFieldValidation(this)">
-                    </div>
-
-                    <div class="col-xl-3 col-lg-3 col-md-6 col-12 pb-field">
-                        <label class="form-label" for="REF">Refrence #:</label>
-                        <input class="form-control" id="REF" type="text" onkeydown="empr_helper.HandleTabFocus(event, '#REMARKS') autocomplete="off">
-                    </div>
-
-                    <div class="col-xl-3 col-lg-3 col-md-6 col-12 pb-field">
-                        <label class="form-label" for="DOC">Doc :</label>
-                        <input type="hidden" value="" id="hdnDOC" />
-
-                        <div class="input-group my-doc-input-group">
-                            <input type="file" name="DOC" id="DOC" class="d-none" onchange=" empr_PurchaseBill.UploadDoc()" accept=".pdf, .doc, .docx, .xls, .xlsx, image/*" />
-
-                            <input type="text" id="DOCName" class="form-control my-doc-text" placeholder="No File" readonly />
-
-                            <button type="button" class="btn my-doc-browse" onclick="$('#DOC').click()">Browse</button>
-                            <a href="javascript:;" class="my-doc-eye" id="openDoc" onclick=" empr_PurchaseBill.OpenDoc()"><i class="fa fa-eye my-eye-btn"></i></a>
-                        </div>
-                    </div>
-
-                    <div class="col-xl-3 d-none">
-                        <label class="form-label" for="CARTAGE">Cartage:</label>
-                        <input class="form-control" id="CARTAGE" type="number" step="0.01" min="0" onkeydown="return !['e', 'E', '+', '-'].includes(event.key)" autocomplete="off">
-                    </div>
-
-                    <div class="col-xl-3 d-none">
-                        <label class="form-label" for="WAREHOUSE">Warehouse:</label>
-                        <div id="WAREHOUSE"></div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xl-6 col-lg-6 col-md-12 pb-field">
-                        <label class="form-label" for="REMARKS">Comment:</label>
-                        <textarea class="form-control" id="REMARKS" rows="1" type="text" onkeydown="empr_helper.MoveFocusToGrid(event, '#DetailContainer', 0, 'iteM_CODE') autocomplete="off"></textarea>
-                    </div>
-                    <div class="col-xl-6 col-lg-6 col-md-12 pb-field">
-                        <label class="form-label" for="FBR_RES">FBR Responce:</label>
-                        <input class="form-control" id="FBR_RES" type="text" readonly autocomplete="off">
-                    </div>
-                </div>
-               
+    <div class="pb-shell">
+    <div class="pb-page-header">
+        <div class="pb-title-block">
+            <div class="pb-title-icon">
+                <i class="fa fa-file-invoice"></i>
+                <span class="pb-icon-check"><i class="fa fa-check"></i></span>
             </div>
-
-            <div class="col-xl-2 col-lg-3 col-md-4 col-12">
-                <div class="text-center">
-                    <div class="image-box">
-                        @* <img id="empProfileImgFinal" src="~/Client/Company/default.jpg" /> *@
-                        <img id="qrImg" src="~/Client/Company/notPostedYet.jpg" />
-                    </div>
-                </div>
+            <div class="pb-title-text">
+                <h5>Sales Tax Invoice</h5>
+                <p>Purchase Invoice • Master Detail View</p>
             </div>
         </div>
-        <div class="col-xl-12 pb-actions d-flex justify-content-end align-items-center">
-           @*  <button type="button" class="btn btn-primary" id="BtnSodaPick">
+        <div class="pb-header-actions">
+            <button type="button" class="btn btn-light btn-search waves-effect waves-light pb-btn-outline" data-bs-toggle="modal"
+                    data-bs-target="#QuickSearchModal" id="BtnQuickSearch">
+                <i class="fa fa-search"></i> Quick Search
+            </button>
+            <button type="button" class="btn btn-light waves-effect waves-light pb-btn-outline" id="BtnInvoiceBulkUpload">
+                <i class="fa fa-upload"></i> Invoice Bulk Upload
+            </button>
+            @*  <button type="button" class="btn btn-primary" id="BtnSodaPick">
                 <i class="fa fa-search"></i> Pick Data
             </button> *@
-
-            <button type="button" id="BtnPrint" class="btn btn-success btn-print waves-effect waves-light">
+            <button type="button" class="btn btn-primary" id="BtnfBRpOST">
+                <i class="fa fa-share-square"></i> Post To FBR
+            </button>
+            <button type="button" id="BtnPrint" class="btn btn-success btn-print waves-effect waves-light pb-btn-solid">
                 <i class="fa fa-print"></i> Print
             </button>
-
-            <button type="button" class="btn btn-primary" id="BtnfBRpOST">
-                Post To FBR
-            </button>
-
-           @*  <button type="button" id="BtnPrintFBR" class="btn btn-success btn-print waves-effect waves-light">
+            @*  <button type="button" id="BtnPrintFBR" class="btn btn-success btn-print waves-effect waves-light">
                 <i class="fa fa-print"></i> Print
             </button> *@
-
-            <span id="verifiedText" class="verified-label" style="display:none;">
-                ✔ Verified
-            </span>
+            <button type="button" class="btn btn-primary btn-new waves-effect waves-light pb-btn-outline" id="BtnNew">
+                <i class="fa fa-plus"></i> Add New
+            </button>
         </div>
+    </div>
+    <div class="card-body Record pb-body">
+        <input id="ID" hidden />
+        <input id="ACT_CODE" hidden />
+        <input id="SACODE" hidden />
+        <input id="partyhidden" hidden />
+        <input id="acthidden" hidden />
+        <input id="salesmanhidden" hidden />
+        <input id="itemIdHidden" hidden />
 
-        <ul class="nav nav-tabs nav-primary" id="pills-warningtab" role="tablist">
-            <li class="nav-item detailInfo">
-                <a class="nav-link active" id="pills-warninghome-tab" data-bs-toggle="pill"
-                   href="#pills-warninghome" role="tab" aria-controls="pills-warninghome" aria-selected="true">
-                    Detail Info
-                </a>
-            </li>
-            <li class="nav-item d-none" id="charges-tab-li">
-                <a class="nav-link" id="pills-warningsummary-tab" data-bs-toggle="pill"
-                   href="#pills-warningsummary" role="tab" aria-controls="pills-warningsummary" aria-selected="false">
-                    Charges
-                </a>
-            </li>
-        </ul>
-
-        <div class="tab-content mt-10" id="pills-warningtabContent">
-            <!-- Detail Tab -->
-            <div class="tab-pane fade show active" id="pills-warninghome" role="tabpanel"
-                 aria-labelledby="pills-warninghome-tab">
-                <div class="table-responsive">
-                    <div id="DetailContainer"></div>
+        <div class="pb-top-row">
+            <div class="pb-details-card">
+                <div class="pb-section-head">
+                    <i class="fa fa-file-alt"></i> Invoice Details
                 </div>
-                <div class="col-xl-12 text-end pb-save-row pr-10">
-                    <button class="btn btn-danger btn-delete" id="BtnDelete" style="display:none"><i class="fa fa-trash"></i> Delete</button>
-                    <button class="btn btn-primary btn-save" id="BtnSave"><i class="fa fa-save"></i> Save</button>
+                <div class="pb-details-body">
+                    <div class="pb-fields-grid">
+                        <div class="pb-field">
+                            <label class="form-label" for="Code">Code:</label>
+                            <input class="form-control" id="Code" readonly type="text" autocomplete="off">
+                        </div>
+                        <div class="pb-field pb-status-field">
+                            <label class="form-label" for="ASTATUS">Status:</label>
+                            <div id="ASTATUS"></div>
+                        </div>
+                        <div class="pb-field">
+                            <label class="form-label" for="V_DATE">Transaction Date:</label>
+                            <input class="form-control" id="V_DATE" type="date" onkeydown="empr_helper.HandleTabFocusToSelectBox(event, '#PARTY_CODE')" value="@DateTime.Now.Date.ToString("yyyy-MM-dd")" autocomplete="off">
+                        </div>
+                        <div class="pb-field vHide">
+                            <label class="form-label" for="VOUCHER_NO">Transaction #:</label>
+                            <input class="form-control" id="VOUCHER_NO" type="text" readonly autocomplete="off">
+                        </div>
+
+                        <div class="pb-field" onkeydown="empr_helper.MoveFocusToGrid(event, '#DetailContainer', 0, 'iteM_CODE')">
+                            <label class="form-label" for="PARTY_CODE">Party Name:</label>
+                            <div id="PARTY_CODE"></div>
+                        </div>
+                        <div class="pb-field">
+                            <label class="form-label" for="BTYPE">Pay Type:</label>
+                            <div id="BTYPE"></div>
+                        </div>
+                        <div class="pb-field">
+                            <label class="form-label" for="REF">Refrence #:</label>
+                            <input class="form-control" id="REF" type="text" onkeydown="empr_helper.HandleTabFocus(event, '#REMARKS') autocomplete="off">
+                        </div>
+                        <div class="pb-field">
+                            <label class="form-label" for="DOC">Doc :</label>
+                            <input type="hidden" value="" id="hdnDOC" />
+                            <div class="input-group my-doc-input-group">
+                                <input type="file" name="DOC" id="DOC" class="d-none" onchange=" empr_PurchaseBill.UploadDoc()" accept=".pdf, .doc, .docx, .xls, .xlsx, image/*" />
+                                <input type="text" id="DOCName" class="form-control my-doc-text" placeholder="No File" readonly />
+                                <button type="button" class="btn my-doc-browse" onclick="$('#DOC').click()">Browse</button>
+                                <a href="javascript:;" class="my-doc-eye" id="openDoc" onclick=" empr_PurchaseBill.OpenDoc()"><i class="fa fa-eye my-eye-btn"></i></a>
+                            </div>
+                        </div>
+
+                        <div class="pb-field pb-field-span-2">
+                            <label class="form-label" for="REMARKS">Comment:</label>
+                            <textarea class="form-control" id="REMARKS" rows="1" type="text" onkeydown="empr_helper.MoveFocusToGrid(event, '#DetailContainer', 0, 'iteM_CODE') autocomplete="off"></textarea>
+                        </div>
+                        <div class="pb-field pb-field-span-2">
+                            <label class="form-label" for="FBR_RES">FBR Responce:</label>
+                            <div class="pb-fbr-wrap">
+                                <span class="pb-fbr-check"><i class="fa fa-check-circle"></i></span>
+                                <input class="form-control" id="FBR_RES" type="text" readonly autocomplete="off" placeholder=" ">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-none">
+                        <div class="col-xl-3 d-none">
+                            <label class="form-label" for="ORDER_TYPE">ORDER_TYPE:</label>
+                            <input class="form-control" id="ORDER_TYPE" type="text" readonly autocomplete="off">
+                        </div>
+                        <div class="col-xl-3 d-none">
+                            <div class="row">
+                                <div class="col-xl-6 d-none">
+                                    <label class="form-label" for="PARTY_BALANCE">Party Balance:</label>
+                                    <input class="form-control" id="PARTY_BALANCE" type="text" autocomplete="off">
+                                </div>
+                                <div class="col-xl-6 d-none">
+                                    <label class="form-label" for="TERMS">Pay Terms:</label>
+                                    <input class="form-control" onkeydown="empr_helper.HandleTabFocus(event, '#REF') id="TERMS" type="text" autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 d-none">
+                            <label class="form-label" for="DISC">Disc %:</label>
+                            <input class="form-control" id="DISC" type="text" autocomplete="off" />
+                        </div>
+                        <div class="col-xl-3 d-none">
+                            <label class="form-label" for="Currency">Currency:</label>
+                            <div id="Currency"></div>
+                        </div>
+                        <div class="col-xl-3 d-none">
+                            <label class="form-label" for="Rate">Rate:</label>
+                            <input class="form-control" id="Rate" type="text" autocomplete="off" oninput="empr_helper.EnhancedDecimalFieldValidation(this)">
+                        </div>
+                        <div class="col-xl-3 d-none">
+                            <label class="form-label" for="CARTAGE">Cartage:</label>
+                            <input class="form-control" id="CARTAGE" type="number" step="0.01" min="0" onkeydown="return !['e', 'E', '+', '-'].includes(event.key)" autocomplete="off">
+                        </div>
+                        <div class="col-xl-3 d-none">
+                            <label class="form-label" for="WAREHOUSE">Warehouse:</label>
+                            <div id="WAREHOUSE"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Charges -->
-            <div class="tab-pane fade" id="pills-warningsummary" role="tabpanel" aria-labelledby="pills-warningsummary-tab">
-                <div class="table-responsive">
-                    <div id="ChargesGridContainer"></div>
+            <div class="pb-qr-card">
+                <div class="pb-section-head">
+                    <i class="fa fa-qrcode"></i> FBR QR Code
                 </div>
-                <div class="col-xl-12 text-end pb-save-row pr-10">
-                    <button type="button" id="BtnChargesSave" class="mr-5 btn btn-primary btn-print waves-effect waves-light float-end">
-                        <i class="fa fa-print"></i> Save Charges
-                    </button>
+                <div class="pb-qr-body">
+                    <div class="text-center">
+                        <div class="image-box">
+                            @* <img id="empProfileImgFinal" src="~/Client/Company/default.jpg" /> *@
+                            <img id="qrImg" src="~/Client/Company/notPostedYet.jpg" />
+                        </div>
+                    </div>
+                    <span id="verifiedText" class="verified-label" style="display:none;">
+                        <i class="fa fa-check-circle"></i> Verified by FBR
+                    </span>
                 </div>
-
             </div>
         </div>
 
+        <div class="pb-items-card">
+            <div class="pb-items-head">
+                <ul class="nav nav-tabs nav-primary" id="pills-warningtab" role="tablist">
+                    <li class="nav-item detailInfo">
+                        <a class="nav-link active" id="pills-warninghome-tab" data-bs-toggle="pill"
+                           href="#pills-warninghome" role="tab" aria-controls="pills-warninghome" aria-selected="true">
+                            <i class="fa fa-th-list"></i> Invoice Items
+                        </a>
+                    </li>
+                    <li class="nav-item d-none" id="charges-tab-li">
+                        <a class="nav-link" id="pills-warningsummary-tab" data-bs-toggle="pill"
+                           href="#pills-warningsummary" role="tab" aria-controls="pills-warningsummary" aria-selected="false">
+                            <i class="fa fa-info-circle"></i> Charges
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="tab-content" id="pills-warningtabContent">
+                <div class="tab-pane fade show active" id="pills-warninghome" role="tabpanel"
+                     aria-labelledby="pills-warninghome-tab">
+                    <div class="table-responsive">
+                        <div id="DetailContainer"></div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="pills-warningsummary" role="tabpanel" aria-labelledby="pills-warningsummary-tab">
+                    <div class="table-responsive">
+                        <div id="ChargesGridContainer"></div>
+                    </div>
+                    <div class="pb-charges-save">
+                        <button type="button" id="BtnChargesSave" class="mr-5 btn btn-primary btn-print waves-effect waves-light">
+                            <i class="fa fa-print"></i> Save Charges
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="pb-summary-bar">
+                <div class="pb-summary-item">
+                    <i class="fa fa-calculator"></i>
+                    <span>Count: <b id="pbSumCount">0</b></span>
+                </div>
+                <div class="pb-summary-item">
+                    <i class="fa fa-cubes"></i>
+                    <span>Total Qty: <b id="pbSumQty">0.00</b></span>
+                </div>
+                <div class="pb-summary-item">
+                    <i class="fa fa-money-bill"></i>
+                    <span>Total Amount: <b id="pbSumAmt">0.00</b></span>
+                </div>
+                <div class="pb-summary-item">
+                    <i class="fa fa-percent"></i>
+                    <span>Total Tax: <b id="pbSumTax">0.00</b></span>
+                </div>
+                <div class="pb-summary-item">
+                    <i class="fa fa-chart-bar"></i>
+                    <span>Net Total: <b id="pbSumNet">0.00</b></span>
+                </div>
+            </div>
+        </div>
     </div>
 
+    <div class="pb-footer">
+        <div class="pb-fbr-info">
+            <i class="fa fa-info-circle"></i>
+            <span>Invoice has been successfully verified by FBR</span>
+        </div>
+        <div class="pb-footer-actions">
+            <button class="btn btn-danger btn-delete" id="BtnDelete" style="display:none"><i class="fa fa-trash"></i> Delete</button>
+            <button class="btn btn-primary btn-save" id="BtnSave"><i class="fa fa-save"></i> Save</button>
+        </div>
+    </div>
+    </div>
 
 @* quick search *@
-    <div class="modal fade bs-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
+    <div class="modal fade bs-example-modal-xl" id="QuickSearchModal" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="myExtraLargeModalLabel">Quick Search</h5>
@@ -431,7 +1233,7 @@
 
 
     <div class="modal fade bs-example-modal-xl" id="ShowReportModal" style="display:none" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="myExtraLargeModalLabel">Print Report</h5>
@@ -570,6 +1372,7 @@
             </div>
         </div>
     </div>
+</div>
 
 @section LinkScriptSection {
         <script type="text/javascript">
@@ -606,6 +1409,156 @@
                 empr_PurchaseBill.InitEvents();
                 empr_PurchaseBill_InvoiceBulkUpload.InitEvents();
                   empr_helper.EnableShortCutKeys('#BtnSave', '#BtnNew', '#BtnDelete', '#BtnQuickSearch', '#Code', '#DetailContainer', 0, 'custoM_ACT_CODE');
+
+                function pbFormatNumber(value) {
+                    var number = parseFloat(value);
+                    if (isNaN(number)) {
+                        number = 0;
+                    }
+                    return number.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                }
+
+                function pbRemoveGridOwnTotal() {
+                    try {
+                        $('#DetailContainer .dx-datagrid-total-footer, #ChargesGridContainer .dx-datagrid-total-footer, #DetailContainer .dx-footer-row, #ChargesGridContainer .dx-footer-row').hide();
+                        ['#DetailContainer', '#ChargesGridContainer'].forEach(function (id) {
+                            var inst = $(id).data('dxDataGrid');
+                            if (!inst || inst._pbOwnTotalRemoved) {
+                                return;
+                            }
+                            var summary = inst.option('summary');
+                            if (summary && summary.totalItems && summary.totalItems.length) {
+                                inst.option('summary.totalItems', []);
+                            }
+                            inst._pbOwnTotalRemoved = true;
+                        });
+                    } catch (ex) {
+                    }
+                }
+
+                function pbUpdateSummaryBar() {
+                    try {
+                        var countEl = document.getElementById('pbSumCount');
+                        if (!countEl) {
+                            return;
+                        }
+                        var grid = $('#DetailContainer').data('dxDataGrid');
+                        if (!grid) {
+                            return;
+                        }
+                        var rows = grid.option('dataSource') || [];
+                        var count = 0;
+                        var qty = 0;
+                        var amt = 0;
+                        var tax = 0;
+                        var net = 0;
+                        for (var i = 0; i < rows.length; i++) {
+                            var row = rows[i];
+                            if (!row || row.iteM_CODE === '' || row.iteM_CODE === null || row.iteM_CODE === undefined) {
+                                continue;
+                            }
+                            count += 1;
+                            qty += parseFloat(row.qty) || 0;
+                            amt += parseFloat(row.amt) || 0;
+                            tax += parseFloat(row.taX_AMT) || 0;
+                            net += parseFloat(row.neT_AMT) || 0;
+                        }
+                        countEl.textContent = count;
+                        $('#pbSumQty').text(pbFormatNumber(qty));
+                        $('#pbSumAmt').text(pbFormatNumber(amt));
+                        $('#pbSumTax').text(pbFormatNumber(tax));
+                        $('#pbSumNet').text(pbFormatNumber(net));
+                    } catch (ex) {
+                    }
+                }
+
+                setInterval(function () {
+                    pbRemoveGridOwnTotal();
+                    pbUpdateSummaryBar();
+                    try {
+                        var inst = $('#DetailContainer').data('dxDataGrid');
+                        var $items = $('.pb-items-card');
+                        if (!inst || !$items.length) {
+                            return;
+                        }
+                        var expected = Math.floor(($('#pills-warninghome > .table-responsive').height() || 0));
+                        var current = parseFloat(inst.option('height')) || 0;
+                        if (expected > 110 && Math.abs(current - expected) > 24) {
+                            pbFitFormToPage();
+                        }
+                    } catch (ex) {
+                    }
+                }, 600);
+
+                function pbFitFormToPage() {
+                    try {
+                        var $form = $('.pb-form');
+                        if (!$form.length) {
+                            return;
+                        }
+                        var $side = $('.rightsidecontent');
+                        var top = $form.offset().top || 0;
+                        var bottom = window.innerHeight;
+                        if ($side.length) {
+                            bottom = $side.offset().top + $side.innerHeight();
+                        }
+                        var available = Math.floor(bottom - top - 4);
+                        if (available > 280) {
+                            $form.css({
+                                height: available + 'px',
+                                maxHeight: available + 'px'
+                            });
+                        }
+
+                        var $wrap = $('#pills-warninghome > .table-responsive');
+                        var gridH = Math.floor($wrap.height() || 0);
+                        if (gridH < 110) {
+                            var $items = $form.find('.pb-items-card');
+                            gridH = Math.floor(($items.height() || 0) - ($items.find('.pb-items-head').outerHeight() || 0) - ($items.find('.pb-summary-bar').outerHeight() || 0) - 2);
+                        }
+                        if (gridH < 110) {
+                            gridH = 110;
+                        }
+                        var inst = $('#DetailContainer').data('dxDataGrid');
+                        if (inst) {
+                            pbRemoveGridOwnTotal();
+                            inst.option('height', gridH);
+                            if (inst.updateDimensions) {
+                                inst.updateDimensions();
+                            } else if (inst.resize) {
+                                inst.resize();
+                            }
+                        }
+                        var charges = $('#ChargesGridContainer').data('dxDataGrid');
+                        if (charges) {
+                            charges.option('height', gridH);
+                            if (charges.updateDimensions) {
+                                charges.updateDimensions();
+                            }
+                        }
+                    } catch (ex) {
+                    }
+                }
+
+                pbRemoveGridOwnTotal();
+                setTimeout(pbFitFormToPage, 400);
+                setTimeout(pbRemoveGridOwnTotal, 200);
+                setTimeout(pbRemoveGridOwnTotal, 800);
+                setTimeout(pbFitFormToPage, 1000);
+                $(window).on('resize', pbFitFormToPage);
+
+                $(document).on('shown.bs.modal', '#QuickSearchModal', function () {
+                    try {
+                        var g = $('#gridContainer').dxDataGrid('instance');
+                        if (g) {
+                            g.option('height', Math.min(460, window.innerHeight - 180));
+                            if (g.updateDimensions) {
+                                g.updateDimensions();
+                            }
+                        }
+                    } catch (ex) {
+                    }
+                });
             });
         </script>
 }

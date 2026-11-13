@@ -7,7 +7,7 @@ var empr_PurchaseBill_InvoiceBulkUpload = {
     itemsReady: false,
 
     columns: [
-        "Party Name", "Party Address", "Party Region", "Party Reg.Type", "Party NTN/CNIC", "Party ST.Reg",
+        "V_Date", "Party Name", "Party Address", "Party Region", "Party Reg.Type", "Party NTN/CNIC", "Party ST.Reg",
         "Item Name", "Item Unit", "HS Code",
         "Invoice Qty", "Rate", "Amount", "W.Rate", "W.Amt", "Tax", "Tax Amt", "Net Amount",
         "Sale Type", "Item SNO", "Schedule No", "Serial SNO"
@@ -241,52 +241,63 @@ var empr_PurchaseBill_InvoiceBulkUpload = {
         var sheet = workbook.addWorksheet("InvoiceBulk");
         var saleTypeSheet = workbook.addWorksheet("SaleTypes");
 
-        saleTypeSheet.addRow(["Sale Type", "Item SNO", "Schedule No", "Serial SNO"]);
+        saleTypeSheet.addRow(["Sale Type", "Item SNO", "Schedule No", "Serial SNO", "Code"]);
         var saleTypeCount = 0;
         if (typeof fbrType !== "undefined" && fbrType && fbrType.length) {
             fbrType.forEach(function (x) {
+                var name = x.value || "";
+                var sno = x.item_Sno || "";
+                // Unique display so duplicate S_NAME rows are selectable (SN001 vs SN002)
+                var display = sno ? (name + " | " + sno) : name;
                 saleTypeSheet.addRow([
-                    x.value || "",
-                    x.item_Sno || "",
+                    display,
+                    sno,
                     x.sche_No || "",
-                    x.seri_No || ""
+                    x.seri_No || "",
+                    x.key || ""
                 ]);
                 saleTypeCount++;
             });
         }
         if (saleTypeCount === 0) {
-            saleTypeSheet.addRow(["", "", "", ""]);
+            saleTypeSheet.addRow(["", "", "", "", ""]);
             saleTypeCount = 1;
         }
         saleTypeSheet.getRow(1).font = { bold: true };
         saleTypeSheet.columns = [
-            { width: 40 }, { width: 14 }, { width: 14 }, { width: 14 }
+            { width: 48 }, { width: 14 }, { width: 14 }, { width: 14 }, { width: 10 }
         ];
 
-        sheet.addRow(empr_PurchaseBill_InvoiceBulkUpload.columns);
+        var colWidths = [
+            14, 22, 24, 14, 14, 16, 14,
+            22, 12, 12,
+            12, 12, 12, 10, 12, 10, 12, 12,
+            48, 12, 12, 12
+        ];
+        sheet.columns = empr_PurchaseBill_InvoiceBulkUpload.columns.map(function (header, i) {
+            return { header: header, width: colWidths[i] || 12 };
+        });
         var headerRow = sheet.getRow(1);
+        empr_PurchaseBill_InvoiceBulkUpload.columns.forEach(function (header, i) {
+            headerRow.getCell(i + 1).value = header;
+        });
         headerRow.font = { bold: true };
         headerRow.alignment = { vertical: "middle", horizontal: "center", wrapText: true };
-
-        sheet.columns = [
-            { width: 22 }, { width: 24 }, { width: 14 }, { width: 14 }, { width: 16 }, { width: 14 },
-            { width: 22 }, { width: 12 }, { width: 12 },
-            { width: 12 }, { width: 12 }, { width: 12 }, { width: 10 }, { width: 12 }, { width: 10 }, { width: 12 }, { width: 12 },
-            { width: 28 }, { width: 12 }, { width: 12 }, { width: 12 }
-        ];
+        headerRow.commit();
 
         var templateRows = 100;
         var listEnd = saleTypeCount + 1;
         for (var r = 2; r <= templateRows + 1; r++) {
-            sheet.getCell("L" + r).value = { formula: "IF(OR(J" + r + "=\"\",K" + r + "=\"\"),\"\",J" + r + "*K" + r + ")" };
-            sheet.getCell("N" + r).value = { formula: "IF(L" + r + "=\"\",\"\",L" + r + "*M" + r + "/100)" };
-            sheet.getCell("P" + r).value = { formula: "IF(L" + r + "=\"\",\"\",L" + r + "*O" + r + "/100)" };
-            sheet.getCell("Q" + r).value = { formula: "IF(L" + r + "=\"\",\"\",L" + r + "+N" + r + "+P" + r + ")" };
-            sheet.getCell("S" + r).value = { formula: "IF(R" + r + "=\"\",\"\",IFERROR(VLOOKUP(R" + r + ",SaleTypes!$A$2:$D$" + listEnd + ",2,FALSE),\"\"))" };
-            sheet.getCell("T" + r).value = { formula: "IF(R" + r + "=\"\",\"\",IFERROR(VLOOKUP(R" + r + ",SaleTypes!$A$2:$D$" + listEnd + ",3,FALSE),\"\"))" };
-            sheet.getCell("U" + r).value = { formula: "IF(R" + r + "=\"\",\"\",IFERROR(VLOOKUP(R" + r + ",SaleTypes!$A$2:$D$" + listEnd + ",4,FALSE),\"\"))" };
+            sheet.getCell("A" + r).numFmt = "yyyy-mm-dd";
+            sheet.getCell("M" + r).value = { formula: "IF(OR(K" + r + "=\"\",L" + r + "=\"\"),\"\",K" + r + "*L" + r + ")" };
+            sheet.getCell("O" + r).value = { formula: "IF(M" + r + "=\"\",\"\",M" + r + "*N" + r + "/100)" };
+            sheet.getCell("Q" + r).value = { formula: "IF(M" + r + "=\"\",\"\",M" + r + "*P" + r + "/100)" };
+            sheet.getCell("R" + r).value = { formula: "IF(M" + r + "=\"\",\"\",M" + r + "+O" + r + "+Q" + r + ")" };
+            sheet.getCell("T" + r).value = { formula: "IF(S" + r + "=\"\",\"\",IFERROR(VLOOKUP(S" + r + ",SaleTypes!$A$2:$D$" + listEnd + ",2,FALSE),\"\"))" };
+            sheet.getCell("U" + r).value = { formula: "IF(S" + r + "=\"\",\"\",IFERROR(VLOOKUP(S" + r + ",SaleTypes!$A$2:$D$" + listEnd + ",3,FALSE),\"\"))" };
+            sheet.getCell("V" + r).value = { formula: "IF(S" + r + "=\"\",\"\",IFERROR(VLOOKUP(S" + r + ",SaleTypes!$A$2:$D$" + listEnd + ",4,FALSE),\"\"))" };
 
-            ["L", "N", "P", "Q", "S", "T", "U"].forEach(function (col) {
+            ["M", "O", "Q", "R", "T", "U", "V"].forEach(function (col) {
                 sheet.getCell(col + r).fill = {
                     type: "pattern",
                     pattern: "solid",
@@ -294,7 +305,7 @@ var empr_PurchaseBill_InvoiceBulkUpload = {
                 };
             });
 
-            sheet.getCell("R" + r).dataValidation = {
+            sheet.getCell("S" + r).dataValidation = {
                 type: "list",
                 allowBlank: true,
                 formulae: ["SaleTypes!$A$2:$A$" + listEnd],
@@ -308,7 +319,7 @@ var empr_PurchaseBill_InvoiceBulkUpload = {
             var blob = new Blob([buffer], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
             var link = document.createElement("a");
             link.href = URL.createObjectURL(blob);
-            link.download = "Invoice_Bulk_Upload_Template.xlsx";
+            link.download = "Invoice_Bulk_Upload_Template_VDate.xlsx";
             link.click();
             URL.revokeObjectURL(link.href);
         });
@@ -350,6 +361,7 @@ var empr_PurchaseBill_InvoiceBulkUpload = {
                 var cell = sheet.getCell(rowNumber, colNumber);
                 if (!cell || cell.value == null || cell.value === "") return "";
                 var v = cell.value;
+                if (Object.prototype.toString.call(v) === "[object Date]") return v;
                 if (typeof v === "object") {
                     if (v.result != null && v.result !== "") return v.result;
                     if (v.text != null) return v.text;
@@ -370,35 +382,102 @@ var empr_PurchaseBill_InvoiceBulkUpload = {
                 var n = parseFloat(v);
                 return isNaN(n) ? NaN : n;
             };
+            var pad2 = function (n) {
+                return String(n).padStart(2, "0");
+            };
+            var formatYmd = function (d) {
+                return d.getFullYear() + "-" + pad2(d.getMonth() + 1) + "-" + pad2(d.getDate());
+            };
+            var toDate = function (v) {
+                if (v == null || v === "") return "";
+                if (Object.prototype.toString.call(v) === "[object Date]" && !isNaN(v.getTime())) {
+                    if (v.getUTCHours() === 0 && v.getHours() !== 0) {
+                        return v.getUTCFullYear() + "-" + pad2(v.getUTCMonth() + 1) + "-" + pad2(v.getUTCDate());
+                    }
+                    return formatYmd(v);
+                }
+                if (typeof v === "number" && isFinite(v)) {
+                    var d = new Date(1899, 11, 30);
+                    d.setDate(d.getDate() + Math.floor(v));
+                    if (!isNaN(d.getTime())) return formatYmd(d);
+                }
+                var s = String(v).trim();
+                if (!s) return "";
+                if (/^\d{4}-\d{2}-\d{2}/.test(s)) return s.substring(0, 10);
+                var dmY = s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})$/);
+                if (dmY) {
+                    var parsed = new Date(parseInt(dmY[3], 10), parseInt(dmY[2], 10) - 1, parseInt(dmY[1], 10));
+                    if (!isNaN(parsed.getTime())) return formatYmd(parsed);
+                }
+                var parsedDate = new Date(s);
+                if (!isNaN(parsedDate.getTime())) return formatYmd(parsedDate);
+                return "";
+            };
 
             sheet.eachRow(function (row, rowNumber) {
                 if (rowNumber === 1) return;
 
-                var partyName = toText(readCell(rowNumber, 1));
-                var itemName = toText(readCell(rowNumber, 7));
+                var vDate = toDate(readCell(rowNumber, 1));
+                var partyName = toText(readCell(rowNumber, 2));
+                var itemName = toText(readCell(rowNumber, 8));
                 if (!partyName && !itemName) return;
 
-                var qty = toNum(readCell(rowNumber, 10)) || 0;
-                var rate = toNum(readCell(rowNumber, 11)) || 0;
-                var wRate = toNum(readCell(rowNumber, 13)) || 0;
-                var tax = toNum(readCell(rowNumber, 15)) || 0;
+                var qty = toNum(readCell(rowNumber, 11)) || 0;
+                var rate = toNum(readCell(rowNumber, 12)) || 0;
+                var wRate = toNum(readCell(rowNumber, 14)) || 0;
+                var tax = toNum(readCell(rowNumber, 16)) || 0;
 
                 var amount = Math.round((qty * rate) * 100) / 100;
                 var wAmt = Math.round((amount * wRate / 100) * 100) / 100;
                 var taxAmt = Math.round((amount * tax / 100) * 100) / 100;
                 var netAmount = Math.round((amount + wAmt + taxAmt) * 100) / 100;
 
-                var saleType = toText(readCell(rowNumber, 18));
-                var itemSno = toText(readCell(rowNumber, 19));
-                var scheduleNo = toText(readCell(rowNumber, 20));
-                var serialSno = toText(readCell(rowNumber, 21));
+                var saleType = toText(readCell(rowNumber, 19));
+                var itemSno = toText(readCell(rowNumber, 20));
+                var scheduleNo = toText(readCell(rowNumber, 21));
+                var serialSno = toText(readCell(rowNumber, 22));
 
-                if (saleType && typeof fbrType !== "undefined" && fbrType && fbrType.length) {
-                    var selected = fbrType.find(function (x) {
-                        return String(x.value).toLowerCase() === saleType.toLowerCase()
-                            || String(x.key) === saleType;
-                    });
+                // Parse "Name | SNxxx" display if present
+                var parsedSnoFromSaleType = "";
+                var saleTypeNameOnly = saleType;
+                if (saleType.indexOf("|") >= 0) {
+                    var parts = saleType.split("|");
+                    saleTypeNameOnly = toText(parts[0]);
+                    parsedSnoFromSaleType = toText(parts.slice(1).join("|"));
+                }
+                if (!itemSno && parsedSnoFromSaleType) {
+                    itemSno = parsedSnoFromSaleType;
+                }
+
+                if (typeof fbrType !== "undefined" && fbrType && fbrType.length) {
+                    var selected = null;
+                    // 1) Match by Item SNO (handles duplicate S_NAME)
+                    if (itemSno) {
+                        selected = fbrType.find(function (x) {
+                            return String(x.item_Sno || "").toLowerCase() === itemSno.toLowerCase();
+                        });
+                    }
+                    // 2) Match by CODE
+                    if (!selected && saleType) {
+                        selected = fbrType.find(function (x) {
+                            return String(x.key) === saleType;
+                        });
+                    }
+                    // 3) Exact unique display "name | sno"
+                    if (!selected && saleType) {
+                        selected = fbrType.find(function (x) {
+                            var display = (x.value || "") + (x.item_Sno ? (" | " + x.item_Sno) : "");
+                            return display.toLowerCase() === saleType.toLowerCase();
+                        });
+                    }
+                    // 4) Fallback by S_NAME only (ambiguous)
+                    if (!selected && saleTypeNameOnly) {
+                        selected = fbrType.find(function (x) {
+                            return String(x.value || "").toLowerCase() === saleTypeNameOnly.toLowerCase();
+                        });
+                    }
                     if (selected) {
+                        saleType = selected.value || saleTypeNameOnly || saleType;
                         itemSno = selected.item_Sno || itemSno;
                         scheduleNo = selected.sche_No || scheduleNo;
                         serialSno = selected.seri_No || serialSno;
@@ -406,15 +485,16 @@ var empr_PurchaseBill_InvoiceBulkUpload = {
                 }
 
                 rows.push({
+                    vDate: vDate,
                     partyName: partyName,
-                    partyAddress: toText(readCell(rowNumber, 2)),
-                    partyRegion: toText(readCell(rowNumber, 3)),
-                    partyRegType: toText(readCell(rowNumber, 4)),
-                    partyNtn: toText(readCell(rowNumber, 5)),
-                    partyStReg: toText(readCell(rowNumber, 6)),
+                    partyAddress: toText(readCell(rowNumber, 3)),
+                    partyRegion: toText(readCell(rowNumber, 4)),
+                    partyRegType: toText(readCell(rowNumber, 5)),
+                    partyNtn: toText(readCell(rowNumber, 6)),
+                    partyStReg: toText(readCell(rowNumber, 7)),
                     itemName: itemName,
-                    itemUnit: toText(readCell(rowNumber, 8)),
-                    hsCode: toText(readCell(rowNumber, 9)),
+                    itemUnit: toText(readCell(rowNumber, 9)),
+                    hsCode: toText(readCell(rowNumber, 10)),
                     invoiceQty: qty,
                     rate: rate,
                     amount: amount,
@@ -464,6 +544,15 @@ var empr_PurchaseBill_InvoiceBulkUpload = {
             }
         });
         return Object.keys(map).map(function (k) { return map[k]; });
+    },
+
+    GetInvoiceGroupCount: function (rows) {
+        var keys = {};
+        (rows || []).forEach(function (r) {
+            var key = ((r.partyName || "") + "|" + (r.partyNtn || "")).trim().toLowerCase();
+            keys[key] = true;
+        });
+        return Object.keys(keys).length;
     },
 
     GetUniqueItems: function (includeIncomplete) {
@@ -804,7 +893,8 @@ var empr_PurchaseBill_InvoiceBulkUpload = {
         empr_PurchaseBill_InvoiceBulkUpload.ShowStep(4);
         $("#ibuInvoiceSummary").html(
             "<strong>Total Excel rows:</strong> " + rows.length +
-            " &nbsp;|&nbsp; <strong>Invoices to create:</strong> " + rows.length
+            " &nbsp;|&nbsp; <strong>Invoices to create:</strong> " + empr_PurchaseBill_InvoiceBulkUpload.GetInvoiceGroupCount(rows) +
+            " <span class=\"text-muted\">(same Party Name + NTN = 1 invoice)</span>"
         );
         empr_PurchaseBill_InvoiceBulkUpload.RenderInvoiceGrid(rows);
     },
@@ -813,6 +903,7 @@ var empr_PurchaseBill_InvoiceBulkUpload = {
         var data = (rows || []).map(function (x, i) {
             return {
                 id: i + 1,
+                vDate: x.vDate,
                 partyName: x.partyName,
                 partyNtn: x.partyNtn,
                 itemName: x.itemName,
@@ -842,6 +933,7 @@ var empr_PurchaseBill_InvoiceBulkUpload = {
             paging: { pageSize: 10 },
             scrolling: { useNative: true },
             columns: [
+                { dataField: "vDate", caption: "V_Date", allowEditing: false },
                 { dataField: "partyName", caption: "Party Name", allowEditing: false },
                 { dataField: "partyNtn", caption: "NTN / CNIC", allowEditing: false },
                 { dataField: "itemName", caption: "Item Name", allowEditing: false },
